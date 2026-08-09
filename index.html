@@ -1,330 +1,1950 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="google-site-verification" content="BmAQLsWZJ2VATv2zK6xsoKCLvi_4bbnyXTg2c8jSwX0" />
-  <title>HADOTI WALE BHAIYA | India's AI Travel Ecosystem</title>
-  <meta name="description" content="HADOTI WALE BHAIYA - India's Biggest AI-Powered Travel Ecosystem. Discover, Plan, Book & Share your journeys." />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<title>HADOTI WALE BHAIYA — Explore India</title>
 
-  <style>
-    :root {
-      --primary: #f59e0b;
-      --primary-dark: #d97706;
-      --bg: #020617;
-      --card: rgba(30, 41, 59, 0.7);
-      --text: #f8fafc;
-      --muted: #94a3b8;
-      --border: rgba(255, 255, 255, 0.08);
-      --gradient: linear-gradient(135deg, #f59e0b, #ef4444);
-      --success: #10b981;
+<meta name="description"
+content="HADOTI WALE BHAIYA — India's intelligent travel and knowledge platform. Explore destinations, plan trips, discover places, guides, food, hotels and more.">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --navy:#06182d;
+    --navy2:#0a2340;
+    --orange:#ffb21c;
+    --gold:#ffc928;
+    --white:#ffffff;
+    --light:#f5f7fa;
+    --text:#152238;
+    --muted:#697586;
+    --border:#e4e8ee;
+    --shadow:0 10px 35px rgba(0,0,0,.10);
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f7fa;
+    color:var(--text);
+    overflow-x:hidden;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button,
+input{
+    font-family:inherit;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    height:72px;
+    background:#06182d;
+    color:white;
+    display:flex;
+    align-items:center;
+    padding:0 3%;
+    box-shadow:0 3px 20px rgba(0,0,0,.25);
+}
+
+.logo{
+    min-width:230px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo-icon{
+    width:52px;
+    height:52px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(145deg,#ffc928,#f27b21);
+    color:#06182d;
+    font-size:20px;
+    font-weight:900;
+    position:relative;
+}
+
+.logo-icon:before{
+    content:"";
+    position:absolute;
+    top:5px;
+    left:10px;
+    width:30px;
+    height:10px;
+    border-top:3px solid #06182d;
+    transform:skew(-30deg);
+}
+
+.logo-text{
+    line-height:1;
+}
+
+.logo-text strong{
+    display:block;
+    font-size:24px;
+    letter-spacing:-1px;
+    color:#ffc928;
+}
+
+.logo-text span{
+    display:block;
+    color:#fff;
+    font-size:16px;
+    font-weight:700;
+    letter-spacing:1px;
+}
+
+.logo-text small{
+    display:block;
+    color:#b9c4d2;
+    font-size:6px;
+    margin-top:5px;
+    letter-spacing:.7px;
+}
+
+.nav{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:23px;
+}
+
+.nav a{
+    color:#fff;
+    font-size:11px;
+    font-weight:700;
+    transition:.25s;
+    white-space:nowrap;
+}
+
+.nav a:hover{
+    color:#ffc928;
+}
+
+.header-actions{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-left:15px;
+}
+
+.lang{
+    font-size:12px;
+    cursor:pointer;
+}
+
+.icon-btn{
+    font-size:18px;
+    cursor:pointer;
+}
+
+.signin{
+    border:0;
+    padding:10px 20px;
+    border-radius:22px;
+    background:linear-gradient(135deg,#ffc928,#f4a51c);
+    color:#07182d;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.menu-btn{
+    display:none;
+    border:0;
+    background:none;
+    color:#fff;
+    font-size:28px;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    min-height:460px;
+    position:relative;
+    background:
+        linear-gradient(
+            90deg,
+            rgba(2,17,34,.72),
+            rgba(2,17,34,.35),
+            rgba(2,17,34,.55)
+        ),
+        url("https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=2200&q=90")
+        center/cover no-repeat;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:white;
+}
+
+.hero-content{
+    width:min(1000px,92%);
+    padding-top:20px;
+}
+
+.hero h1{
+    font-size:48px;
+    line-height:1.05;
+    margin-bottom:8px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.hero h1 span{
+    color:#ffc928;
+}
+
+.hero-subtitle{
+    font-size:18px;
+    margin-bottom:22px;
+}
+
+.search-area{
+    max-width:900px;
+    margin:auto;
+}
+
+.search-box{
+    display:flex;
+    background:white;
+    border-radius:10px;
+    padding:5px;
+    box-shadow:0 10px 35px rgba(0,0,0,.30);
+}
+
+.search-box input{
+    flex:1;
+    border:0;
+    outline:0;
+    padding:15px;
+    font-size:16px;
+    color:#333;
+}
+
+.search-box button{
+    border:0;
+    background:linear-gradient(135deg,#ffc928,#f2a51a);
+    padding:0 28px;
+    border-radius:8px;
+    font-weight:900;
+    cursor:pointer;
+}
+
+.ai-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    margin-left:10px;
+    padding:15px 22px;
+    background:#071d35;
+    border:1px solid rgba(255,255,255,.3);
+    border-radius:9px;
+    color:#fff;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.popular{
+    margin-top:18px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:9px;
+    flex-wrap:wrap;
+}
+
+.popular strong{
+    font-size:12px;
+}
+
+.tag{
+    border:1px solid rgba(255,255,255,.5);
+    border-radius:18px;
+    padding:7px 14px;
+    font-size:11px;
+    background:rgba(0,0,0,.25);
+}
+
+/* =========================
+   SIDE TOOLS
+========================= */
+
+.side-tools{
+    position:absolute;
+    left:12px;
+    top:85px;
+    width:62px;
+    border-radius:10px;
+    overflow:hidden;
+    background:rgba(4,22,42,.92);
+    z-index:20;
+}
+
+.tool{
+    min-height:58px;
+    padding:7px 3px;
+    color:#fff;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:4px;
+    border-bottom:1px solid rgba(255,255,255,.1);
+    font-size:8px;
+    text-align:center;
+    cursor:pointer;
+}
+
+.tool-icon{
+    font-size:18px;
+}
+
+/* =========================
+   WEATHER
+========================= */
+
+.weather{
+    position:absolute;
+    right:20px;
+    top:85px;
+    width:145px;
+    padding:18px;
+    border-radius:12px;
+    color:#fff;
+    background:rgba(4,22,42,.88);
+    text-align:left;
+}
+
+.weather-location{
+    font-size:11px;
+    font-weight:bold;
+}
+
+.weather-temp{
+    font-size:27px;
+    font-weight:800;
+    margin:12px 0;
+}
+
+.weather-sun{
+    font-size:30px;
+}
+
+.weather small{
+    color:#c7d0dc;
+}
+
+/* =========================
+   QUICK TOOLS
+========================= */
+
+.quick-tools{
+    width:92%;
+    max-width:1180px;
+    margin:-28px auto 25px;
+    position:relative;
+    z-index:30;
+    background:#fff;
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    overflow:hidden;
+}
+
+.quick{
+    padding:17px 10px;
+    text-align:center;
+    border-right:1px solid #eee;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.quick:hover{
+    transform:translateY(-3px);
+    background:#fffaf0;
+}
+
+.quick:last-child{
+    border-right:0;
+}
+
+.quick-icon{
+    font-size:26px;
+    margin-bottom:7px;
+}
+
+.quick strong{
+    display:block;
+    font-size:12px;
+}
+
+.quick span{
+    color:#7a8492;
+    font-size:10px;
+}
+
+/* =========================
+   COMMON SECTION
+========================= */
+
+.container{
+    width:94%;
+    max-width:1500px;
+    margin:auto;
+}
+
+.section{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:12px;
+    margin-bottom:18px;
+    padding:18px;
+}
+
+.section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:14px;
+}
+
+.section-head h2{
+    font-size:15px;
+    text-transform:uppercase;
+}
+
+.view{
+    color:#5564a8;
+    font-size:11px;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:12px;
+}
+
+.card{
+    height:150px;
+    border-radius:9px;
+    overflow:hidden;
+    position:relative;
+    color:white;
+    cursor:pointer;
+    box-shadow:0 5px 15px rgba(0,0,0,.12);
+}
+
+.card:after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(transparent 30%,rgba(0,0,0,.75));
+}
+
+.card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.4s;
+}
+
+.card:hover img{
+    transform:scale(1.08);
+}
+
+.card-info{
+    position:absolute;
+    z-index:2;
+    left:12px;
+    bottom:11px;
+}
+
+.card-info strong{
+    display:block;
+    font-size:14px;
+}
+
+.card-info span{
+    font-size:10px;
+    color:#ddd;
+}
+
+/* =========================
+   STATES
+========================= */
+
+.states{
+    grid-template-columns:repeat(4,1fr);
+}
+
+/* =========================
+   CONTENT GRID
+========================= */
+
+.content-grid{
+    display:grid;
+    grid-template-columns:1.1fr 1fr 1fr 1fr;
+    gap:14px;
+}
+
+.panel{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:16px;
+}
+
+.panel-title{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:12px;
+}
+
+.panel-title strong{
+    font-size:14px;
+}
+
+.inspiration{
+    position:relative;
+    height:190px;
+    overflow:hidden;
+    border-radius:9px;
+    color:#fff;
+}
+
+.inspiration img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.inspiration:after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(transparent,rgba(0,0,0,.85));
+}
+
+.inspiration-text{
+    position:absolute;
+    z-index:2;
+    bottom:12px;
+    left:12px;
+}
+
+.inspiration-text strong{
+    display:block;
+    font-size:16px;
+}
+
+.small-list{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.list-item{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.list-item img{
+    width:58px;
+    height:45px;
+    object-fit:cover;
+    border-radius:6px;
+}
+
+.list-item strong{
+    font-size:11px;
+    display:block;
+}
+
+.list-item span{
+    font-size:9px;
+    color:#7b8490;
+}
+
+/* =========================
+   AI PANEL
+========================= */
+
+.ai-panel{
+    background:linear-gradient(135deg,#ece9ff,#f7f4ff);
+    overflow:hidden;
+}
+
+.robot{
+    text-align:center;
+    font-size:75px;
+    margin:5px 0;
+}
+
+.ai-panel h3{
+    font-size:20px;
+    margin-bottom:8px;
+}
+
+.ai-panel p{
+    font-size:11px;
+    color:#596274;
+    line-height:1.6;
+}
+
+.ai-features{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:6px;
+    margin:13px 0;
+}
+
+.ai-feature{
+    font-size:10px;
+}
+
+.create-btn{
+    border:0;
+    border-radius:7px;
+    background:linear-gradient(135deg,#7040ed,#9b4cff);
+    color:#fff;
+    padding:10px 14px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+/* =========================
+   EVENTS
+========================= */
+
+.event{
+    display:flex;
+    gap:10px;
+    padding:9px 0;
+    border-bottom:1px solid #eee;
+}
+
+.event:last-child{
+    border-bottom:0;
+}
+
+.event img{
+    width:68px;
+    height:45px;
+    object-fit:cover;
+    border-radius:6px;
+}
+
+.event strong{
+    display:block;
+    font-size:11px;
+}
+
+.event span{
+    font-size:9px;
+    color:#777;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats{
+    background:#06182d;
+    color:white;
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    padding:22px;
+    gap:10px;
+}
+
+.stat{
+    text-align:center;
+}
+
+.stat-icon{
+    font-size:24px;
+}
+
+.stat strong{
+    display:block;
+    margin:5px 0;
+    font-size:14px;
+}
+
+.stat span{
+    font-size:9px;
+    color:#b7c1ce;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+    background:#06182d;
+    color:white;
+    padding:35px 5% 20px;
+}
+
+.footer-grid{
+    max-width:1300px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr 1fr;
+    gap:30px;
+}
+
+.footer h3{
+    color:#ffc928;
+    margin-bottom:12px;
+}
+
+.footer p,
+.footer a{
+    color:#b9c4d2;
+    font-size:12px;
+    line-height:1.8;
+}
+
+.footer-links{
+    display:flex;
+    flex-direction:column;
+}
+
+.footer-bottom{
+    max-width:1300px;
+    margin:25px auto 0;
+    padding-top:15px;
+    border-top:1px solid rgba(255,255,255,.1);
+    display:flex;
+    justify-content:space-between;
+    font-size:10px;
+    color:#9da9b7;
+}
+
+/* =========================
+   AI MODAL
+========================= */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:2000;
+    background:rgba(0,0,0,.7);
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal-box{
+    width:min(600px,100%);
+    background:#fff;
+    border-radius:16px;
+    padding:25px;
+    position:relative;
+}
+
+.close{
+    position:absolute;
+    right:18px;
+    top:12px;
+    font-size:25px;
+    cursor:pointer;
+}
+
+.modal-box h2{
+    color:#06182d;
+    margin-bottom:8px;
+}
+
+.form-group{
+    margin:12px 0;
+}
+
+.form-group label{
+    display:block;
+    font-size:12px;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+    padding:11px;
+    border:1px solid #ddd;
+    border-radius:7px;
+}
+
+.plan-btn{
+    width:100%;
+    margin-top:10px;
+    border:0;
+    padding:13px;
+    border-radius:8px;
+    background:linear-gradient(135deg,#ffc928,#f37b21);
+    font-weight:900;
+    cursor:pointer;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1200px){
+
+    .nav{
+        gap:12px;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Outfit', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      overflow-x: hidden;
+    .nav a{
+        font-size:9px;
     }
 
-    .bg-glow {
-      position: fixed; width: 600px; height: 600px;
-      border-radius: 50%; filter: blur(120px); opacity: 0.12;
-      z-index: -1; pointer-events: none;
-    }
-    .glow-1 { background: #f59e0b; top: -200px; left: -100px; }
-    .glow-2 { background: #ef4444; bottom: -150px; right: -100px; }
-
-    header {
-      position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
-      padding: 1.1rem 0; backdrop-filter: blur(20px);
-      background: rgba(2, 6, 23, 0.85); border-bottom: 1px solid var(--border);
-    }
-    .nav-container {
-      max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .logo {
-      display: flex; align-items: center; gap: 0.7rem; text-decoration: none; color: white;
-    }
-    .logo-icon {
-      width: 40px; height: 40px; background: var(--gradient);
-      border-radius: 11px; display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: 1.1rem;
-    }
-    .logo-text {
-      font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700;
-    }
-    .logo-text span { color: var(--primary); }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a {
-      color: var(--muted); text-decoration: none; font-weight: 500; font-size: 0.95rem;
-      transition: color 0.3s;
-    }
-    .nav-links a:hover { color: white; }
-    .nav-cta {
-      background: var(--gradient); color: white; padding: 0.65rem 1.4rem;
-      border-radius: 50px; font-weight: 600; font-size: 0.9rem; text-decoration: none;
+    .logo{
+        min-width:190px;
     }
 
-    .hero {
-      min-height: 100vh; display: flex; align-items: center;
-      padding: 7.5rem 1.5rem 4rem;
-    }
-    .hero-container {
-      max-width: 1200px; margin: 0 auto; width: 100%;
-      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 3.5rem; align-items: center;
-    }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.3);
-      color: var(--primary); padding: 0.4rem 1rem; border-radius: 50px;
-      font-size: 0.85rem; font-weight: 500; margin-bottom: 1.4rem;
-    }
-    .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.6rem, 5vw, 4rem); font-weight: 700; line-height: 1.15;
-      margin-bottom: 1.3rem;
-    }
-    .hero h1 .highlight {
-      background: var(--gradient); -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent; background-clip: text;
-    }
-    .hero-desc {
-      font-size: 1.1rem; color: var(--muted); max-width: 520px;
-      margin-bottom: 2.2rem; line-height: 1.7;
-    }
-    .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.8rem; }
-    .btn-primary {
-      background: var(--gradient); color: white; padding: 0.95rem 1.9rem;
-      border-radius: 14px; font-weight: 600; font-size: 1rem; text-decoration: none;
-      display: inline-flex; align-items: center; gap: 0.5rem;
-    }
-    .btn-secondary {
-      background: rgba(255,255,255,0.05); color: white; padding: 0.95rem 1.9rem;
-      border-radius: 14px; font-weight: 600; border: 1px solid var(--border);
-      text-decoration: none;
-    }
-    .hero-stats { display: flex; gap: 2.2rem; flex-wrap: wrap; }
-    .stat-item h3 { font-size: 1.7rem; font-weight: 700; color: var(--primary); }
-    .stat-item p { font-size: 0.9rem; color: var(--muted); }
-
-    .hero-card {
-      background: var(--card); backdrop-filter: blur(20px);
-      border: 1px solid var(--border); border-radius: 24px; padding: 1.8rem;
-      position: relative; overflow: hidden;
-    }
-    .hero-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
-      background: var(--gradient);
-    }
-    .card-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.4rem; }
-    .card-avatar {
-      width: 48px; height: 48px; background: var(--gradient); border-radius: 12px;
-      display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
-    }
-    .ai-features { display: grid; gap: 0.8rem; }
-    .ai-item {
-      display: flex; align-items: center; gap: 0.85rem;
-      background: rgba(255,255,255,0.03); padding: 0.85rem 1rem;
-      border-radius: 12px; border: 1px solid transparent;
-    }
-    .ai-icon {
-      width: 34px; height: 34px; background: rgba(245,158,11,0.15);
-      border-radius: 9px; display: flex; align-items: center; justify-content: center;
+    .cards{
+        grid-template-columns:repeat(4,1fr);
     }
 
-    section { padding: 5.5rem 1.5rem; }
-    .container { max-width: 1200px; margin: 0 auto; }
-    .section-header { text-align: center; max-width: 680px; margin: 0 auto 3.5rem; }
-    .section-tag {
-      display: inline-block; background: rgba(245,158,11,0.12); color: var(--primary);
-      padding: 0.35rem 1rem; border-radius: 50px; font-size: 0.82rem;
-      font-weight: 600; margin-bottom: 0.9rem;
-    }
-    .section-header h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.9rem, 3.8vw, 2.7rem); font-weight: 700; margin-bottom: 0.9rem;
-    }
-    .section-header p { color: var(--muted); font-size: 1.05rem; }
-
-    .features-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.4rem;
-    }
-    .feature-card {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 18px; padding: 1.8rem; transition: 0.35s;
-    }
-    .feature-card:hover {
-      transform: translateY(-6px); border-color: rgba(245,158,11,0.3);
-    }
-    .feature-icon {
-      width: 50px; height: 50px; background: rgba(245,158,11,0.12);
-      border-radius: 14px; display: flex; align-items: center; justify-content: center;
-      font-size: 1.45rem; margin-bottom: 1.1rem;
-    }
-    .feature-card h3 { font-size: 1.15rem; margin-bottom: 0.6rem; }
-    .feature-card p { color: var(--muted); font-size: 0.92rem; }
-
-    .ai-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.1rem;
-    }
-    .ai-box {
-      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
-      border-radius: 16px; padding: 1.4rem; text-align: center;
-    }
-    .ai-box .icon { font-size: 1.8rem; margin-bottom: 0.7rem; }
-    .ai-box h4 { font-size: 1rem; margin-bottom: 0.35rem; }
-    .ai-box p { font-size: 0.82rem; color: var(--muted); }
-
-    .hierarchy {
-      display: flex; flex-direction: column; align-items: center; gap: 0.45rem; margin-top: 1.5rem;
-    }
-    .hierarchy-item {
-      background: var(--card); border: 1px solid var(--border);
-      padding: 0.9rem 2.2rem; border-radius: 50px; font-weight: 500;
-    }
-    .hierarchy-arrow { color: var(--primary); font-size: 1.1rem; }
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.8rem; }
-    .info-card {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 20px; padding: 2.2rem;
-    }
-    .info-card h3 {
-      font-size: 1.35rem; margin-bottom: 1.3rem;
-      display: flex; align-items: center; gap: 0.6rem;
-    }
-    .info-list { list-style: none; display: grid; gap: 0.7rem; }
-    .info-list li {
-      display: flex; align-items: center; gap: 0.7rem;
-      color: var(--muted); font-size: 0.93rem;
-    }
-    .info-list li::before {
-      content: '✓'; color: var(--success); font-weight: 700;
+    .content-grid{
+        grid-template-columns:1fr 1fr;
     }
 
-    .vision-box {
-      background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(239,68,68,0.07));
-      border: 1px solid rgba(245,158,11,0.2); border-radius: 24px;
-      padding: 3.2rem; text-align: center;
-    }
-    .vision-box h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.7rem, 3.3vw, 2.3rem); margin-bottom: 1.1rem;
-    }
-    .vision-box p {
-      font-size: 1.1rem; color: var(--muted); max-width: 780px;
-      margin: 0 auto 1.8rem; line-height: 1.7;
-    }
-    .vision-tagline {
-      font-size: 1.2rem; font-weight: 600;
-      background: var(--gradient); -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent; background-clip: text;
+    .quick-tools{
+        grid-template-columns:repeat(4,1fr);
     }
 
-    footer {
-      background: #01040f; border-top: 1px solid var(--border);
-      padding: 3.5rem 1.5rem 1.8rem;
+    .quick:nth-child(4){
+        border-right:0;
     }
-    .footer-content {
-      max-width: 1200px; margin: 0 auto;
-      display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 2.5rem;
-      margin-bottom: 2.5rem;
-    }
-    .footer-brand p { color: var(--muted); font-size: 0.92rem; max-width: 270px; margin-top: 0.8rem; }
-    .footer-col h4 { font-size: 0.95rem; margin-bottom: 1.1rem; }
-    .footer-col ul { list-style: none; }
-    .footer-col ul li { margin-bottom: 0.6rem; }
-    .footer-col ul a { color: var(--muted); text-decoration: none; font-size: 0.88rem; }
-    .footer-col ul a:hover { color: var(--primary); }
-    .footer-bottom {
-      max-width: 1200px; margin: 0 auto; padding-top: 1.6rem;
-      border-top: 1px solid var(--border);
-      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem;
-    }
-    .footer-bottom p { color: var(--muted); font-size: 0.88rem; }
+}
 
-    @media (max-width: 900px) {
-      .hero-container { grid-template-columns: 1fr; text-align: center; }
-      .hero-desc { margin-left: auto; margin-right: auto; }
-      .hero-buttons, .hero-stats { justify-content: center; }
-      .two-col { grid-template-columns: 1fr; }
-      .footer-content { grid-template-columns: 1fr 1fr; }
-      .nav-links { display: none; }
+@media(max-width:900px){
+
+    .header{
+        height:65px;
     }
-    @media (max-width: 600px) {
-      .footer-content { grid-template-columns: 1fr; }
+
+    .nav,
+    .header-actions{
+        display:none;
     }
-  </style>
+
+    .menu-btn{
+        display:block;
+        margin-left:auto;
+    }
+
+    .logo{
+        min-width:auto;
+    }
+
+    .side-tools,
+    .weather{
+        display:none;
+    }
+
+    .hero{
+        min-height:520px;
+    }
+
+    .hero h1{
+        font-size:36px;
+    }
+
+    .search-box{
+        flex-direction:column;
+        gap:5px;
+    }
+
+    .search-box button{
+        height:45px;
+    }
+
+    .ai-btn{
+        margin:10px 0 0;
+    }
+
+    .quick-tools{
+        grid-template-columns:repeat(2,1fr);
+        margin-top:-15px;
+    }
+
+    .quick:nth-child(2n){
+        border-right:0;
+    }
+
+    .cards{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .states{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .stats{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:600px){
+
+    .logo-text strong{
+        font-size:19px;
+    }
+
+    .logo-text span{
+        font-size:12px;
+    }
+
+    .logo-icon{
+        width:43px;
+        height:43px;
+    }
+
+    .hero{
+        min-height:540px;
+    }
+
+    .hero h1{
+        font-size:31px;
+    }
+
+    .hero-subtitle{
+        font-size:14px;
+    }
+
+    .popular{
+        gap:5px;
+    }
+
+    .tag{
+        padding:6px 9px;
+    }
+
+    .section{
+        padding:12px;
+    }
+
+    .cards{
+        grid-template-columns:1fr 1fr;
+        gap:8px;
+    }
+
+    .card{
+        height:125px;
+    }
+
+    .content-grid{
+        grid-template-columns:1fr;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr;
+    }
+
+    .footer-bottom{
+        flex-direction:column;
+        gap:10px;
+    }
+}
+</style>
 </head>
+
 <body>
-  <div class="bg-glow glow-1"></div>
-  <div class="bg-glow glow-2"></div>
 
-  <header>
-    <div class="nav-container">
-      <a href="#" class="logo">
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <a href="#" class="logo">
+
         <div class="logo-icon">HB</div>
-        <div class="logo-text">Hadoti <span>Wale Bhaiya</span></div>
-      </a>
-      <ul class="nav-links">
-        <li><a href="#features">Features</a></li>
-        <li><a href="#ai">AI System</a></li>
-        <li><a href="#destinations">Destinations</a></li>
-        <li><a href="#booking">Booking</a></li>
-        <li><a href="#vision">Vision</a></li>
-      </ul>
-      <a href="#cta" class="nav-cta">Get Started</a>
-    </div>
-  </header>
 
-  <section class="hero">
-    <div class="hero-container">
-      <div>
-        <div class="hero-badge">✦ India's Biggest AI Travel Ecosystem</div>
-        <h1>Discover. Plan. Book.<br><span class="highlight">Travel Smarter</span></h1>
-        <p class="hero-desc">
-          HADOTI WALE BHAIYA is a complete AI-powered Travel Operating System where travelers, hotels, guides, photographers and businesses connect on one powerful platform.
+        <div class="logo-text">
+            <strong>HADOTI</strong>
+            <span>WALE BHAIYA</span>
+            <small>EXPLORE EVERY JOURNEY, DISCOVER EVERY STORY</small>
+        </div>
+
+    </a>
+
+    <nav class="nav">
+
+        <a href="#home">HOME</a>
+        <a href="#explore">EXPLORE</a>
+        <a href="#states">STATES</a>
+        <a href="#districts">DISTRICTS</a>
+        <a href="#places">PLACES</a>
+        <a href="#temples">TEMPLES</a>
+        <a href="#forts">FORTS</a>
+        <a href="#waterfalls">WATERFALLS</a>
+        <a href="#history">HISTORY</a>
+        <a href="#food">FOOD</a>
+        <a href="#planner">TRAVEL PLANNER</a>
+        <a href="#maps">MAPS</a>
+        <a href="#videos">VIDEOS</a>
+        <a href="#blogs">BLOGS</a>
+        <a href="#gallery">GALLERY</a>
+
+    </nav>
+
+    <div class="header-actions">
+
+        <span class="lang">हिन्दी⌄</span>
+        <span class="icon-btn">☾</span>
+        <span class="icon-btn">♧</span>
+
+        <button class="signin" onclick="openPlanner()">
+            SIGN IN
+        </button>
+
+    </div>
+
+    <button class="menu-btn" onclick="mobileMenu()">
+        ☰
+    </button>
+
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero" id="home">
+
+    <div class="side-tools">
+
+        <div class="tool">
+            <div class="tool-icon">⌖</div>
+            Near Me
+        </div>
+
+        <div class="tool">
+            <div class="tool-icon">☀</div>
+            Weather
+        </div>
+
+        <div class="tool">
+            <div class="tool-icon">⌁</div>
+            Route Finder
+        </div>
+
+        <div class="tool">
+            <div class="tool-icon">▣</div>
+            Budget Planner
+        </div>
+
+        <div class="tool">
+            <div class="tool-icon">✓</div>
+            Trip Notes
+        </div>
+
+        <div class="tool">
+            <div class="tool-icon">♧</div>
+            Packing List
+        </div>
+
+    </div>
+
+
+    <div class="weather">
+
+        <div class="weather-location">
+            KOTA, RAJASTHAN
+        </div>
+
+        <div class="weather-sun">
+            ☀️
+        </div>
+
+        <div class="weather-temp">
+            32°C
+        </div>
+
+        <small>Sunny</small>
+        <br>
+        <small>H: 34°C &nbsp; L: 21°C</small>
+
+    </div>
+
+
+    <div class="hero-content">
+
+        <h1>
+            EXPLORE INDIA WITH<br>
+            <span>HADOTI WALE BHAIYA</span>
+        </h1>
+
+        <div class="hero-subtitle">
+            India's Most Intelligent Travel & Knowledge Platform
+        </div>
+
+        <div class="search-area">
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search places, temples, forts, cities..."
+                    onkeyup="searchPlace(event)"
+                >
+
+                <button onclick="performSearch()">
+                    SEARCH
+                </button>
+
+            </div>
+
+            <button class="ai-btn" onclick="openPlanner()">
+                🤖 AI TRIP PLANNER
+            </button>
+
+        </div>
+
+        <div class="popular">
+
+            <strong>Popular Searches:</strong>
+
+            <span class="tag">Kumbhalgarh Fort</span>
+            <span class="tag">Jaisalmer</span>
+            <span class="tag">Coorg</span>
+            <span class="tag">Varanasi</span>
+            <span class="tag">Leh Ladakh</span>
+            <span class="tag">Tawang</span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= QUICK TOOLS ================= -->
+
+<div class="quick-tools">
+
+    <div class="quick" onclick="alert('Explore Map coming soon')">
+        <div class="quick-icon">🗺️</div>
+        <strong>Explore Map</strong>
+        <span>Interactive Map</span>
+    </div>
+
+    <div class="quick" onclick="openPlanner()">
+        <div class="quick-icon">📅</div>
+        <strong>Travel Planner</strong>
+        <span>Plan Your Trip</span>
+    </div>
+
+    <div class="quick" onclick="openPlanner()">
+        <div class="quick-icon">🤖</div>
+        <strong>AI Trip Planner</strong>
+        <span>5 Day Plan in 1 Click</span>
+    </div>
+
+    <div class="quick">
+        <div class="quick-icon">🧮</div>
+        <strong>Budget Calculator</strong>
+        <span>Estimate Your Trip</span>
+    </div>
+
+    <div class="quick">
+        <div class="quick-icon">🛏️</div>
+        <strong>Hotel Booking</strong>
+        <span>Find Best Stays</span>
+    </div>
+
+    <div class="quick">
+        <div class="quick-icon">👨‍🏫</div>
+        <strong>Local Guide</strong>
+        <span>Book Local Experts</span>
+    </div>
+
+    <div class="quick">
+        <div class="quick-icon">📖</div>
+        <strong>Travel Journal</strong>
+        <span>Your Travel Diary</span>
+    </div>
+
+</div>
+
+
+<main class="container">
+
+
+<!-- ================= DESTINATIONS ================= -->
+
+<section class="section" id="explore">
+
+    <div class="section-head">
+
+        <h2>Popular Destinations</h2>
+
+        <a href="#" class="view">
+            View All
+        </a>
+
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1595658658481-d53d3f999875?auto=format&fit=crop&w=900&q=85">
+            <div class="card-info">
+                <strong>Udaipur</strong>
+                <span>Rajasthan</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=900&q=85">
+            <div class="card-info">
+                <strong>Jaipur</strong>
+                <span>Rajasthan</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=900&q=85">
+            <div class="card-info">
+                <strong>Manali</strong>
+                <span>Himachal Pradesh</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=900&q=85">
+            <div class="card-info">
+                <strong>Varanasi</strong>
+                <span>Uttar Pradesh</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1609948543911-7f0f6e9c2f5b?auto=format&fit=crop&w=900&q=85">
+            <div class="card-info">
+                <strong>Rishikesh</strong>
+                <span>Uttarakhand</span>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= STATES ================= -->
+
+<section class="section" id="states">
+
+    <div class="section-head">
+
+        <h2>Explore By State</h2>
+
+        <a href="#" class="view">
+            View All
+        </a>
+
+    </div>
+
+    <div class="cards states">
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=900&q=85">
+            <div class="card-info">
+                <strong>Rajasthan</strong>
+                <span>The Land of Kings</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=85">
+            <div class="card-info">
+                <strong>Uttarakhand</strong>
+                <span>Devbhoomi</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1590050752117-23a9d9e2f4d8?auto=format&fit=crop&w=900&q=85">
+            <div class="card-info">
+                <strong>Madhya Pradesh</strong>
+                <span>The Heart of India</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=900&q=85">
+            <div class="card-info">
+                <strong>Himachal Pradesh</strong>
+                <span>Land of Gods</span>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CONTENT ================= -->
+
+<div class="content-grid">
+
+
+<!-- Travel Inspiration -->
+
+<section class="panel">
+
+    <div class="panel-title">
+        <strong>TRAVEL INSPIRATION</strong>
+        <span class="view">View All</span>
+    </div>
+
+    <div class="inspiration">
+
+        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=85">
+
+        <div class="inspiration-text">
+            <strong>20 Hidden Places in India</strong>
+            <span>You Must Visit Before You Die</span>
+        </div>
+
+    </div>
+
+    <br>
+
+    <div class="small-list">
+
+        <div class="list-item">
+
+            <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=300&q=80">
+
+            <div>
+                <strong>Monsoon Destinations</strong>
+                <span>Best Places to Visit in Rainy Season</span>
+            </div>
+
+        </div>
+
+        <div class="list-item">
+
+            <img src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=300&q=80">
+
+            <div>
+                <strong>Temple Trails</strong>
+                <span>Spiritual Journeys in India</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- AI Trip Planner -->
+
+<section class="panel ai-panel" id="planner">
+
+    <div class="panel-title">
+        <strong>AI TRIP PLANNER</strong>
+        <span>🤖 BETA</span>
+    </div>
+
+    <h3>Plan Your 5 Day Trip in 1 Click</h3>
+
+    <p>
+        Tell us your preferences and budget,
+        our AI will create the perfect itinerary for you.
+    </p>
+
+    <div class="robot">
+        🤖
+    </div>
+
+    <div class="ai-features">
+
+        <div class="ai-feature">💰 Budget Friendly</div>
+        <div class="ai-feature">🧭 Best Routes</div>
+        <div class="ai-feature">📍 Top Attractions</div>
+        <div class="ai-feature">⏱️ Time Saving</div>
+
+    </div>
+
+    <button class="create-btn" onclick="openPlanner()">
+        CREATE MY PLAN NOW
+    </button>
+
+</section>
+
+
+<!-- Guides -->
+
+<section class="panel">
+
+    <div class="panel-title">
+        <strong>TRAVEL GUIDE & TIPS</strong>
+        <span class="view">View All</span>
+    </div>
+
+    <div class="small-list">
+
+        <div class="list-item">
+
+            <img src="https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=300&q=80">
+
+            <div>
+                <strong>Complete Guide to Rajasthan Travel</strong>
+                <span>Everything you need to know</span>
+            </div>
+
+        </div>
+
+        <div class="list-item">
+
+            <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=300&q=80">
+
+            <div>
+                <strong>How to Travel India on a Budget</strong>
+                <span>Save Money & Travel More</span>
+            </div>
+
+        </div>
+
+        <div class="list-item">
+
+            <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=300&q=80">
+
+            <div>
+                <strong>Packing Guide for Every Traveler</strong>
+                <span>Never Forget Anything Again</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- Events -->
+
+<section class="panel">
+
+    <div class="panel-title">
+        <strong>FESTIVALS & EVENTS</strong>
+        <span class="view">View All</span>
+    </div>
+
+    <div class="event">
+
+        <img src="https://images.unsplash.com/photo-1606293926249-edf7d4f3c1b4?auto=format&fit=crop&w=300&q=80">
+
+        <div>
+            <strong>Pushkar Camel Fair</strong>
+            <span>Nov 9 – Nov 15</span>
+        </div>
+
+    </div>
+
+    <div class="event">
+
+        <img src="https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=300&q=80">
+
+        <div>
+            <strong>Diwali in Varanasi</strong>
+            <span>Festival of Lights</span>
+        </div>
+
+    </div>
+
+    <div class="event">
+
+        <img src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=300&q=80">
+
+        <div>
+            <strong>Jaipur Literature Festival</strong>
+            <span>Jaipur, Rajasthan</span>
+        </div>
+
+    </div>
+
+</section>
+
+</div>
+
+
+<!-- ================= MORE FEATURES ================= -->
+
+<section class="section">
+
+    <div class="section-head">
+        <h2>Explore More With Hadoti Wale Bhaiya</h2>
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=900&q=85">
+            <div class="card-info">
+                <strong>Hotels & Stays</strong>
+                <span>Find your perfect stay</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=900&q=85">
+            <div class="card-info">
+                <strong>Transport</strong>
+                <span>Travel your way</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=900&q=85">
+            <div class="card-info">
+                <strong>Wildlife</strong>
+                <span>Discover nature</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?auto=format&fit=crop&w=900&q=85">
+            <div class="card-info">
+                <strong>Adventure</strong>
+                <span>Feel the thrill</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=900&q=85">
+            <div class="card-info">
+                <strong>Food</strong>
+                <span>Taste India</span>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<!-- ================= STATS ================= -->
+
+<section class="stats">
+
+    <div class="stat">
+        <div class="stat-icon">📍</div>
+        <strong>10,000+</strong>
+        <span>Destinations</span>
+    </div>
+
+    <div class="stat">
+        <div class="stat-icon">📖</div>
+        <strong>500+</strong>
+        <span>Travel Guides</span>
+    </div>
+
+    <div class="stat">
+        <div class="stat-icon">🎥</div>
+        <strong>1,000+</strong>
+        <span>Videos</span>
+    </div>
+
+    <div class="stat">
+        <div class="stat-icon">◷</div>
+        <strong>24/7</strong>
+        <span>Travel Assistant</span>
+    </div>
+
+    <div class="stat">
+        <div class="stat-icon">🗺️</div>
+        <strong>AI</strong>
+        <span>Personalized Trip Planner</span>
+    </div>
+
+    <div class="stat">
+        <div class="stat-icon">🌐</div>
+        <strong>Multi</strong>
+        <span>Language Support</span>
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    <div class="footer-grid">
+
+        <div>
+
+            <h3>HADOTI WALE BHAIYA</h3>
+
+            <p>
+                Explore every journey, discover every story.
+                An India-first travel and knowledge platform
+                connecting travelers with destinations,
+                experiences, guides, businesses and stories.
+            </p>
+
+        </div>
+
+        <div>
+
+            <h3>EXPLORE</h3>
+
+            <div class="footer-links">
+                <a href="#">Destinations</a>
+                <a href="#">States</a>
+                <a href="#">Temples</a>
+                <a href="#">Forts</a>
+                <a href="#">Waterfalls</a>
+            </div>
+
+        </div>
+
+        <div>
+
+            <h3>TRAVEL</h3>
+
+            <div class="footer-links">
+                <a href="#">AI Trip Planner</a>
+                <a href="#">Hotels</a>
+                <a href="#">Guides</a>
+                <a href="#">Maps</a>
+                <a href="#">Travel Journal</a>
+            </div>
+
+        </div>
+
+        <div>
+
+            <h3>COMPANY</h3>
+
+            <div class="footer-links">
+                <a href="#">About Us</a>
+                <a href="#">Contact Us</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms & Conditions</a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+        <span>
+            © 2026 Hadoti Wale Bhaiya. All Rights Reserved.
+        </span>
+
+        <span>
+            Follow Us: YouTube • Instagram • Facebook • X
+        </span>
+
+    </div>
+
+</footer>
+
+
+<!-- ================= AI PLANNER MODAL ================= -->
+
+<div class="modal" id="plannerModal">
+
+    <div class="modal-box">
+
+        <div class="close" onclick="closePlanner()">
+            ×
+        </div>
+
+        <h2>🤖 AI Trip Planner</h2>
+
+        <p>
+            Tell us about your trip and create your travel plan.
         </p>
-        <div class="hero-buttons">
-          <a href="#ai" class="btn-primary">✦ Try AI Trip Planner</a>
-          <a href="#features" class="btn-secondary">Explore Features</a>
-        </div>
-        <div class="hero-stats">
-          <div class="stat-item"><h3>10+</h3><p>AI Modules</p></div>
-          <div class="stat-item"><h3>100%</h3><p>Mobile First</p></div>
-          <div class="stat-item"><h3>∞</h3><p>Destinations</p></div>
-        </div>
-      </div>
 
-      <div class="hero-card">
-        <div class="card-header">
-          <div class="card-avatar">🤖</div>
-          <div>
-            <h4 style="font-size:1.05rem;">AI Travel Assistant</h4>
-            <p style="font-size:0.85rem;color:var(--muted);">Always ready to help you</p>
-          </div>
+        <div class="form-group">
+
+            <label>Where do you want to go?</label>
+
+            <input
+                id="destination"
+                placeholder="Example: Rajasthan"
+            >
+
         </div>
-        <div class="ai-features">
-          <div class="ai-item"><div class="ai-icon">🗺️</div><span>Smart Trip Planner</span></div>
-          <div class="ai-item"><div class="ai-icon">💰</div><span>Budget Optimizer</span></div>
-          <div class="ai-item"><div class="ai-icon">🏨</div><span>Hotel & Stay Suggestions</span></div>
-          <div class="ai-item"><div class="ai-icon">🧭</div><span>Route & Safety Guide</span></div>
-          <div class="ai-item"><div class="ai-icon">🎒</div><span>Smart Packing List</span></div>
+
+        <div class="form-group">
+
+            <label>Number of Days</label>
+
+            <select id="days">
+
+                <option>3 Days</option>
+                <option selected>5 Days</option>
+                <option>7 Days</option>
+                <option>10 Days</option>
+
+            </select>
+
         </div>
-      </div>
+
+        <div class="form-group">
+
+            <label>Budget</label>
+
+            <select id="budget">
+
+                <option>Budget Friendly</option>
+                <option>Medium</option>
+                <option>Premium</option>
+                <option>Luxury</option>
+
+            </select>
+
+        </div>
+
+        <button class="plan-btn" onclick="generatePlan()">
+            GENERATE MY TRIP PLAN
+        </button>
+
+        <div id="planResult"></div>
+
     </div>
-  </section>
 
-  <!-- Baaki sections yahan se continue rahenge (features, AI, etc.) -->
-  <!-- Agar poora code chahiye to batao, main remaining part bhi de dunga -->
+</div>
+
+
+<script>
+
+/* =========================
+   SEARCH
+========================= */
+
+function performSearch(){
+
+    const input =
+        document.getElementById("searchInput");
+
+    const value =
+        input.value.trim();
+
+    if(!value){
+
+        alert("Please enter a destination or place.");
+
+        input.focus();
+
+        return;
+    }
+
+    alert(
+        "Searching HADOTI WALE BHAIYA for: " +
+        value
+    );
+}
+
+
+function searchPlace(event){
+
+    if(event.key === "Enter"){
+
+        performSearch();
+
+    }
+
+}
+
+
+/* =========================
+   AI PLANNER
+========================= */
+
+function openPlanner(){
+
+    document.getElementById("plannerModal")
+    .style.display="flex";
+
+}
+
+
+function closePlanner(){
+
+    document.getElementById("plannerModal")
+    .style.display="none";
+
+}
+
+
+function generatePlan(){
+
+    const destination =
+        document.getElementById("destination").value;
+
+    const days =
+        document.getElementById("days").value;
+
+    const budget =
+        document.getElementById("budget").value;
+
+    const result =
+        document.getElementById("planResult");
+
+    if(!destination){
+
+        result.innerHTML =
+        "<p style='color:#d33;margin-top:15px'>Please enter a destination.</p>";
+
+        return;
+    }
+
+    result.innerHTML = `
+
+        <div style="
+            margin-top:18px;
+            padding:15px;
+            background:#f4f7fb;
+            border-radius:10px;
+            line-height:1.7;
+        ">
+
+            <strong>Your Trip Request</strong>
+
+            <br>
+
+            📍 Destination:
+            ${destination}
+
+            <br>
+
+            📅 Duration:
+            ${days}
+
+            <br>
+
+            💰 Budget:
+            ${budget}
+
+            <br><br>
+
+            <strong>
+                ✨ Your personalized AI itinerary
+                will appear here.
+            </strong>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================
+   MOBILE MENU
+========================= */
+
+function mobileMenu(){
+
+    const nav =
+        document.querySelector(".nav");
+
+    if(nav.style.display === "flex"){
+
+        nav.style.display="none";
+
+    }else{
+
+        nav.style.display="flex";
+
+        nav.style.position="absolute";
+
+        nav.style.top="65px";
+
+        nav.style.left="0";
+
+        nav.style.right="0";
+
+        nav.style.background="#06182d";
+
+        nav.style.padding="20px";
+
+        nav.style.flexDirection="column";
+
+        nav.style.alignItems="flex-start";
+
+    }
+
+}
+
+
+/* =========================
+   CLOSE MODAL OUTSIDE
+========================= */
+
+window.addEventListener("click",function(e){
+
+    const modal =
+        document.getElementById("plannerModal");
+
+    if(e.target === modal){
+
+        closePlanner();
+
+    }
+
+});
+
+</script>
 
 </body>
 </html>
