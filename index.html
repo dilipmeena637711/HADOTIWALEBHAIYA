@@ -1,1511 +1,1279 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>HADOTI WALE BHAIYA — Explore The World</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <title>HADOTI WALE BHAIYA | India's Intelligent Travel Platform</title>
 
-<style>
-:root{
- --black:#080b0d;
- --dark:#101417;
- --gold:#d2b274;
- --cream:#f5f2ea;
- --white:#fff;
- --muted:#8b9295;
- --line:rgba(255,255,255,.12);
- --shadow:0 25px 80px rgba(0,0,0,.25);
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{
- font-family:Inter,sans-serif;
- background:var(--cream);
- color:#111;
- overflow-x:hidden
-}
-button,input,select{font:inherit}
-button{cursor:pointer}
-a{text-decoration:none;color:inherit}
+    <meta
+        name="description"
+        content="Explore India with Hadoti Wale Bhaiya. Discover destinations, travel guides, AI trip planning, maps, food, history and more."
+    >
 
-/* HEADER */
-.header{
- position:fixed;
- top:0;left:0;
- width:100%;
- height:76px;
- z-index:1000;
- display:flex;
- align-items:center;
- justify-content:space-between;
- padding:0 5%;
- color:#fff;
- transition:.3s;
-}
-.header.scrolled{
- background:rgba(7,10,12,.92);
- backdrop-filter:blur(20px);
- box-shadow:0 10px 40px #0004;
-}
-.logo{display:flex;align-items:center;gap:10px}
-.logo-mark{
- width:40px;height:40px;
- border:1px solid #ffffff88;
- border-radius:50%;
- display:grid;place-items:center;
- font:700 21px "Playfair Display";
- color:var(--gold)
-}
-.logo-text{display:flex;flex-direction:column;line-height:1}
-.logo-text b{font-size:13px;letter-spacing:2px}
-.logo-text small{font-size:7px;letter-spacing:3px;margin-top:5px;opacity:.6}
+    <link rel="stylesheet" href="style.css">
 
-.nav{display:flex;gap:30px;align-items:center}
-.nav a{
- font-size:11px;
- color:#ffffffcc;
- position:relative
-}
-.nav a:hover{color:#fff}
-.nav a:after{
- content:"";
- position:absolute;
- bottom:-7px;left:0;
- width:0;height:1px;
- background:var(--gold);
- transition:.3s
-}
-.nav a:hover:after{width:100%}
-
-.header-actions{display:flex;gap:9px;align-items:center}
-.header-btn{
- border:1px solid #ffffff35;
- background:#ffffff0d;
- color:#fff;
- border-radius:30px;
- padding:9px 14px;
- font-size:10px
-}
-.menu{display:none;width:40px;height:40px;border-radius:50%}
-
-/* HERO */
-.hero{
- min-height:100vh;
- position:relative;
- display:flex;
- align-items:center;
- color:#fff;
- background:
- linear-gradient(90deg,#000c,#0003),
- url("https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=2200&q=90")
- center/cover;
-}
-.hero:after{
- content:"";
- position:absolute;
- inset:0;
- background:radial-gradient(circle at 75% 50%,transparent,#0004)
-}
-.hero-content{
- width:min(1200px,90%);
- margin:auto;
- position:relative;
- z-index:2;
- padding-top:60px
-}
-.eyebrow{
- color:#fff9;
- font-size:10px;
- letter-spacing:3px;
- margin-bottom:20px
-}
-.eyebrow span{color:var(--gold)}
-.hero h1{
- font:600 clamp(48px,7vw,94px)/.95 "Playfair Display";
- letter-spacing:-3px;
- max-width:850px
-}
-.hero h1 em{color:#dfc68f}
-.hero p{
- max-width:550px;
- margin:25px 0 32px;
- color:#fff9;
- font-size:14px;
- line-height:1.8
-}
-
-/* SEARCH */
-.search-box{
- width:min(800px,100%);
- background:#fffffff5;
- color:#111;
- border-radius:17px;
- padding:9px;
- display:flex;
- align-items:center;
- box-shadow:var(--shadow)
-}
-.search-part{
- flex:1;
- padding:8px 14px;
- border-right:1px solid #ddd
-}
-.search-part label{
- display:block;
- font-size:8px;
- color:#888;
- letter-spacing:1.5px;
- text-transform:uppercase;
- font-weight:800;
- margin-bottom:5px
-}
-.search-part input,.search-part select{
- width:100%;
- border:0;
- outline:0;
- background:transparent;
- font-size:13px;
- font-weight:600
-}
-.search-btn{
- border:0;
- background:#111;
- color:#fff;
- border-radius:11px;
- padding:14px 18px;
- font-size:10px;
- font-weight:800;
- white-space:nowrap
-}
-.search-btn:hover{background:#292d30}
-.popular{display:flex;gap:9px;margin-top:14px;align-items:center}
-.popular span{font-size:9px;color:#fff8}
-.popular button{
- border:0;
- border-bottom:1px solid #fff6;
- background:none;
- color:#fff;
- font-size:9px
-}
-
-/* SECTIONS */
-section{padding:100px 5%}
-.section-head{
- max-width:1150px;
- margin:0 auto 40px;
- display:flex;
- justify-content:space-between;
- align-items:end;
- gap:20px
-}
-.label{
- color:#a17d3e;
- font-size:9px;
- letter-spacing:3px;
- font-weight:800;
- margin-bottom:12px;
- display:block
-}
-.section-head h2{
- font:600 clamp(35px,5vw,60px)/1 "Playfair Display";
- letter-spacing:-1.5px
-}
-.section-head p{color:#888;font-size:12px;margin-top:12px}
-
-/* EXPLORER */
-.explorer{
- background:#080b0d;
- color:#fff
-}
-.explorer-inner{max-width:1150px;margin:auto}
-.breadcrumb{
- display:flex;
- flex-wrap:wrap;
- gap:8px;
- align-items:center;
- color:#888;
- font-size:10px;
- margin-bottom:22px
-}
-.breadcrumb button{
- border:0;background:none;color:#d9c18f;font-size:10px
-}
-.explorer-title{
- font:600 clamp(38px,5vw,65px)/1 "Playfair Display";
- margin-bottom:12px
-}
-.explorer-sub{color:#888;font-size:13px;margin-bottom:35px}
-.world-grid{
- display:grid;
- grid-template-columns:repeat(4,1fr);
- gap:15px
-}
-.world-card{
- min-height:220px;
- position:relative;
- overflow:hidden;
- border-radius:18px;
- cursor:pointer;
- background:#222
-}
-.world-card img{
- position:absolute;
- inset:0;
- width:100%;
- height:100%;
- object-fit:cover;
- transition:.6s
-}
-.world-card:after{
- content:"";
- position:absolute;
- inset:0;
- background:linear-gradient(transparent 30%,#000d)
-}
-.world-card:hover img{transform:scale(1.08)}
-.world-info{
- position:absolute;
- z-index:2;
- bottom:20px;left:20px
-}
-.world-info small{font-size:8px;letter-spacing:2px;color:#fff9}
-.world-info h3{font:600 27px "Playfair Display";margin-top:5px}
-
-/* PLACE DETAIL */
-.place-detail{background:#fff;display:none}
-.place-hero{
- max-width:1150px;
- margin:auto;
- min-height:420px;
- border-radius:25px;
- overflow:hidden;
- position:relative;
- background-size:cover;
- background-position:center;
- display:flex;
- align-items:end;
-}
-.place-hero:after{
- content:"";
- position:absolute;inset:0;
- background:linear-gradient(transparent 30%,#000d)
-}
-.place-title{
- position:relative;
- z-index:2;
- padding:45px;
- color:#fff
-}
-.place-title small{font-size:9px;letter-spacing:3px}
-.place-title h2{font:600 clamp(42px,6vw,72px) "Playfair Display"}
-.place-title p{color:#fffb;font-size:12px}
-.place-tabs{
- max-width:1150px;
- margin:25px auto;
- display:flex;
- gap:8px;
- overflow:auto
-}
-.place-tab{
- border:1px solid #ddd;
- background:#fff;
- border-radius:30px;
- padding:10px 15px;
- font-size:10px;
- white-space:nowrap
-}
-.place-tab.active,.place-tab:hover{background:#111;color:#fff}
-.place-content{
- max-width:1150px;
- margin:auto
-}
-.info-grid{
- display:grid;
- grid-template-columns:2fr 1fr;
- gap:25px
-}
-.info-card{
- border:1px solid #e3e0d8;
- border-radius:18px;
- padding:28px;
- background:#faf9f5
-}
-.info-card h3{
- font:600 30px "Playfair Display";
- margin-bottom:12px
-}
-.info-card p{
- color:#666;
- font-size:12px;
- line-height:1.9
-}
-.quick-grid{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:10px
-}
-.quick{
- padding:18px;
- background:#111;
- color:#fff;
- border-radius:14px
-}
-.quick b{display:block;color:var(--gold);font-size:9px;margin-bottom:5px}
-.quick span{font-size:11px}
-
-/* PHOTOS */
-.photo-grid{
- display:grid;
- grid-template-columns:2fr 1fr 1fr;
- gap:12px;
- margin-top:25px
-}
-.photo-grid img{
- width:100%;
- height:190px;
- object-fit:cover;
- border-radius:14px
-}
-.photo-grid img:first-child{height:392px;grid-row:span 2}
-
-/* FEATURES */
-.features{background:#f0eee8}
-.feature-grid{
- max-width:1150px;
- margin:auto;
- display:grid;
- grid-template-columns:repeat(4,1fr);
- gap:1px;
- background:#d5d1c7
-}
-.feature{
- background:#f5f3ee;
- min-height:240px;
- padding:28px
-}
-.feature-num{font-size:9px;color:#999;letter-spacing:2px}
-.feature-icon{font-size:30px;color:#a17d3e;margin:45px 0 20px}
-.feature h3{font:600 25px "Playfair Display"}
-.feature p{font-size:11px;color:#777;line-height:1.7;margin-top:10px}
-
-/* PLANNER */
-.planner{background:#080b0d;color:#fff}
-.planner-box{
- max-width:1150px;
- margin:auto;
- padding:60px;
- border:1px solid #fff2;
- border-radius:25px;
- background:radial-gradient(circle at 80%,#c9a96e22,transparent 35%),#111417
-}
-.planner-box h2{font:600 clamp(40px,5vw,65px) "Playfair Display"}
-.planner-box h2 em{color:#d4bb88}
-.planner-box p{max-width:500px;color:#888;font-size:13px;line-height:1.8;margin:20px 0}
-.primary{
- border:0;
- background:#fff;
- color:#111;
- border-radius:10px;
- padding:14px 20px;
- font-size:10px;
- font-weight:800
-}
-
-/* MODALS */
-.modal{
- position:fixed;
- inset:0;
- z-index:3000;
- display:none;
- place-items:center;
- padding:20px
-}
-.modal.show{display:grid}
-.backdrop{
- position:absolute;
- inset:0;
- background:#000b;
- backdrop-filter:blur(12px)
-}
-.modal-box{
- position:relative;
- z-index:2;
- width:min(500px,100%);
- max-height:90vh;
- overflow:auto;
- background:#fff;
- border-radius:22px;
- padding:35px;
- box-shadow:0 30px 100px #0007
-}
-.close{
- position:absolute;
- top:14px;right:14px;
- width:35px;height:35px;
- border:0;border-radius:50%;
- background:#eee;font-size:20px
-}
-.modal-box h2{font:600 40px "Playfair Display";margin:8px 0}
-.modal-box p{font-size:12px;color:#777;margin-bottom:22px}
-.form-group{margin-bottom:15px}
-.form-group label{
- display:block;
- font-size:9px;
- font-weight:800;
- letter-spacing:1px;
- text-transform:uppercase;
- margin-bottom:7px
-}
-.form-group input,.form-group select{
- width:100%;
- padding:13px;
- border:1px solid #ddd;
- border-radius:9px;
- outline:0
-}
-.full{width:100%;margin-top:5px}
-.otp-box{display:none}
-.demo-otp{
- background:#f3eee3;
- padding:13px;
- border-radius:10px;
- margin:12px 0;
- font-size:12px;
- color:#765d2d
-}
-
-/* TOAST */
-.toast{
- position:fixed;
- right:20px;
- bottom:20px;
- z-index:5000;
- background:#111;
- color:#fff;
- padding:13px 17px;
- border-radius:10px;
- font-size:11px;
- transform:translateY(30px);
- opacity:0;
- pointer-events:none;
- transition:.3s
-}
-.toast.show{opacity:1;transform:translateY(0)}
-
-/* FOOTER */
-footer{
- background:#080b0d;
- color:#fff;
- padding:60px 5% 25px
-}
-.footer-inner{
- max-width:1150px;
- margin:auto;
- display:flex;
- justify-content:space-between;
- gap:40px
-}
-.footer-inner p{color:#777;font-size:11px;line-height:1.8;margin-top:15px}
-.footer-links{display:flex;gap:55px}
-.footer-links h4{font-size:9px;color:#777;letter-spacing:2px;margin-bottom:13px}
-.footer-links a{display:block;font-size:10px;color:#aaa;margin:9px 0}
-.copyright{
- max-width:1150px;
- margin:40px auto 0;
- padding-top:20px;
- border-top:1px solid #fff1;
- color:#555;
- font-size:8px;
- display:flex;
- justify-content:space-between
-}
-
-/* RESPONSIVE */
-@media(max-width:900px){
- .nav{
-  position:fixed;
-  top:70px;left:5%;right:5%;
-  display:none;
-  flex-direction:column;
-  align-items:flex-start;
-  padding:25px;
-  background:#080b0df7;
-  border:1px solid #fff2;
-  border-radius:16px
- }
- .nav.active{display:flex}
- .menu{display:block}
- .login-top{display:none}
- .world-grid{grid-template-columns:1fr 1fr}
- .feature-grid{grid-template-columns:1fr 1fr}
- .info-grid{grid-template-columns:1fr}
-}
-@media(max-width:600px){
- section{padding:70px 20px}
- .header{padding:0 20px}
- .hero{min-height:780px}
- .hero-content{width:calc(100% - 10px)}
- .hero h1{font-size:50px;letter-spacing:-2px}
- .search-box{display:block}
- .search-part{
-  border-right:0;
-  border-bottom:1px solid #ddd;
-  padding:12px
- }
- .search-btn{width:100%;margin-top:7px}
- .popular{flex-wrap:wrap}
- .world-grid{grid-template-columns:1fr}
- .feature-grid{grid-template-columns:1fr}
- .place-title{padding:25px}
- .place-title h2{font-size:46px}
- .photo-grid{grid-template-columns:1fr 1fr}
- .photo-grid img,.photo-grid img:first-child{height:150px;grid-row:auto}
- .footer-inner{display:block}
- .footer-links{margin-top:30px;gap:25px;flex-wrap:wrap}
- .copyright{display:block}
- .copyright span{display:block;margin:7px 0}
-}
-</style>
+    <!-- Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
 </head>
 
 <body>
 
-<header class="header" id="header">
+<!-- =========================================================
+     PAGE LOADER
+========================================================= -->
 
-<a class="logo" href="#home">
- <span class="logo-mark">H</span>
- <span class="logo-text">
-  <b>HADOTI</b>
-  <small>WALE BHAIYA</small>
- </span>
-</a>
+<div id="pageLoader" class="page-loader">
+    <div class="loader-logo">
+        <span>HADOTI</span>
+        <small>WALE BHAIYA</small>
+    </div>
 
-<nav class="nav" id="nav">
- <a href="#home">Home</a>
- <a href="#explore">Explore World</a>
- <a href="#destinations">Destinations</a>
- <a href="#planner">AI Planner</a>
- <a href="#features">Experience</a>
-</nav>
+    <div class="loader-line">
+        <span></span>
+    </div>
 
-<div class="header-actions">
- <button class="header-btn login-top" onclick="openLogin()">Login</button>
- <button class="header-btn menu" id="menu">☰</button>
+    <p>Preparing your journey...</p>
 </div>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="main-header" id="mainHeader">
+
+    <div class="header-inner">
+
+        <!-- LOGO -->
+        <a href="#" class="brand">
+
+            <div class="brand-mark">
+                <i class="fa-solid fa-location-dot"></i>
+            </div>
+
+            <div class="brand-text">
+                <strong>HADOTI</strong>
+                <span>WALE BHAIYA</span>
+                <small>EXPLORE EVERY JOURNEY</small>
+            </div>
+
+        </a>
+
+
+        <!-- DESKTOP NAVIGATION -->
+
+        <nav class="desktop-nav">
+
+            <a href="#" class="active">HOME</a>
+            <a href="#explore">EXPLORE</a>
+            <a href="#states">STATES</a>
+            <a href="#districts">DISTRICTS</a>
+            <a href="#places">PLACES</a>
+            <a href="#temples">TEMPLES</a>
+            <a href="#forts">FORTS</a>
+            <a href="#waterfalls">WATERFALLS</a>
+            <a href="#history">HISTORY</a>
+            <a href="#food">FOOD</a>
+            <a href="#planner">TRAVEL PLANNER</a>
+            <a href="#maps">MAPS</a>
+            <a href="#videos">VIDEOS</a>
+            <a href="#blogs">BLOGS</a>
+            <a href="#gallery">GALLERY</a>
+
+        </nav>
+
+
+        <!-- HEADER ACTIONS -->
+
+        <div class="header-actions">
+
+            <button class="language-btn" id="languageBtn">
+                हिन्दी
+                <i class="fa-solid fa-chevron-down"></i>
+            </button>
+
+            <button class="icon-btn" id="themeBtn" title="Dark Mode">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+
+            <button class="icon-btn" title="Notifications">
+                <i class="fa-regular fa-bell"></i>
+            </button>
+
+            <button class="sign-btn" id="signBtn">
+                SIGN IN
+            </button>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+        </div>
+
+    </div>
 
 </header>
 
 
-<!-- WELCOME -->
-<section class="hero" id="home">
+<!-- =========================================================
+     MOBILE MENU
+========================================================= -->
 
-<div class="hero-content">
+<div class="mobile-menu" id="mobileMenu">
 
-<div class="eyebrow">
- <span>✦</span> YOUR JOURNEY STARTS HERE
-</div>
-
-<h1>
- Explore the world.<br>
- <em>Find your story.</em>
-</h1>
-
-<p>
-Discover destinations, understand their history and geography,
-find places worth visiting and build your perfect journey —
-all in one place.
-</p>
-
-<div class="search-box">
-
-<div class="search-part">
-<label>Where do you want to explore?</label>
-<input id="search" placeholder="Search world, country, state, district or place...">
-</div>
-
-<div class="search-part">
-<label>Experience</label>
-<select id="type">
-<option value="all">Any experience</option>
-<option value="culture">Culture & History</option>
-<option value="nature">Nature</option>
-<option value="adventure">Adventure</option>
-<option value="luxury">Luxury</option>
-</select>
-</div>
-
-<button class="search-btn" onclick="searchPlace()">Search →</button>
+    <a href="#explore">Explore</a>
+    <a href="#states">States</a>
+    <a href="#places">Places</a>
+    <a href="#temples">Temples</a>
+    <a href="#forts">Forts</a>
+    <a href="#food">Food</a>
+    <a href="#planner">Travel Planner</a>
+    <a href="#maps">Maps</a>
+    <a href="#blogs">Blogs</a>
+    <a href="#gallery">Gallery</a>
 
 </div>
 
-<div class="popular">
-<span>Popular:</span>
-<button onclick="openDestination('Rajasthan')">Rajasthan</button>
-<button onclick="openDestination('Dubai')">Dubai</button>
-<button onclick="openDestination('Paris')">Paris</button>
-<button onclick="openDestination('Bali')">Bali</button>
-</div>
 
-</div>
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero" id="explore">
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+
+        <div class="hero-kicker">
+            <span></span>
+            INDIA'S INTELLIGENT TRAVEL PLATFORM
+            <span></span>
+        </div>
+
+        <h1>
+            EXPLORE INDIA WITH
+            <strong>HADOTI WALE BHAIYA</strong>
+        </h1>
+
+        <p class="hero-subtitle">
+            Discover places. Plan journeys. Experience India.
+        </p>
+
+
+        <!-- SEARCH -->
+
+        <div class="hero-search">
+
+            <div class="search-box">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="text"
+                    id="destinationSearch"
+                    placeholder="Search places, temples, forts, cities..."
+                >
+
+                <button id="searchBtn">
+                    SEARCH
+                </button>
+
+            </div>
+
+
+            <button class="ai-main-btn" id="openPlanner">
+
+                <div class="ai-icon">
+                    <i class="fa-solid fa-robot"></i>
+                </div>
+
+                <div>
+                    <strong>AI TRIP PLANNER</strong>
+                    <small>Plan your journey intelligently</small>
+                </div>
+
+            </button>
+
+        </div>
+
+
+        <!-- POPULAR SEARCH -->
+
+        <div class="popular-searches">
+
+            <span>Popular Searches:</span>
+
+            <button>Kumbhalgarh Fort</button>
+            <button>Jaisalmer</button>
+            <button>Coorg</button>
+            <button>Varanasi</button>
+            <button>Leh Ladakh</button>
+            <button>Tawang</button>
+
+        </div>
+
+    </div>
+
+
+    <!-- WEATHER CARD -->
+
+    <div class="weather-card">
+
+        <span class="weather-location">
+            KOTA, RAJASTHAN
+        </span>
+
+        <div class="weather-icon">
+            <i class="fa-regular fa-sun"></i>
+        </div>
+
+        <strong class="temperature">
+            32°C
+        </strong>
+
+        <span class="weather-status">
+            Sunny
+        </span>
+
+        <div class="weather-minmax">
+            <span>H: 34°C</span>
+            <span>L: 21°C</span>
+        </div>
+
+        <button>
+            View Full Forecast
+            <i class="fa-solid fa-arrow-right"></i>
+        </button>
+
+    </div>
+
+
+    <!-- LEFT QUICK TOOLS -->
+
+    <aside class="quick-tools">
+
+        <button>
+            <i class="fa-solid fa-location-crosshairs"></i>
+            <span>Near Me</span>
+        </button>
+
+        <button>
+            <i class="fa-regular fa-sun"></i>
+            <span>Weather</span>
+        </button>
+
+        <button>
+            <i class="fa-solid fa-route"></i>
+            <span>Route Finder</span>
+        </button>
+
+        <button>
+            <i class="fa-solid fa-calculator"></i>
+            <span>Budget Planner</span>
+        </button>
+
+        <button>
+            <i class="fa-solid fa-note-sticky"></i>
+            <span>Trip Notes</span>
+        </button>
+
+        <button>
+            <i class="fa-solid fa-list-check"></i>
+            <span>Packing List</span>
+        </button>
+
+        <button class="more-tool-btn">
+            <i class="fa-solid fa-grip"></i>
+            <span>More Tools</span>
+        </button>
+
+    </aside>
 
 </section>
 
 
-<!-- WORLD EXPLORER -->
-<section class="explorer" id="explore">
+<!-- =========================================================
+     FEATURE BAR
+========================================================= -->
 
-<div class="explorer-inner">
+<section class="feature-wrapper">
 
-<div class="label">EXPLORE THE WORLD</div>
+    <div class="feature-bar">
 
-<div class="breadcrumb" id="breadcrumb">
-<button onclick="showWorld()">🌍 World</button>
-</div>
+        <button class="feature-item">
 
-<h2 class="explorer-title" id="explorerTitle">Choose your continent</h2>
-<p class="explorer-sub" id="explorerSub">
-Start from the world and travel down to country, state, district and destination.
-</p>
+            <div class="feature-icon blue">
+                <i class="fa-solid fa-map"></i>
+            </div>
 
-<div class="world-grid" id="worldGrid"></div>
+            <div>
+                <strong>Explore Map</strong>
+                <small>Interactive Map</small>
+            </div>
 
-</div>
+        </button>
+
+
+        <button class="feature-item">
+
+            <div class="feature-icon orange">
+                <i class="fa-regular fa-calendar"></i>
+            </div>
+
+            <div>
+                <strong>Travel Planner</strong>
+                <small>Plan Your Trip</small>
+            </div>
+
+        </button>
+
+
+        <button class="feature-item" id="featureAI">
+
+            <div class="feature-icon purple">
+                <i class="fa-solid fa-robot"></i>
+            </div>
+
+            <div>
+                <strong>
+                    AI Trip Planner
+                    <span class="new-tag">NEW</span>
+                </strong>
+
+                <small>5 Day Plan in 1 Click</small>
+            </div>
+
+        </button>
+
+
+        <button class="feature-item">
+
+            <div class="feature-icon green">
+                <i class="fa-solid fa-calculator"></i>
+            </div>
+
+            <div>
+                <strong>Budget Calculator</strong>
+                <small>Estimate Your Trip</small>
+            </div>
+
+        </button>
+
+
+        <button class="feature-item">
+
+            <div class="feature-icon pink">
+                <i class="fa-solid fa-bed"></i>
+            </div>
+
+            <div>
+                <strong>Hotel Booking</strong>
+                <small>Find Best Stays</small>
+            </div>
+
+        </button>
+
+
+        <button class="feature-item">
+
+            <div class="feature-icon yellow">
+                <i class="fa-solid fa-user-tie"></i>
+            </div>
+
+            <div>
+                <strong>Local Guide</strong>
+                <small>Book Local Experts</small>
+            </div>
+
+        </button>
+
+
+        <button class="feature-item">
+
+            <div class="feature-icon red">
+                <i class="fa-solid fa-book-open"></i>
+            </div>
+
+            <div>
+                <strong>Travel Journal</strong>
+                <small>Your Travel Diary</small>
+            </div>
+
+        </button>
+
+    </div>
+
 </section>
 
 
-<!-- DESTINATION DETAIL -->
-<section class="place-detail" id="detail">
+<!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
 
-<div class="place-hero" id="placeHero">
+<main class="main-content">
 
-<div class="place-title">
-<small id="placeCountry">INDIA</small>
-<h2 id="placeName">Rajasthan</h2>
-<p id="placeTag">Royal heritage, desert and unforgettable journeys.</p>
-</div>
 
-</div>
+<!-- =========================================================
+     POPULAR DESTINATIONS
+========================================================= -->
 
-<div class="place-tabs">
-<button class="place-tab active" onclick="detailTab('overview',this)">Overview</button>
-<button class="place-tab" onclick="detailTab('history',this)">History</button>
-<button class="place-tab" onclick="detailTab('geography',this)">Geography</button>
-<button class="place-tab" onclick="detailTab('places',this)">Places</button>
-<button class="place-tab" onclick="detailTab('travel',this)">Travel Info</button>
-</div>
+<section class="content-section reveal" id="places">
 
-<div class="place-content">
+    <div class="section-heading">
 
-<div id="detailContent"></div>
+        <div>
+            <span class="section-label">DISCOVER</span>
+            <h2>Popular Destinations</h2>
+        </div>
 
-</div>
+        <button class="view-all">
+            View All
+            <i class="fa-solid fa-arrow-right"></i>
+        </button>
+
+    </div>
+
+
+    <div class="destination-grid">
+
+
+        <article class="destination-card">
+
+            <img
+                src="https://images.unsplash.com/photo-1602643163983-ed0babc39797?auto=format&fit=crop&w=900&q=85"
+                alt="Udaipur"
+            >
+
+            <div class="card-gradient"></div>
+
+            <div class="destination-info">
+                <h3>Udaipur</h3>
+                <span>Rajasthan</span>
+            </div>
+
+            <button class="heart-btn">
+                <i class="fa-regular fa-heart"></i>
+            </button>
+
+        </article>
+
+
+        <article class="destination-card">
+
+            <img
+                src="https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=900&q=85"
+                alt="Jaipur"
+            >
+
+            <div class="card-gradient"></div>
+
+            <div class="destination-info">
+                <h3>Jaipur</h3>
+                <span>Rajasthan</span>
+            </div>
+
+            <button class="heart-btn">
+                <i class="fa-regular fa-heart"></i>
+            </button>
+
+        </article>
+
+
+        <article class="destination-card">
+
+            <img
+                src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=900&q=85"
+                alt="Manali"
+            >
+
+            <div class="card-gradient"></div>
+
+            <div class="destination-info">
+                <h3>Manali</h3>
+                <span>Himachal Pradesh</span>
+            </div>
+
+            <button class="heart-btn">
+                <i class="fa-regular fa-heart"></i>
+            </button>
+
+        </article>
+
+
+        <article class="destination-card">
+
+            <img
+                src="https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=900&q=85"
+                alt="Varanasi"
+            >
+
+            <div class="card-gradient"></div>
+
+            <div class="destination-info">
+                <h3>Varanasi</h3>
+                <span>Uttar Pradesh</span>
+            </div>
+
+            <button class="heart-btn">
+                <i class="fa-regular fa-heart"></i>
+            </button>
+
+        </article>
+
+
+        <article class="destination-card">
+
+            <img
+                src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=85"
+                alt="Rishikesh"
+            >
+
+            <div class="card-gradient"></div>
+
+            <div class="destination-info">
+                <h3>Rishikesh</h3>
+                <span>Uttarakhand</span>
+            </div>
+
+            <button class="heart-btn">
+                <i class="fa-regular fa-heart"></i>
+            </button>
+
+        </article>
+
+    </div>
 
 </section>
 
 
-<!-- DESTINATIONS -->
-<section id="destinations">
+<!-- =========================================================
+     EXPLORE STATES
+========================================================= -->
 
-<div class="section-head">
-<div>
-<span class="label">CURATED DESTINATIONS</span>
-<h2>Where will you go next?</h2>
-<p>Start exploring some of our featured destinations.</p>
-</div>
-</div>
+<section class="content-section reveal" id="states">
 
-<div class="world-grid" style="max-width:1150px;margin:auto">
+    <div class="section-heading">
 
-<div class="world-card" onclick="openDestination('Rajasthan')">
-<img src="https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=1000&q=85">
-<div class="world-info"><small>INDIA</small><h3>Rajasthan</h3></div>
-</div>
+        <div>
+            <span class="section-label">INDIA</span>
+            <h2>Explore by State</h2>
+        </div>
 
-<div class="world-card" onclick="openDestination('Dubai')">
-<img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1000&q=85">
-<div class="world-info"><small>UAE</small><h3>Dubai</h3></div>
-</div>
+        <button class="view-all">
+            View All
+            <i class="fa-solid fa-arrow-right"></i>
+        </button>
 
-<div class="world-card" onclick="openDestination('Bali')">
-<img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1000&q=85">
-<div class="world-info"><small>INDONESIA</small><h3>Bali</h3></div>
-</div>
+    </div>
 
-<div class="world-card" onclick="openDestination('Paris')">
-<img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1000&q=85">
-<div class="world-info"><small>FRANCE</small><h3>Paris</h3></div>
-</div>
 
-</div>
+    <div class="state-grid">
+
+
+        <article class="state-card">
+
+            <img
+                src="https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=800&q=85"
+                alt="Rajasthan"
+            >
+
+            <div class="state-overlay"></div>
+
+            <div>
+                <h3>Rajasthan</h3>
+                <span>The Land of Kings</span>
+            </div>
+
+        </article>
+
+
+        <article class="state-card">
+
+            <img
+                src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=800&q=85"
+                alt="Uttarakhand"
+            >
+
+            <div class="state-overlay"></div>
+
+            <div>
+                <h3>Uttarakhand</h3>
+                <span>Devbhoomi</span>
+            </div>
+
+        </article>
+
+
+        <article class="state-card">
+
+            <img
+                src="https://images.unsplash.com/photo-1606298855672-3efb63017be8?auto=format&fit=crop&w=800&q=85"
+                alt="Madhya Pradesh"
+            >
+
+            <div class="state-overlay"></div>
+
+            <div>
+                <h3>Madhya Pradesh</h3>
+                <span>The Heart of India</span>
+            </div>
+
+        </article>
+
+
+        <article class="state-card">
+
+            <img
+                src="https://images.unsplash.com/photo-1504598318550-17eba1008a68?auto=format&fit=crop&w=800&q=85"
+                alt="Himachal Pradesh"
+            >
+
+            <div class="state-overlay"></div>
+
+            <div>
+                <h3>Himachal Pradesh</h3>
+                <span>Land of Gods</span>
+            </div>
+
+        </article>
+
+    </div>
+
 </section>
 
 
-<!-- FEATURES -->
-<section class="features" id="features">
+<!-- =========================================================
+     LOWER GRID
+========================================================= -->
 
-<div class="section-head">
-<div>
-<span class="label">THE HADOTI WALE BHAIYA EXPERIENCE</span>
-<h2>Travel, reimagined.</h2>
-</div>
-</div>
+<section class="lower-grid reveal">
 
-<div class="feature-grid">
 
-<div class="feature">
-<div class="feature-num">01</div>
-<div class="feature-icon">🌍</div>
-<h3>Explore</h3>
-<p>Move from world to continent, country, state, district and destination.</p>
-</div>
+    <!-- TRAVEL INSPIRATION -->
 
-<div class="feature">
-<div class="feature-num">02</div>
-<div class="feature-icon">📜</div>
-<h3>Understand</h3>
-<p>Discover the history, geography and culture behind every destination.</p>
-</div>
+    <div class="panel inspiration-panel">
 
-<div class="feature">
-<div class="feature-num">03</div>
-<div class="feature-icon">🗺️</div>
-<h3>Navigate</h3>
-<p>Find places, routes and travel information in one connected experience.</p>
-</div>
+        <div class="section-heading compact">
 
-<div class="feature">
-<div class="feature-num">04</div>
-<div class="feature-icon">✦</div>
-<h3>Plan</h3>
-<p>Create a personalized journey according to your time and travel style.</p>
-</div>
+            <div>
+                <span class="section-label">INSPIRATION</span>
+                <h2>Travel Inspiration</h2>
+            </div>
 
-</div>
+            <button class="view-all">View All</button>
+
+        </div>
+
+
+        <div class="inspiration-layout">
+
+            <article class="big-story">
+
+                <img
+                    src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=85"
+                    alt="Hidden places"
+                >
+
+                <div class="story-overlay"></div>
+
+                <div class="story-text">
+                    <span>TRAVEL STORY</span>
+                    <h3>20 Hidden Places in India You Must Visit</h3>
+                    <p>Discover places beyond the ordinary.</p>
+                </div>
+
+            </article>
+
+
+            <div class="small-stories">
+
+                <article>
+                    <img
+                        src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=300&q=80"
+                        alt=""
+                    >
+
+                    <div>
+                        <strong>Monsoon Destinations</strong>
+                        <span>Best places to visit in rainy season</span>
+                    </div>
+                </article>
+
+
+                <article>
+                    <img
+                        src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=300&q=80"
+                        alt=""
+                    >
+
+                    <div>
+                        <strong>Temple Trails</strong>
+                        <span>Spiritual journeys in India</span>
+                    </div>
+                </article>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- AI PLANNER -->
+
+    <div class="panel ai-panel" id="planner">
+
+        <div class="ai-panel-content">
+
+            <span class="section-label">AI POWERED</span>
+
+            <h2>Plan Your 5 Day Trip in 1 Click</h2>
+
+            <p>
+                Tell us your destination, budget and travel style.
+                Our AI will create a personalized journey for you.
+            </p>
+
+
+            <div class="ai-benefits">
+
+                <span>
+                    <i class="fa-solid fa-wallet"></i>
+                    Budget Friendly
+                </span>
+
+                <span>
+                    <i class="fa-solid fa-route"></i>
+                    Best Routes
+                </span>
+
+                <span>
+                    <i class="fa-solid fa-location-dot"></i>
+                    Top Attractions
+                </span>
+
+                <span>
+                    <i class="fa-regular fa-clock"></i>
+                    Time Saving
+                </span>
+
+            </div>
+
+
+            <button class="primary-btn" id="createPlanBtn">
+                CREATE MY PLAN NOW
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+        </div>
+
+
+        <div class="ai-visual">
+
+            <div class="robot-circle">
+                <i class="fa-solid fa-robot"></i>
+            </div>
+
+            <div class="travel-bag">
+                <i class="fa-solid fa-suitcase-rolling"></i>
+            </div>
+
+        </div>
+
+    </div>
+
+
 </section>
 
 
-<!-- AI PLANNER -->
-<section class="planner" id="planner">
+<!-- =========================================================
+     GUIDES + EVENTS
+========================================================= -->
 
-<div class="planner-box">
+<section class="lower-grid second-row reveal">
 
-<span class="label">SMART TRAVEL</span>
 
-<h2>Your trip.<br><em>Designed around you.</em></h2>
+    <!-- GUIDES -->
 
-<p>
-Tell us your destination, number of days and travel style.
-The planner will create a starting itinerary for your journey.
-</p>
+    <div class="panel list-panel" id="blogs">
 
-<button class="primary" onclick="openPlanner()">Start AI Planner →</button>
+        <div class="section-heading compact">
 
-</div>
+            <div>
+                <span class="section-label">TRAVEL KNOWLEDGE</span>
+                <h2>Travel Guide & Tips</h2>
+            </div>
+
+            <button class="view-all">View All</button>
+
+        </div>
+
+
+        <div class="guide-list">
+
+            <article>
+
+                <img
+                    src="https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=400&q=80"
+                    alt=""
+                >
+
+                <div>
+                    <strong>Complete Guide to Rajasthan Travel</strong>
+                    <span>Everything you need to know</span>
+                </div>
+
+                <i class="fa-solid fa-chevron-right"></i>
+
+            </article>
+
+
+            <article>
+
+                <img
+                    src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=400&q=80"
+                    alt=""
+                >
+
+                <div>
+                    <strong>How to Travel India on a Budget</strong>
+                    <span>Save money & travel more</span>
+                </div>
+
+                <i class="fa-solid fa-chevron-right"></i>
+
+            </article>
+
+
+            <article>
+
+                <img
+                    src="https://images.unsplash.com/photo-1488085061387-422e29b40080?auto=format&fit=crop&w=400&q=80"
+                    alt=""
+                >
+
+                <div>
+                    <strong>Packing Guide for Every Traveler</strong>
+                    <span>Never forget anything again</span>
+                </div>
+
+                <i class="fa-solid fa-chevron-right"></i>
+
+            </article>
+
+        </div>
+
+    </div>
+
+
+    <!-- EVENTS -->
+
+    <div class="panel list-panel">
+
+        <div class="section-heading compact">
+
+            <div>
+                <span class="section-label">HAPPENING NOW</span>
+                <h2>Festivals & Events</h2>
+            </div>
+
+            <button class="view-all">View All</button>
+
+        </div>
+
+
+        <div class="event-list">
+
+            <article>
+
+                <img
+                    src="https://images.unsplash.com/photo-1503500345332-1d0f3b8f5c2f?auto=format&fit=crop&w=400&q=80"
+                    alt=""
+                >
+
+                <div>
+                    <strong>Pushkar Festival</strong>
+                    <span>Rajasthan • Cultural Festival</span>
+                </div>
+
+                <b>2026</b>
+
+            </article>
+
+
+            <article>
+
+                <img
+                    src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=400&q=80"
+                    alt=""
+                >
+
+                <div>
+                    <strong>Diwali in Varanasi</strong>
+                    <span>Uttar Pradesh • Festival</span>
+                </div>
+
+                <b>2026</b>
+
+            </article>
+
+
+            <article>
+
+                <img
+                    src="https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?auto=format&fit=crop&w=400&q=80"
+                    alt=""
+                >
+
+                <div>
+                    <strong>Jaipur Literature Festival</strong>
+                    <span>Jaipur • Literature</span>
+                </div>
+
+                <b>2026</b>
+
+            </article>
+
+        </div>
+
+    </div>
+
 </section>
 
 
-<footer>
+<!-- =========================================================
+     PLATFORM STATS
+========================================================= -->
 
-<div class="footer-inner">
+<section class="stats-section reveal">
 
-<div>
-<div class="logo">
-<span class="logo-mark">H</span>
-<span class="logo-text">
-<b>HADOTI</b>
-<small>WALE BHAIYA</small>
-</span>
-</div>
+    <div class="stat">
 
-<p>
-Explore more. Travel better.<br>
-Create your own story.
-</p>
-</div>
+        <i class="fa-solid fa-location-dot"></i>
 
-<div class="footer-links">
+        <div>
+            <strong class="counter" data-target="10000">0</strong>
+            <span>+ Destinations</span>
+        </div>
 
-<div>
-<h4>EXPLORE</h4>
-<a href="#explore">World Explorer</a>
-<a href="#destinations">Destinations</a>
-<a href="#planner">AI Planner</a>
-</div>
+    </div>
 
-<div>
-<h4>ACCOUNT</h4>
-<a href="#" onclick="openLogin();return false">Login</a>
-<a href="#" onclick="openLogin();return false">Create Account</a>
-</div>
 
-<div>
-<h4>PLATFORM</h4>
-<a href="#features">Features</a>
-<a href="#home">Home</a>
-</div>
+    <div class="stat">
 
-</div>
-</div>
+        <i class="fa-solid fa-book-open"></i>
 
-<div class="copyright">
-<span>© 2026 HADOTI WALE BHAIYA</span>
-<span>Made for explorers worldwide.</span>
-</div>
+        <div>
+            <strong class="counter" data-target="500">0</strong>
+            <span>+ Travel Guides</span>
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <i class="fa-solid fa-video"></i>
+
+        <div>
+            <strong class="counter" data-target="1000">0</strong>
+            <span>+ Videos</span>
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <i class="fa-solid fa-headset"></i>
+
+        <div>
+            <strong>24/7</strong>
+            <span>Travel Assistant</span>
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <i class="fa-solid fa-route"></i>
+
+        <div>
+            <strong>AI</strong>
+            <span>Personalized Planner</span>
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <i class="fa-solid fa-globe"></i>
+
+        <div>
+            <strong>100+</strong>
+            <span>Languages</span>
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+    <div class="footer-top">
+
+        <div class="footer-brand">
+
+            <div class="footer-logo">
+                HADOTI
+                <span>WALE BHAIYA</span>
+            </div>
+
+            <p>
+                Explore every journey. Discover every story.
+            </p>
+
+            <div class="socials">
+
+                <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>EXPLORE</h4>
+
+            <a href="#">Destinations</a>
+            <a href="#">States</a>
+            <a href="#">Districts</a>
+            <a href="#">Temples</a>
+            <a href="#">Forts</a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>PLAN</h4>
+
+            <a href="#">AI Trip Planner</a>
+            <a href="#">Budget Calculator</a>
+            <a href="#">Travel Maps</a>
+            <a href="#">Hotels</a>
+            <a href="#">Local Guides</a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>COMMUNITY</h4>
+
+            <a href="#">Travel Stories</a>
+            <a href="#">Blogs</a>
+            <a href="#">Videos</a>
+            <a href="#">Gallery</a>
+            <a href="#">Travelers</a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>COMPANY</h4>
+
+            <a href="#">About Us</a>
+            <a href="#">Contact</a>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="#">Help Center</a>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <span>
+            © 2026 Hadoti Wale Bhaiya. All Rights Reserved.
+        </span>
+
+        <span>
+            Made for travelers ❤️
+        </span>
+
+    </div>
 
 </footer>
 
 
-<!-- LOGIN -->
-<div class="modal" id="loginModal">
+<!-- =========================================================
+     AI PLANNER MODAL
+========================================================= -->
 
-<div class="backdrop" onclick="closeModal('loginModal')"></div>
-
-<div class="modal-box">
-
-<button class="close" onclick="closeModal('loginModal')">×</button>
-
-<span class="label">HADOTI WALE BHAIYA</span>
-<h2>Welcome back.</h2>
-<p>Login with your mobile number.</p>
-
-<div id="phoneBox">
-
-<div class="form-group">
-<label>Mobile number</label>
-<input id="phone" type="tel" maxlength="10" placeholder="10 digit mobile number">
-</div>
-
-<button class="primary full" onclick="sendOTP()">Send OTP →</button>
-
-</div>
-
-<div class="otp-box" id="otpBox">
-
-<div class="demo-otp">
-Demo OTP: <b id="demoOtp"></b>
-</div>
-
-<div class="form-group">
-<label>Enter OTP</label>
-<input id="otp" maxlength="6" placeholder="Enter 6 digit OTP">
-</div>
-
-<button class="primary full" onclick="verifyOTP()">Verify & Login →</button>
-
-</div>
-
-</div>
-</div>
-
-
-<!-- PLANNER MODAL -->
 <div class="modal" id="plannerModal">
 
-<div class="backdrop" onclick="closeModal('plannerModal')"></div>
-
-<div class="modal-box">
-
-<button class="close" onclick="closeModal('plannerModal')">×</button>
-
-<span class="label">AI TRIP PLANNER</span>
-<h2>Build your journey.</h2>
-<p>Create a quick personalized trip plan.</p>
-
-<div class="form-group">
-<label>Destination</label>
-<input id="planDestination" placeholder="Rajasthan">
-</div>
-
-<div class="form-group">
-<label>Number of days</label>
-<input id="planDays" type="number" min="1" max="60" placeholder="5">
-</div>
-
-<div class="form-group">
-<label>Travel style</label>
-<select id="planStyle">
-<option>Adventure</option>
-<option>Culture</option>
-<option>Nature</option>
-<option>Luxury</option>
-<option>Relaxation</option>
-</select>
-</div>
-
-<button class="primary full" onclick="generatePlan()">Create my trip →</button>
-
-<div id="planResult" style="margin-top:20px"></div>
-
-</div>
-</div>
-
-
-<div class="toast" id="toast"></div>
-
-
-<script>
-
-/* =========================
-   DATA
-========================= */
-
-const data={
-
-World:{
- title:"Choose your continent",
- sub:"Explore the world region by region.",
- children:[
-  ["Asia","🌏","Asia"],
-  ["Europe","🏰","Europe"],
-  ["North America","🌎","North America"],
-  ["South America","🌎","South America"],
-  ["Africa","🌍","Africa"],
-  ["Oceania","🌊","Oceania"]
- ]
-},
-
-Asia:{
- title:"Explore Asia",
- sub:"Choose a country.",
- children:[
-  ["India","🇮🇳","India"],
-  ["UAE","🇦🇪","United Arab Emirates"],
-  ["Japan","🇯🇵","Japan"],
-  ["Indonesia","🇮🇩","Indonesia"],
-  ["Thailand","🇹🇭","Thailand"]
- ]
-},
-
-India:{
- title:"Explore India",
- sub:"Choose a state or union territory.",
- children:[
-  ["Rajasthan","🏰","Rajasthan"],
-  ["Delhi","🏙️","Delhi"],
-  ["Goa","🏖️","Goa"],
-  ["Kerala","🌴","Kerala"],
-  ["Himachal Pradesh","🏔️","Himachal Pradesh"]
- ]
-},
-
-Rajasthan:{
- title:"Explore Rajasthan",
- sub:"Choose a district.",
- children:[
-  ["Bundi","🏰","Bundi"],
-  ["Jaipur","🏙️","Jaipur"],
-  ["Jodhpur","🏜️","Jodhpur"],
-  ["Udaipur","🌊","Udaipur"],
-  ["Jaisalmer","🏜️","Jaisalmer"],
-  ["Kota","🌆","Kota"]
- ]
-},
-
-Bundi:{
- title:"Explore Bundi",
- sub:"Choose a place to visit.",
- children:[
-  ["Bundi Palace","🏰","Bundi Palace"],
-  ["Taragarh Fort","⛰️","Taragarh Fort"],
-  ["Chitrashala","🎨","Chitrashala"],
-  ["Sukh Mahal","🌊","Sukh Mahal"],
-  ["Nawal Sagar","💧","Nawal Sagar"]
- ]
-},
-
-Jaipur:{
- title:"Explore Jaipur",
- sub:"Choose a place to visit.",
- children:[
-  ["Amber Fort","🏰","Amber Fort"],
-  ["Hawa Mahal","🏛️","Hawa Mahal"],
-  ["City Palace","👑","City Palace"],
-  ["Jantar Mantar","🔭","Jantar Mantar"]
- ]
-}
-
-};
-
-
-/* =========================
-   DESTINATION DATABASE
-========================= */
-
-const places={
-
-Rajasthan:{
- country:"INDIA • RAJASTHAN",
- tag:"Royal heritage, forts, desert and unforgettable journeys.",
- image:"https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=1600&q=90",
- history:"Rajasthan has a remarkable history shaped by Rajput kingdoms, historic forts, trading routes and princely states. Its architecture and traditions preserve centuries of cultural heritage.",
- geography:"Rajasthan is India's largest state by area. It includes the Thar Desert, Aravalli ranges, plains and diverse landscapes.",
- places:["Jaipur","Udaipur","Jodhpur","Jaisalmer","Bundi"],
- travel:"Best explored with a combination of road and rail travel. October to March is generally popular for tourism."
-},
-
-Bundi:{
- country:"INDIA • RAJASTHAN • BUNDI",
- tag:"A historic blue city surrounded by hills, lakes and magnificent heritage.",
- image:"https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=1600&q=90",
- history:"Bundi is known for its historic Rajput architecture, palace complexes, stepwells and distinctive miniature paintings.",
- geography:"Bundi lies in southeastern Rajasthan and is surrounded by the Aravalli landscape, hills and seasonal water bodies.",
- places:["Bundi Palace","Taragarh Fort","Chitrashala","Sukh Mahal","Nawal Sagar"],
- travel:"Bundi is well connected by road and has rail connectivity through Bundi railway station."
-},
-
-"Dubai":{
- country:"UNITED ARAB EMIRATES",
- tag:"Futuristic architecture, luxury, desert adventures and global culture.",
- image:"https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1600&q=90",
- history:"Dubai developed from a small trading settlement into one of the world's most internationally recognized cities.",
- geography:"Dubai is located on the southeastern coast of the Arabian Gulf and combines coastal areas with desert landscapes.",
- places:["Burj Khalifa","Dubai Marina","Palm Jumeirah","Dubai Mall"],
- travel:"Dubai has extensive international air connectivity and a modern public transport network."
-},
-
-"Paris":{
- country:"FRANCE • EUROPE",
- tag:"Art, architecture, history, food and timeless streets.",
- image:"https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1600&q=90",
- history:"Paris has played a major role in European political, artistic and intellectual history for centuries.",
- geography:"Paris lies along the River Seine in northern-central France.",
- places:["Eiffel Tower","Louvre Museum","Notre-Dame","Montmartre"],
- travel:"Paris is one of Europe's major transport hubs with extensive rail and air connections."
-},
-
-"Bali":{
- country:"INDONESIA • ASIA",
- tag:"Tropical landscapes, temples, beaches and rich local culture.",
- image:"https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1600&q=90",
- history:"Bali is renowned for its distinctive Hindu culture, temples, traditional arts and long history of local kingdoms.",
- geography:"Bali is an Indonesian island known for volcanic mountains, rice terraces, forests and beaches.",
- places:["Ubud","Tanah Lot","Seminyak","Uluwatu"],
- travel:"Ngurah Rai International Airport provides the island's main international gateway."
-},
-
-"Hawa Mahal":{
- country:"INDIA • RAJASTHAN • JAIPUR",
- tag:"The iconic Palace of Winds in the heart of Jaipur.",
- image:"https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1600&q=90",
- history:"Hawa Mahal was constructed in 1799 during the reign of Maharaja Sawai Pratap Singh.",
- geography:"It stands in the historic walled city of Jaipur.",
- places:["Hawa Mahal","City Palace","Jantar Mantar","Amber Fort"],
- travel:"The monument is located in central Jaipur and is easily accessible by road."
-},
-
-"Amber Fort":{
- country:"INDIA • RAJASTHAN • JAIPUR",
- tag:"A magnificent hill fort overlooking the surrounding landscape.",
- image:"https://images.unsplash.com/photo-1599661046827-dacff0b1327c?auto=format&fit=crop&w=1600&q=90",
- history:"Amber Fort was developed over generations by the Kachwaha Rajput rulers.",
- geography:"The fort sits on a hill overlooking Maota Lake near Jaipur.",
- places:["Amber Fort","Maota Lake","Jaigarh Fort","Panna Meena Ka Kund"],
- travel:"Amber is located north of central Jaipur and can be reached by road."
-}
-
-};
-
-
-/* =========================
-   EXPLORER
-========================= */
-
-let currentLevel="World";
-let path=["World"];
-
-function showWorld(){
- currentLevel="World";
- path=["World"];
- renderExplorer();
-}
-
-function goLevel(name){
- currentLevel=name;
- path.push(name);
- renderExplorer();
-}
-
-function renderExplorer(){
-
- const info=data[currentLevel]||data.World;
-
- document.getElementById("explorerTitle").textContent=info.title;
- document.getElementById("explorerSub").textContent=info.sub;
-
- document.getElementById("breadcrumb").innerHTML=
- path.map((x,i)=>`
- <button onclick="jumpPath(${i})">${i?"› ":""}${x==="World"?"🌍 World":x}</button>
- `).join("");
-
- const grid=document.getElementById("worldGrid");
- grid.innerHTML="";
-
- info.children.forEach(item=>{
-
-  const [name,icon,target]=item;
-
-  const card=document.createElement("div");
-  card.className="world-card";
-
-  card.innerHTML=`
-   <div style="position:absolute;inset:0;display:grid;place-items:center;
-   font-size:70px;background:radial-gradient(circle,#c9a96e22,transparent 65%)">
-   ${icon}</div>
-   <div class="world-info">
-    <small>EXPLORE</small>
-    <h3>${name}</h3>
-   </div>
-  `;
-
-  card.onclick=()=>{
-
-   if(data[target]){
-    goLevel(target);
-   }else if(places[target]){
-    openDestination(target);
-   }else{
-    showToast(target+" will be added soon.");
-   }
-
-  };
-
-  grid.appendChild(card);
-
- });
-
- document.getElementById("explore").scrollIntoView({behavior:"smooth"});
-}
-
-function jumpPath(index){
- path=path.slice(0,index+1);
- currentLevel=path[path.length-1];
- renderExplorer();
-}
-
-
-/* =========================
-   DESTINATION DETAIL
-========================= */
-
-let activePlace="Rajasthan";
-
-function openDestination(name){
-
- const place=places[name];
-
- if(!place){
-  showToast(name+" information is coming soon.");
-  return;
- }
-
- activePlace=name;
-
- document.getElementById("placeCountry").textContent=place.country;
- document.getElementById("placeName").textContent=name;
- document.getElementById("placeTag").textContent=place.tag;
-
- document.getElementById("placeHero").style.backgroundImage=
- `url("${place.image}")`;
-
- document.querySelectorAll(".place-tab").forEach((x,i)=>{
-  x.classList.toggle("active",i===0);
- });
-
- renderDetail("overview");
-
- document.getElementById("detail").style.display="block";
-
- document.getElementById("detail").scrollIntoView({
-  behavior:"smooth"
- });
-
-}
-
-function detailTab(tab,button){
-
- document.querySelectorAll(".place-tab")
- .forEach(x=>x.classList.remove("active"));
-
- button.classList.add("active");
-
- renderDetail(tab);
-}
-
-function renderDetail(tab){
-
- const p=places[activePlace];
- const content=document.getElementById("detailContent");
-
- if(tab==="overview"){
-
-  content.innerHTML=`
-   <div class="info-grid">
-    <div class="info-card">
-     <span class="label">OVERVIEW</span>
-     <h3>Discover ${activePlace}</h3>
-     <p>${p.tag}</p>
-     <br>
-     <p>${p.history}</p>
+    <div class="modal-box">
+
+        <button class="modal-close" id="closePlanner">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+
+        <div class="modal-header">
+
+            <div class="modal-ai-icon">
+                <i class="fa-solid fa-robot"></i>
+            </div>
+
+            <div>
+                <span>AI TRAVEL ASSISTANT</span>
+                <h2>Create Your Journey</h2>
+            </div>
+
+        </div>
+
+
+        <div class="planner-form">
+
+            <label>
+                Destination
+
+                <input
+                    type="text"
+                    id="plannerDestination"
+                    placeholder="e.g. Rajasthan, Goa, Kashmir..."
+                >
+
+            </label>
+
+
+            <div class="form-row">
+
+                <label>
+                    Days
+
+                    <select id="plannerDays">
+                        <option value="3">3 Days</option>
+                        <option value="5" selected>5 Days</option>
+                        <option value="7">7 Days</option>
+                        <option value="10">10 Days</option>
+                    </select>
+
+                </label>
+
+
+                <label>
+                    Budget
+
+                    <select id="plannerBudget">
+                        <option value="budget">₹10,000 - ₹20,000</option>
+                        <option value="medium">₹20,000 - ₹50,000</option>
+                        <option value="premium">₹50,000+</option>
+                    </select>
+
+                </label>
+
+            </div>
+
+
+            <label>
+                Travel Style
+
+                <select id="travelStyle">
+
+                    <option>Family</option>
+                    <option>Solo</option>
+                    <option>Couple</option>
+                    <option>Friends</option>
+                    <option>Adventure</option>
+                    <option>Luxury</option>
+
+                </select>
+
+            </label>
+
+
+            <button class="generate-btn" id="generateTrip">
+
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+                GENERATE MY TRIP
+
+            </button>
+
+        </div>
+
     </div>
 
-    <div class="info-card">
-     <span class="label">QUICK INFO</span>
-     <div class="quick-grid">
-      <div class="quick"><b>📍 LOCATION</b><span>${p.country}</span></div>
-      <div class="quick"><b>✦ STYLE</b><span>Culture & Explore</span></div>
-      <div class="quick"><b>📸 EXPERIENCE</b><span>Heritage & Nature</span></div>
-      <div class="quick"><b>🗺️ GUIDE</b><span>Travel Smart</span></div>
-     </div>
+</div>
+
+
+<!-- =========================================================
+     TRIP COMPLETE
+========================================================= -->
+
+<div class="trip-complete" id="tripComplete">
+
+    <div class="complete-circle">
+
+        <i class="fa-solid fa-check"></i>
+
     </div>
-   </div>
 
-   <span class="label" style="margin-top:50px">VISUAL JOURNEY</span>
+    <span>YOUR JOURNEY IS READY</span>
 
-   <div class="photo-grid">
-    <img src="${p.image}">
-    <img src="${p.image}">
-    <img src="${p.image}">
-    <img src="${p.image}">
-    <img src="${p.image}">
-   </div>
-  `;
+    <h2>Trip Complete!</h2>
 
- }
+    <p>
+        Your personalized travel plan has been generated.
+    </p>
 
- if(tab==="history"){
+    <button id="closeComplete">
+        VIEW MY ITINERARY
+        <i class="fa-solid fa-arrow-right"></i>
+    </button>
 
-  content.innerHTML=`
-   <div class="info-card">
-    <span class="label">HISTORY</span>
-    <h3>The story of ${activePlace}</h3>
-    <p>${p.history}</p>
-   </div>
-  `;
+</div>
 
- }
 
- if(tab==="geography"){
+<!-- =========================================================
+     SEARCH RESULT TOAST
+========================================================= -->
 
-  content.innerHTML=`
-   <div class="info-card">
-    <span class="label">GEOGRAPHY</span>
-    <h3>Understanding the landscape</h3>
-    <p>${p.geography}</p>
-   </div>
-  `;
+<div class="toast" id="toast">
 
- }
+    <i class="fa-solid fa-circle-info"></i>
 
- if(tab==="places"){
+    <span id="toastMessage">
+        Search ready
+    </span>
 
-  content.innerHTML=`
-   <div class="info-card">
-    <span class="label">PLACES TO VISIT</span>
-    <h3>Don't miss these places</h3>
-    <div class="quick-grid" style="margin-top:20px">
-     ${p.places.map((x,i)=>`
-      <div class="quick">
-       <b>0${i+1}</b>
-       <span>${x}</span>
-      </div>
-     `).join("")}
-    </div>
-   </div>
-  `;
+</div>
 
- }
 
- if(tab==="travel"){
-
-  content.innerHTML=`
-   <div class="info-card">
-    <span class="label">TRAVEL INFORMATION</span>
-    <h3>Plan your visit</h3>
-    <p>${p.travel}</p>
-    <br>
-    <p><b>Transport:</b> Road, rail and air options can be added to the live platform later.</p>
-    <br>
-    <p><b>Budget:</b> The future budget engine will calculate stay, food, transport and activities.</p>
-   </div>
-  `;
-
- }
-
-}
-
-
-/* =========================
-   SEARCH
-========================= */
-
-function searchPlace(){
-
- const q=document.getElementById("search").value.trim().toLowerCase();
-
- if(!q){
-  showToast("Type a destination first.");
-  return;
- }
-
- const found=Object.keys(places).find(x=>
-  x.toLowerCase().includes(q)
- );
-
- if(found){
-  openDestination(found);
- }else{
-  showToast("No destination found yet. Try Rajasthan, Bundi, Dubai, Paris or Bali.");
- }
-
-}
-
-
-/* =========================
-   LOGIN + OTP DEMO
-========================= */
-
-let generatedOTP="";
-
-function openLogin(){
- document.getElementById("loginModal").classList.add("show");
-}
-
-function sendOTP(){
-
- const phone=document.getElementById("phone").value.trim();
-
- if(!/^[0-9]{10}$/.test(phone)){
-  showToast("Enter a valid 10 digit mobile number.");
-  return;
- }
-
- generatedOTP=Math.floor(100000+Math.random()*900000).toString();
-
- document.getElementById("demoOtp").textContent=generatedOTP;
- document.getElementById("phoneBox").style.display="none";
- document.getElementById("otpBox").style.display="block";
-
- showToast("Demo OTP generated.");
-}
-
-function verifyOTP(){
-
- const otp=document.getElementById("otp").value.trim();
-
- if(otp!==generatedOTP){
-  showToast("Incorrect OTP.");
-  return;
- }
-
- closeModal("loginModal");
-
- showToast("Login successful. Welcome to Hadoti Wale Bhaiya ✦");
-}
-
-
-/* =========================
-   PLANNER
-========================= */
-
-function openPlanner(){
- document.getElementById("plannerModal").classList.add("show");
-}
-
-function generatePlan(){
-
- const destination=document.getElementById("planDestination").value.trim();
- const days=Number(document.getElementById("planDays").value);
- const style=document.getElementById("planStyle").value;
-
- if(!destination||!days){
-  showToast("Enter destination and number of days.");
-  return;
- }
-
- const result=document.getElementById("planResult");
-
- result.innerHTML=`
- <div class="info-card" style="padding:20px">
- <span class="label">YOUR STARTING ITINERARY</span>
- <h3>${days}-Day ${style} Trip</h3>
- <p><b>Destination:</b> ${destination}</p>
- <br>
- <p><b>Day 1:</b> Arrival & local exploration</p>
- <p><b>Day 2:</b> Main attractions & experiences</p>
- <p><b>Day 3:</b> Culture, food & hidden gems</p>
- <p><b>Final Day:</b> Relaxation & departure</p>
- <br>
- <p>This is the first planning layer. Live hotels, flights, maps, prices and real AI recommendations can be connected later.</p>
- </div>
- `;
-
-}
-
-
-/* =========================
-   MODALS
-========================= */
-
-function closeModal(id){
- document.getElementById(id).classList.remove("show");
-}
-
-
-/* =========================
-   MENU
-========================= */
-
-document.getElementById("menu").onclick=()=>{
- document.getElementById("nav").classList.toggle("active");
-};
-
-document.querySelectorAll(".nav a").forEach(a=>{
- a.onclick=()=>document.getElementById("nav").classList.remove("active");
-});
-
-
-/* =========================
-   HEADER SCROLL
-========================= */
-
-window.addEventListener("scroll",()=>{
- document.getElementById("header")
- .classList.toggle("scrolled",window.scrollY>50);
-});
-
-
-/* =========================
-   TOAST
-========================= */
-
-let toastTimer;
-
-function showToast(message){
-
- const t=document.getElementById("toast");
-
- t.textContent=message;
- t.classList.add("show");
-
- clearTimeout(toastTimer);
-
- toastTimer=setTimeout(()=>{
-  t.classList.remove("show");
- },2800);
-}
-
-
-/* =========================
-   START
-========================= */
-
-renderExplorer();
-
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
