@@ -1,578 +1,913 @@
 /* =========================================================
    HADOTI WALE BHAIYA
-   PREMIUM TRAVEL WEBSITE JS
-   ========================================================= */
+   PREMIUM TRAVEL PLATFORM
+   MAIN JAVASCRIPT
+========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* =======================================================
-     ELEMENTS
-     ======================================================= */
+    /* =====================================================
+       ELEMENTS
+    ===================================================== */
 
-  const header = document.getElementById("header");
-  const nav = document.getElementById("nav");
-  const menuBtn = document.getElementById("menuBtn");
+    const pageLoader = document.getElementById("pageLoader");
+    const mainHeader = document.getElementById("mainHeader");
 
-  const searchBtn = document.getElementById("searchBtn");
-  const searchInput = document.getElementById("searchInput");
-  const travelType = document.getElementById("travelType");
+    const themeBtn = document.getElementById("themeBtn");
+    const languageBtn = document.getElementById("languageBtn");
 
-  const resultsSection = document.getElementById("resultsSection");
-  const resultsGrid = document.getElementById("resultsGrid");
-  const resultsTitle = document.getElementById("resultsTitle");
-  const clearSearch = document.getElementById("clearSearch");
+    const signBtn = document.getElementById("signBtn");
 
-  const plannerBtn = document.getElementById("plannerBtn");
-  const plannerModal = document.getElementById("plannerModal");
-  const modalClose = document.getElementById("modalClose");
+    const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
 
-  const generatePlan = document.getElementById("generatePlan");
+    const searchInput = document.getElementById("destinationSearch");
+    const searchBtn = document.getElementById("searchBtn");
 
-  const planDestination = document.getElementById("planDestination");
-  const planDays = document.getElementById("planDays");
-  const planStyle = document.getElementById("planStyle");
-  const planResult = document.getElementById("planResult");
+    const openPlanner = document.getElementById("openPlanner");
+    const featureAI = document.getElementById("featureAI");
+    const createPlanBtn = document.getElementById("createPlanBtn");
 
-  const newsletterForm = document.getElementById("newsletterForm");
-  const newsletterMessage = document.getElementById("newsletterMessage");
+    const plannerModal = document.getElementById("plannerModal");
+    const closePlanner = document.getElementById("closePlanner");
 
-  const toast = document.getElementById("toast");
+    const generateTrip = document.getElementById("generateTrip");
 
+    const tripComplete = document.getElementById("tripComplete");
+    const closeComplete = document.getElementById("closeComplete");
 
-  /* =======================================================
-     HEADER SCROLL EFFECT
-     ======================================================= */
-
-  window.addEventListener("scroll", () => {
-
-    if (window.scrollY > 60) {
-      header.classList.add("scrolled");
-    } else {
-      header.classList.remove("scrolled");
-    }
-
-  });
+    const toast = document.getElementById("toast");
+    const toastMessage = document.getElementById("toastMessage");
 
 
-  /* =======================================================
-     MOBILE MENU
-     ======================================================= */
+    /* =====================================================
+       PAGE LOADER
+    ===================================================== */
 
-  menuBtn.addEventListener("click", () => {
-    nav.classList.toggle("active");
-  });
+    window.addEventListener("load", () => {
 
+        setTimeout(() => {
 
-  document.querySelectorAll(".nav a").forEach(link => {
+            if (pageLoader) {
+                pageLoader.classList.add("hidden");
+            }
 
-    link.addEventListener("click", () => {
-      nav.classList.remove("active");
-    });
-
-  });
-
-
-  /* =======================================================
-     DESTINATION DATA
-     ======================================================= */
-
-  const destinations = [
-
-    {
-      name: "Rajasthan",
-      country: "INDIA",
-      type: "culture",
-      description: "Royal cities, forts & desert adventures",
-      image: "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=1000&q=85"
-    },
-
-    {
-      name: "Dubai",
-      country: "UAE",
-      type: "luxury",
-      description: "Luxury, architecture & unforgettable experiences",
-      image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1000&q=85"
-    },
-
-    {
-      name: "Bali",
-      country: "INDONESIA",
-      type: "nature",
-      description: "Tropical islands, temples & beaches",
-      image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1000&q=85"
-    },
-
-    {
-      name: "Paris",
-      country: "FRANCE",
-      type: "culture",
-      description: "Art, architecture, food & romance",
-      image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1000&q=85"
-    },
-
-    {
-      name: "Switzerland",
-      country: "EUROPE",
-      type: "nature",
-      description: "Mountains, lakes & scenic train journeys",
-      image: "https://images.unsplash.com/photo-1527668752968-14dc70a27c95?auto=format&fit=crop&w=1000&q=85"
-    },
-
-    {
-      name: "Maldives",
-      country: "MALDIVES",
-      type: "luxury",
-      description: "Crystal water, islands & private escapes",
-      image: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=1000&q=85"
-    },
-
-    {
-      name: "Tokyo",
-      country: "JAPAN",
-      type: "culture",
-      description: "Future cities, food & Japanese culture",
-      image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=1000&q=85"
-    },
-
-    {
-      name: "New York",
-      country: "USA",
-      type: "luxury",
-      description: "Iconic skyline, culture & city energy",
-      image: "https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?auto=format&fit=crop&w=1000&q=85"
-    }
-
-  ];
-
-
-  /* =======================================================
-     SEARCH
-     ======================================================= */
-
-  function performSearch() {
-
-    const query = searchInput.value.trim().toLowerCase();
-    const type = travelType.value;
-
-    let filtered = destinations.filter(destination => {
-
-      const matchesText =
-        query === "" ||
-        destination.name.toLowerCase().includes(query) ||
-        destination.country.toLowerCase().includes(query) ||
-        destination.description.toLowerCase().includes(query);
-
-      const matchesType =
-        type === "all" ||
-        destination.type === type;
-
-      return matchesText && matchesType;
+        }, 900);
 
     });
 
 
-    if (query === "" && type === "all") {
+    /* =====================================================
+       HEADER SCROLL EFFECT
+    ===================================================== */
 
-      showToast("Type a destination to search.");
+    window.addEventListener("scroll", () => {
 
-      searchInput.focus();
+        if (!mainHeader) return;
 
-      return;
-    }
-
-
-    resultsGrid.innerHTML = "";
-
-
-    if (filtered.length === 0) {
-
-      resultsTitle.textContent = "No destinations found";
-
-      resultsGrid.innerHTML = `
-        <div style="
-          grid-column:1/-1;
-          padding:50px;
-          text-align:center;
-          color:#777;
-          background:#f5f5f2;
-          border-radius:18px;
-        ">
-          <h3 style="font-family:serif;font-size:30px;margin-bottom:10px;">
-            Nothing found
-          </h3>
-          <p>
-            Try another destination or travel style.
-          </p>
-        </div>
-      `;
-
-    } else {
-
-      resultsTitle.textContent =
-        query
-          ? `Explore "${searchInput.value.trim()}"`
-          : "Explore destinations";
-
-      filtered.forEach(destination => {
-
-        const card = document.createElement("article");
-
-        card.className = "result-card";
-
-        card.innerHTML = `
-          <div
-            class="result-bg"
-            style="background-image:url('${destination.image}')"
-          ></div>
-
-          <div class="result-content">
-            <span>${destination.country}</span>
-            <h3>${destination.name}</h3>
-            <p>${destination.description}</p>
-          </div>
-        `;
-
-        resultsGrid.appendChild(card);
-
-      });
-
-    }
-
-
-    resultsSection.classList.remove("hidden");
-
-    resultsSection.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
-
-  }
-
-
-  searchBtn.addEventListener("click", performSearch);
-
-
-  searchInput.addEventListener("keydown", event => {
-
-    if (event.key === "Enter") {
-      performSearch();
-    }
-
-  });
-
-
-  /* =======================================================
-     POPULAR SEARCH BUTTONS
-     ======================================================= */
-
-  document.querySelectorAll("[data-search]").forEach(button => {
-
-    button.addEventListener("click", () => {
-
-      searchInput.value = button.dataset.search;
-
-      travelType.value = "all";
-
-      performSearch();
+        if (window.scrollY > 40) {
+            mainHeader.classList.add("scrolled");
+        } else {
+            mainHeader.classList.remove("scrolled");
+        }
 
     });
 
-  });
+
+    /* =====================================================
+       MOBILE MENU
+    ===================================================== */
+
+    if (mobileMenuBtn && mobileMenu) {
+
+        mobileMenuBtn.addEventListener("click", () => {
+
+            mobileMenu.classList.toggle("open");
+
+            const icon = mobileMenuBtn.querySelector("i");
+
+            if (mobileMenu.classList.contains("open")) {
+
+                icon.classList.remove("fa-bars");
+                icon.classList.add("fa-xmark");
+
+            } else {
+
+                icon.classList.remove("fa-xmark");
+                icon.classList.add("fa-bars");
+
+            }
+
+        });
 
 
-  /* =======================================================
-     CLEAR SEARCH
-     ======================================================= */
+        mobileMenu.querySelectorAll("a").forEach(link => {
 
-  clearSearch.addEventListener("click", () => {
+            link.addEventListener("click", () => {
 
-    searchInput.value = "";
+                mobileMenu.classList.remove("open");
 
-    travelType.value = "all";
+                const icon = mobileMenuBtn.querySelector("i");
 
-    resultsGrid.innerHTML = "";
+                icon.classList.remove("fa-xmark");
+                icon.classList.add("fa-bars");
 
-    resultsSection.classList.add("hidden");
+            });
 
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
+        });
 
-  });
-
-
-  /* =======================================================
-     VIEW ALL
-     ======================================================= */
-
-  document.getElementById("viewAllBtn").addEventListener("click", () => {
-
-    searchInput.value = "";
-
-    travelType.value = "all";
-
-    resultsGrid.innerHTML = "";
-
-    destinations.forEach(destination => {
-
-      const card = document.createElement("article");
-
-      card.className = "result-card";
-
-      card.innerHTML = `
-        <div
-          class="result-bg"
-          style="background-image:url('${destination.image}')"
-        ></div>
-
-        <div class="result-content">
-          <span>${destination.country}</span>
-          <h3>${destination.name}</h3>
-          <p>${destination.description}</p>
-        </div>
-      `;
-
-      resultsGrid.appendChild(card);
-
-    });
-
-    resultsTitle.textContent = "All destinations";
-
-    resultsSection.classList.remove("hidden");
-
-    resultsSection.scrollIntoView({
-      behavior: "smooth"
-    });
-
-  });
-
-
-  /* =======================================================
-     AI PLANNER MODAL
-     ======================================================= */
-
-  plannerBtn.addEventListener("click", () => {
-
-    plannerModal.classList.remove("hidden");
-
-    document.body.style.overflow = "hidden";
-
-  });
-
-
-  function closePlanner() {
-
-    plannerModal.classList.add("hidden");
-
-    document.body.style.overflow = "";
-
-  }
-
-
-  modalClose.addEventListener("click", closePlanner);
-
-
-  document.querySelector(".modal-backdrop").addEventListener(
-    "click",
-    closePlanner
-  );
-
-
-  document.addEventListener("keydown", event => {
-
-    if (event.key === "Escape") {
-      closePlanner();
-    }
-
-  });
-
-
-  /* =======================================================
-     AI TRIP GENERATOR
-     ======================================================= */
-
-  generatePlan.addEventListener("click", () => {
-
-    const destination = planDestination.value.trim();
-    const days = Number(planDays.value);
-    const style = planStyle.value;
-
-
-    if (!destination) {
-
-      showToast("Please enter a destination.");
-
-      planDestination.focus();
-
-      return;
     }
 
 
-    if (!days || days < 1) {
+    /* =====================================================
+       DARK MODE
+    ===================================================== */
 
-      showToast("Please enter number of days.");
+    if (themeBtn) {
 
-      planDays.focus();
+        themeBtn.addEventListener("click", () => {
 
-      return;
-    }
+            document.body.classList.toggle("dark-mode");
 
+            const icon = themeBtn.querySelector("i");
 
-    const placesPerDay =
-      days <= 3 ? "2–3" :
-      days <= 7 ? "3–4" :
-      "3–5";
+            if (document.body.classList.contains("dark-mode")) {
 
+                icon.classList.remove("fa-moon");
+                icon.classList.add("fa-sun");
 
-    planResult.innerHTML = `
-      <strong>Your ${days}-day ${style} journey to ${destination}</strong>
+                themeBtn.setAttribute("title", "Light Mode");
 
-      <br><br>
+                localStorage.setItem("hwb-theme", "dark");
 
-      <b>Day 1</b> — Arrival & local exploration<br>
-      <b>Day 2</b> — Top attractions & experiences<br>
-      <b>Day 3</b> — Hidden gems & local food<br>
-      <b>Day ${days}</b> — Relax, explore & departure
+                showToast("Dark mode enabled");
 
-      <br><br>
+            } else {
 
-      <span style="color:#8b7040;">
-        ✦ Suggested pace: ${placesPerDay} experiences per day.
-      </span>
+                icon.classList.remove("fa-sun");
+                icon.classList.add("fa-moon");
 
-      <br><br>
+                themeBtn.setAttribute("title", "Dark Mode");
 
-      <small>
-        This is the first planning layer. Real AI itinerary,
-        maps, hotels, flights and live pricing can be connected
-        through APIs later.
-      </small>
-    `;
+                localStorage.setItem("hwb-theme", "light");
 
-    planResult.classList.remove("hidden");
+                showToast("Light mode enabled");
 
-  });
+            }
+
+        });
 
 
-  /* =======================================================
-     NEWSLETTER
-     ======================================================= */
+        if (localStorage.getItem("hwb-theme") === "dark") {
 
-  newsletterForm.addEventListener("submit", event => {
+            document.body.classList.add("dark-mode");
 
-    event.preventDefault();
+            const icon = themeBtn.querySelector("i");
 
-    const email = document.getElementById("emailInput").value.trim();
+            icon.classList.remove("fa-moon");
+            icon.classList.add("fa-sun");
 
-
-    if (!email) {
-      return;
-    }
-
-
-    newsletterMessage.textContent =
-      "You're on the list. Welcome to the journey ✦";
-
-    newsletterForm.reset();
-
-  });
-
-
-  /* =======================================================
-     TOAST
-     ======================================================= */
-
-  let toastTimer;
-
-
-  function showToast(message) {
-
-    toast.textContent = message;
-
-    toast.classList.add("show");
-
-    clearTimeout(toastTimer);
-
-    toastTimer = setTimeout(() => {
-
-      toast.classList.remove("show");
-
-    }, 2800);
-
-  }
-
-
-  /* =======================================================
-     DESTINATION CARD CLICK
-     ======================================================= */
-
-  document.querySelectorAll(".destination-card").forEach(card => {
-
-    card.addEventListener("click", () => {
-
-      const destination = card.dataset.name;
-
-      searchInput.value = destination;
-
-      travelType.value = card.dataset.type;
-
-      performSearch();
-
-    });
-
-  });
-
-
-  /* =======================================================
-     SMALL ENTRANCE ANIMATION
-     ======================================================= */
-
-  const observer = new IntersectionObserver(
-    entries => {
-
-      entries.forEach(entry => {
-
-        if (entry.isIntersecting) {
-
-          entry.target.style.opacity = "1";
-          entry.target.style.transform = "translateY(0)";
-
-          observer.unobserve(entry.target);
+            themeBtn.setAttribute("title", "Light Mode");
 
         }
 
-      });
-
-    },
-    {
-      threshold: .12
     }
-  );
 
 
-  document
-    .querySelectorAll(
-      ".feature-card, .destination-card, .planner-card"
-    )
-    .forEach(element => {
+    /* =====================================================
+       LANGUAGE BUTTON
+    ===================================================== */
 
-      element.style.opacity = "0";
-      element.style.transform = "translateY(25px)";
-      element.style.transition =
-        "opacity .7s ease, transform .7s ease";
+    if (languageBtn) {
 
-      observer.observe(element);
+        languageBtn.addEventListener("click", () => {
+
+            const current = languageBtn.childNodes[0];
+
+            if (current) {
+
+                const text = current.textContent.trim();
+
+                if (text === "हिन्दी") {
+
+                    current.textContent = "English ";
+
+                    showToast("English language selected");
+
+                } else {
+
+                    current.textContent = "हिन्दी ";
+
+                    showToast("हिन्दी भाषा चुनी गई");
+
+                }
+
+            }
+
+        });
+
+    }
+
+
+    /* =====================================================
+       SEARCH
+    ===================================================== */
+
+    function performSearch() {
+
+        if (!searchInput) return;
+
+        const query = searchInput.value.trim();
+
+        if (!query) {
+
+            showToast("Please enter a destination");
+
+            searchInput.focus();
+
+            return;
+
+        }
+
+        showToast(`Searching for "${query}"...`);
+
+        setTimeout(() => {
+
+            showToast(`Explore results for ${query}`);
+
+        }, 1200);
+
+    }
+
+
+    if (searchBtn) {
+
+        searchBtn.addEventListener("click", performSearch);
+
+    }
+
+
+    if (searchInput) {
+
+        searchInput.addEventListener("keydown", (event) => {
+
+            if (event.key === "Enter") {
+
+                performSearch();
+
+            }
+
+        });
+
+    }
+
+
+    /* =====================================================
+       POPULAR SEARCH BUTTONS
+    ===================================================== */
+
+    document.querySelectorAll(".popular-searches button")
+        .forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                if (!searchInput) return;
+
+                searchInput.value = button.textContent.trim();
+
+                searchInput.focus();
+
+                performSearch();
+
+            });
+
+        });
+
+
+    /* =====================================================
+       AI PLANNER OPEN
+    ===================================================== */
+
+    function openPlannerModal() {
+
+        if (!plannerModal) return;
+
+        plannerModal.classList.add("active");
+
+        document.body.classList.add("modal-open");
+
+        const plannerDestination =
+            document.getElementById("plannerDestination");
+
+        if (plannerDestination) {
+
+            setTimeout(() => {
+                plannerDestination.focus();
+            }, 250);
+
+        }
+
+    }
+
+
+    if (openPlanner) {
+
+        openPlanner.addEventListener("click", openPlannerModal);
+
+    }
+
+
+    if (featureAI) {
+
+        featureAI.addEventListener("click", openPlannerModal);
+
+    }
+
+
+    if (createPlanBtn) {
+
+        createPlanBtn.addEventListener("click", openPlannerModal);
+
+    }
+
+
+    /* =====================================================
+       CLOSE PLANNER
+    ===================================================== */
+
+    function closePlannerModal() {
+
+        if (!plannerModal) return;
+
+        plannerModal.classList.remove("active");
+
+        document.body.classList.remove("modal-open");
+
+    }
+
+
+    if (closePlanner) {
+
+        closePlanner.addEventListener("click", closePlannerModal);
+
+    }
+
+
+    if (plannerModal) {
+
+        plannerModal.addEventListener("click", (event) => {
+
+            if (event.target === plannerModal) {
+
+                closePlannerModal();
+
+            }
+
+        });
+
+    }
+
+
+    /* =====================================================
+       ESC KEY
+    ===================================================== */
+
+    document.addEventListener("keydown", (event) => {
+
+        if (event.key === "Escape") {
+
+            closePlannerModal();
+
+            if (tripComplete) {
+
+                tripComplete.classList.remove("active");
+
+            }
+
+        }
 
     });
 
 
-  /* =======================================================
-     INITIAL STATE
-     ======================================================= */
+    /* =====================================================
+       GENERATE TRIP
+    ===================================================== */
 
-  console.log(
-    "HADOTI WALE BHAIYA — Premium Travel Platform loaded."
-  );
+    if (generateTrip) {
 
-});
+        generateTrip.addEventListener("click", () => {
+
+            const destination =
+                document.getElementById("plannerDestination");
+
+            const days =
+                document.getElementById("plannerDays");
+
+            const budget =
+                document.getElementById("plannerBudget");
+
+            const style =
+                document.getElementById("travelStyle");
+
+
+            if (!destination || !destination.value.trim()) {
+
+                showToast("Please enter your destination");
+
+                destination.focus();
+
+                return;
+
+            }
+
+
+            const destinationName = destination.value.trim();
+
+            const selectedDays = days ? days.value : "5";
+
+            const selectedBudget =
+                budget ? budget.options[budget.selectedIndex].text : "";
+
+            const selectedStyle =
+                style ? style.value : "";
+
+
+            generateTrip.innerHTML = `
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                CREATING YOUR JOURNEY...
+            `;
+
+            generateTrip.disabled = true;
+
+
+            setTimeout(() => {
+
+                closePlannerModal();
+
+                if (tripComplete) {
+
+                    tripComplete.classList.add("active");
+
+                }
+
+                generateTrip.innerHTML = `
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    GENERATE MY TRIP
+                `;
+
+                generateTrip.disabled = false;
+
+
+                console.log("Trip Plan:", {
+                    destination: destinationName,
+                    days: selectedDays,
+                    budget: selectedBudget,
+                    style: selectedStyle
+                });
+
+            }, 1800);
+
+        });
+
+    }
+
+
+    /* =====================================================
+       TRIP COMPLETE CLOSE
+    ===================================================== */
+
+    if (closeComplete) {
+
+        closeComplete.addEventListener("click", () => {
+
+            if (tripComplete) {
+
+                tripComplete.classList.remove("active");
+
+            }
+
+            showToast("Your itinerary is ready to explore!");
+
+        });
+
+    }
+
+
+    /* =====================================================
+       HEART / FAVOURITES
+    ===================================================== */
+
+    document.querySelectorAll(".heart-btn")
+        .forEach(button => {
+
+            button.addEventListener("click", (event) => {
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                const icon = button.querySelector("i");
+
+                if (!icon) return;
+
+
+                button.classList.toggle("liked");
+
+
+                if (button.classList.contains("liked")) {
+
+                    icon.classList.remove("fa-regular");
+                    icon.classList.add("fa-solid");
+
+                    showToast("Added to your favourites ❤️");
+
+                } else {
+
+                    icon.classList.remove("fa-solid");
+                    icon.classList.add("fa-regular");
+
+                    showToast("Removed from favourites");
+
+                }
+
+            });
+
+        });
+
+
+    /* =====================================================
+       QUICK TOOLS
+    ===================================================== */
+
+    document.querySelectorAll(".quick-tools button")
+        .forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                const toolName =
+                    button.querySelector("span")?.textContent.trim();
+
+                if (!toolName) return;
+
+
+                if (toolName === "Near Me") {
+
+                    if ("geolocation" in navigator) {
+
+                        showToast("Finding places near you...");
+
+                        navigator.geolocation.getCurrentPosition(
+
+                            () => {
+                                showToast("Location found!");
+                            },
+
+                            () => {
+                                showToast("Location permission required");
+                            }
+
+                        );
+
+                    } else {
+
+                        showToast("Location is not supported");
+
+                    }
+
+                } else {
+
+                    showToast(`${toolName} will open soon`);
+
+                }
+
+            });
+
+        });
+
+
+    /* =====================================================
+       FEATURE BAR
+    ===================================================== */
+
+    document.querySelectorAll(".feature-item")
+        .forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                if (button.id === "featureAI") return;
+
+                const title =
+                    button.querySelector("strong")?.textContent.trim();
+
+                if (!title) return;
+
+                showToast(`${title} selected`);
+
+            });
+
+        });
+
+
+    /* =====================================================
+       VIEW ALL BUTTONS
+    ===================================================== */
+
+    document.querySelectorAll(".view-all")
+        .forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                const section =
+                    button.closest("section, .panel");
+
+                if (section) {
+
+                    section.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+                }
+
+                showToast("More travel content coming soon");
+
+            });
+
+        });
+
+
+    /* =====================================================
+       SCROLL REVEAL
+    ===================================================== */
+
+    const revealElements =
+        document.querySelectorAll(".reveal");
+
+
+    if ("IntersectionObserver" in window) {
+
+        const observer =
+            new IntersectionObserver(
+                (entries, observerInstance) => {
+
+                    entries.forEach(entry => {
+
+                        if (entry.isIntersecting) {
+
+                            entry.target.classList.add("visible");
+
+                            observerInstance.unobserve(
+                                entry.target
+                            );
+
+                        }
+
+                    });
+
+                },
+                {
+                    threshold: 0.12
+                }
+            );
+
+
+        revealElements.forEach(element => {
+
+            observer.observe(element);
+
+        });
+
+    } else {
+
+        revealElements.forEach(element => {
+
+            element.classList.add("visible");
+
+        });
+
+    }
+
+
+    /* =====================================================
+       COUNTER ANIMATION
+    ===================================================== */
+
+    const counters =
+        document.querySelectorAll(".counter");
+
+
+    function animateCounter(counter) {
+
+        const target =
+            Number(counter.dataset.target || 0);
+
+        let current = 0;
+
+        const duration = 1600;
+
+        const startTime = performance.now();
+
+
+        function updateCounter(currentTime) {
+
+            const elapsed = currentTime - startTime;
+
+            const progress =
+                Math.min(elapsed / duration, 1);
+
+
+            const eased =
+                1 - Math.pow(1 - progress, 3);
+
+
+            current =
+                Math.floor(target * eased);
+
+
+            counter.textContent =
+                current.toLocaleString("en-IN");
+
+
+            if (progress < 1) {
+
+                requestAnimationFrame(updateCounter);
+
+            } else {
+
+                counter.textContent =
+                    target.toLocaleString("en-IN");
+
+            }
+
+        }
+
+
+        requestAnimationFrame(updateCounter);
+
+    }
+
+
+    if ("IntersectionObserver" in window) {
+
+        const counterObserver =
+            new IntersectionObserver(
+                entries => {
+
+                    entries.forEach(entry => {
+
+                        if (entry.isIntersecting) {
+
+                            animateCounter(entry.target);
+
+                            counterObserver.unobserve(
+                                entry.target
+                            );
+
+                        }
+
+                    });
+
+                },
+                {
+                    threshold: 0.5
+                }
+            );
+
+
+        counters.forEach(counter => {
+
+            counterObserver.observe(counter);
+
+        });
+
+    }
+
+
+    /* =====================================================
+       IMAGE LOADING EFFECT
+    ===================================================== */
+
+    document.querySelectorAll("img")
+        .forEach(image => {
+
+            image.addEventListener("load", () => {
+
+                image.classList.add("loaded");
+
+            });
+
+        });
+
+
+    /* =====================================================
+       NOTIFICATION BUTTON
+    ===================================================== */
+
+    const notificationBtn =
+        document.querySelector(
+            ".header-actions .icon-btn:not(#themeBtn)"
+        );
+
+
+    if (notificationBtn) {
+
+        notificationBtn.addEventListener("click", () => {
+
+            showToast("No new travel notifications");
+
+        });
+
+    }
+
+
+    /* =====================================================
+       SIGN IN
+    ===================================================== */
+
+    if (signBtn) {
+
+        signBtn.addEventListener("click", () => {
+
+            showToast("Sign in system coming soon");
+
+        });
+
+    }
+
+
+    /* =====================================================
+       TOAST
+    ===================================================== */
+
+    let toastTimer;
+
+
+    function showToast(message) {
+
+        if (!toast || !toastMessage) return;
+
+
+        toastMessage.textContent = message;
+
+        toast.classList.add("show");
+
+
+        clearTimeout(toastTimer);
+
+
+        toastTimer = setTimeout(() => {
+
+            toast.classList.remove("show");
+
+        }, 2800);
+
+    }
+
+
+    /* =====================================================
+       SMOOTH ANCHOR SCROLL
+    ===================================================== */
+
+    document.querySelectorAll('a[href^="#"]')
+        .forEach(link => {
+
+            link.addEventListener("click", event => {
+
+                const targetId =
+                    link.getAttribute("href");
+
+                if (
+                    !targetId ||
+                    targetId === "#"
+                ) {
+                    return;
+                }
+
+
+                const target =
+                    document.querySelector(targetId);
+
+
+                if (target) {
+
+                    event.preventDefault();
+
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+                }
+
+            });
+
+        });
+
+
+    /* =====================================================
+       KEYBOARD SHORTCUT
+       "/" = SEARCH
+    ===================================================== */
+
+    document.addEventListener("keydown", event => {
+
+  
