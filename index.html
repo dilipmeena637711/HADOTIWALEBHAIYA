@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HADOTI WALE BHAIYA | India's AI Travel Ecosystem</title>
+  <meta name="description" content="HADOTI WALE BHAIYA - India's Biggest AI-Powered Travel Ecosystem. Discover, Plan, Book & Share your journeys." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #f59e0b;
+      --primary-dark: #d97706;
+      --bg: #020617;
+      --card: rgba(30, 41, 59, 0.7);
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --border: rgba(255, 255, 255, 0.08);
+      --gradient: linear-gradient(135deg, #f59e0b, #ef4444);
+      --success: #10b981;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .bg-glow {
+      position: fixed; width: 600px; height: 600px;
+      border-radius: 50%; filter: blur(120px); opacity: 0.12;
+      z-index: -1; pointer-events: none;
+    }
+    .glow-1 { background: #f59e0b; top: -200px; left: -100px; }
+    .glow-2 { background: #ef4444; bottom: -150px; right: -100px; }
+
+    header {
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+      padding: 1.1rem 0; backdrop-filter: blur(20px);
+      background: rgba(2, 6, 23, 0.85); border-bottom: 1px solid var(--border);
+    }
+    .nav-container {
+      max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 0.7rem; text-decoration: none; color: white;
+    }
+    .logo-icon {
+      width: 40px; height: 40px; background: var(--gradient);
+      border-radius: 11px; display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 1.1rem;
+    }
+    .logo-text {
+      font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700;
+    }
+    .logo-text span { color: var(--primary); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none; font-weight: 500; font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: white; }
+    .nav-cta {
+      background: var(--gradient); color: white; padding: 0.65rem 1.4rem;
+      border-radius: 50px; font-weight: 600; font-size: 0.9rem; text-decoration: none;
+    }
+
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      padding: 7.5rem 1.5rem 4rem;
+    }
+    .hero-container {
+      max-width: 1200px; margin: 0 auto; width: 100%;
+      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 3.5rem; align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.3);
+      color: var(--primary); padding: 0.4rem 1rem; border-radius: 50px;
+      font-size: 0.85rem; font-weight: 500; margin-bottom: 1.4rem;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 5vw, 4rem); font-weight: 700; line-height: 1.15;
+      margin-bottom: 1.3rem;
+    }
+    .hero h1 .highlight {
+      background: var(--gradient); -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-desc {
+      font-size: 1.1rem; color: var(--muted); max-width: 520px;
+      margin-bottom: 2.2rem; line-height: 1.7;
+    }
+    .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.8rem; }
+    .btn-primary {
+      background: var(--gradient); color: white; padding: 0.95rem 1.9rem;
+      border-radius: 14px; font-weight: 600; font-size: 1rem; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+    }
+    .btn-secondary {
+      background: rgba(255,255,255,0.05); color: white; padding: 0.95rem 1.9rem;
+      border-radius: 14px; font-weight: 600; border: 1px solid var(--border);
+      text-decoration: none;
+    }
+    .hero-stats { display: flex; gap: 2.2rem; flex-wrap: wrap; }
+    .stat-item h3 { font-size: 1.7rem; font-weight: 700; color: var(--primary); }
+    .stat-item p { font-size: 0.9rem; color: var(--muted); }
+
+    .hero-card {
+      background: var(--card); backdrop-filter: blur(20px);
+      border: 1px solid var(--border); border-radius: 24px; padding: 1.8rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: var(--gradient);
+    }
+    .card-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.4rem; }
+    .card-avatar {
+      width: 48px; height: 48px; background: var(--gradient); border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+    }
+    .ai-features { display: grid; gap: 0.8rem; }
+    .ai-item {
+      display: flex; align-items: center; gap: 0.85rem;
+      background: rgba(255,255,255,0.03); padding: 0.85rem 1rem;
+      border-radius: 12px; border: 1px solid transparent;
+    }
+    .ai-icon {
+      width: 34px; height: 34px; background: rgba(245,158,11,0.15);
+      border-radius: 9px; display: flex; align-items: center; justify-content: center;
+    }
+
+    section { padding: 5.5rem 1.5rem; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .section-header { text-align: center; max-width: 680px; margin: 0 auto 3.5rem; }
+    .section-tag {
+      display: inline-block; background: rgba(245,158,11,0.12); color: var(--primary);
+      padding: 0.35rem 1rem; border-radius: 50px; font-size: 0.82rem;
+      font-weight: 600; margin-bottom: 0.9rem;
+    }
+    .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 3.8vw, 2.7rem); font-weight: 700; margin-bottom: 0.9rem;
+    }
+    .section-header p { color: var(--muted); font-size: 1.05rem; }
+
+    .features-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.4rem;
+    }
+    .feature-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 18px; padding: 1.8rem; transition: 0.35s;
+    }
+    .feature-card:hover {
+      transform: translateY(-6px); border-color: rgba(245,158,11,0.3);
+    }
+    .feature-icon {
+      width: 50px; height: 50px; background: rgba(245,158,11,0.12);
+      border-radius: 14px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.45rem; margin-bottom: 1.1rem;
+    }
+    .feature-card h3 { font-size: 1.15rem; margin-bottom: 0.6rem; }
+    .feature-card p { color: var(--muted); font-size: 0.92rem; }
+
+    .ai-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.1rem;
+    }
+    .ai-box {
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.4rem; text-align: center;
+    }
+    .ai-box .icon { font-size: 1.8rem; margin-bottom: 0.7rem; }
+    .ai-box h4 { font-size: 1rem; margin-bottom: 0.35rem; }
+    .ai-box p { font-size: 0.82rem; color: var(--muted); }
+
+    .hierarchy {
+      display: flex; flex-direction: column; align-items: center; gap: 0.45rem; margin-top: 1.5rem;
+    }
+    .hierarchy-item {
+      background: var(--card); border: 1px solid var(--border);
+      padding: 0.9rem 2.2rem; border-radius: 50px; font-weight: 500;
+    }
+    .hierarchy-arrow { color: var(--primary); font-size: 1.1rem; }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.8rem; }
+    .info-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 2.2rem;
+    }
+    .info-card h3 {
+      font-size: 1.35rem; margin-bottom: 1.3rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .info-list { list-style: none; display: grid; gap: 0.7rem; }
+    .info-list li {
+      display: flex; align-items: center; gap: 0.7rem;
+      color: var(--muted); font-size: 0.93rem;
+    }
+    .info-list li::before {
+      content: '✓'; color: var(--success); font-weight: 700;
+    }
+
+    .vision-box {
+      background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(239,68,68,0.07));
+      border: 1px solid rgba(245,158,11,0.2); border-radius: 24px;
+      padding: 3.2rem; text-align: center;
+    }
+    .vision-box h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.7rem, 3.3vw, 2.3rem); margin-bottom: 1.1rem;
+    }
+    .vision-box p {
+      font-size: 1.1rem; color: var(--muted); max-width: 780px;
+      margin: 0 auto 1.8rem; line-height: 1.7;
+    }
+    .vision-tagline {
+      font-size: 1.2rem; font-weight: 600;
+      background: var(--gradient); -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    footer {
+      background: #01040f; border-top: 1px solid var(--border);
+      padding: 3.5rem 1.5rem 1.8rem;
+    }
+    .footer-content {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 2.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .footer-brand p { color: var(--muted); font-size: 0.92rem; max-width: 270px; margin-top: 0.8rem; }
+    .footer-col h4 { font-size: 0.95rem; margin-bottom: 1.1rem; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 0.6rem; }
+    .footer-col ul a { color: var(--muted); text-decoration: none; font-size: 0.88rem; }
+    .footer-col ul a:hover { color: var(--primary); }
+    .footer-bottom {
+      max-width: 1200px; margin: 0 auto; padding-top: 1.6rem;
+      border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem;
+    }
+    .footer-bottom p { color: var(--muted); font-size: 0.88rem; }
+
+    @media (max-width: 900px) {
+      .hero-container { grid-template-columns: 1fr; text-align: center; }
+      .hero-desc { margin-left: auto; margin-right: auto; }
+      .hero-buttons, .hero-stats { justify-content: center; }
+      .two-col { grid-template-columns: 1fr; }
+      .footer-content { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 600px) {
+      .footer-content { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-glow glow-1"></div>
+  <div class="bg-glow glow-2"></div>
+
+  <header>
+    <div class="nav-container">
+      <a href="#" class="logo">
+        <div class="logo-icon">HB</div>
+        <div class="logo-text">Hadoti <span>Wale Bhaiya</span></div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#ai">AI System</a></li>
+        <li><a href="#destinations">Destinations</a></li>
+        <li><a href="#booking">Booking</a></li>
+        <li><a href="#vision">Vision</a></li>
+      </ul>
+      <a href="#cta" class="nav-cta">Get Started</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-container">
+      <div>
+        <div class="hero-badge">✦ India's Biggest AI Travel Ecosystem</div>
+        <h1>Discover. Plan. Book.<br><span class="highlight">Travel Smarter</span></h1>
+        <p class="hero-desc">
+          HADOTI WALE BHAIYA is a complete AI-powered Travel Operating System where travelers, hotels, guides, photographers and businesses connect on one powerful platform.
+        </p>
+        <div class="hero-buttons">
+          <a href="#ai" class="btn-primary">✦ Try AI Trip Planner</a>
+          <a href="#features" class="btn-secondary">Explore Features</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item"><h3>10+</h3><p>AI Modules</p></div>
+          <div class="stat-item"><h3>100%</h3><p>Mobile First</p></div>
+          <div class="stat-item"><h3>∞</h3><p>Destinations</p></div>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="card-header">
+          <div class="card-avatar">🤖</div>
+          <div>
+            <h4 style="font-size:1.05rem;">AI Travel Assistant</h4>
+            <p style="font-size:0.85rem;color:var(--muted);">Always ready to help you</p>
+          </div>
+        </div>
+        <div class="ai-features">
+          <div class="ai-item"><div class="ai-icon">🗺️</div><span>Smart Trip Planner</span></div>
+          <div class="ai-item"><div class="ai-icon">💰</div><span>Budget Optimizer</span></div>
+          <div class="ai-item"><div class="ai-icon">🏨</div><span>Hotel & Stay Suggestions</span></div>
+          <div class="ai-item"><div class="ai-icon">🧭</div><span>Route & Safety Guide</span></div>
+          <div class="ai-item"><div class="ai-icon">🎒</div><span>Smart Packing List</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">CORE PLATFORM</div>
+        <h2>Everything a Traveler Needs</h2>
+        <p>One platform. Endless possibilities. Built for the next generation of explorers.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">📱</div>
+          <h3>Multi-Platform</h3>
+          <p>Premium website + Android + iOS + PWA. Fast, secure & mobile-first.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">👤</div>
+          <h3>Travel Profile</h3>
+          <p>Timeline, countries visited, personal map, achievements & badges.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📖</div>
+          <h3>Travel Diary</h3>
+          <p>Write stories, upload photos & videos, tag locations and share tips.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🌍</div>
+          <h3>Destination Database</h3>
+          <p>History, culture, hotels, food, maps, 360° views and safety tips.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🤝</div>
+          <h3>Community</h3>
+          <p>Follow travelers, join groups, forums, Q&A and real meetups.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <h3>Safety First</h3>
+          <p>SOS button, emergency contacts, hospitals, police & live alerts.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🏆</div>
+          <h3>Rewards System</h3>
+          <p>Travel points, badges, leaderboards, cashback and daily challenges.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎥</div>
+          <h3>Creator Platform</h3>
+          <p>Publish blogs, videos & photos with analytics and monetization.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="ai">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">ARTIFICIAL INTELLIGENCE</div>
+        <h2>Powered by Advanced AI</h2>
+        <p>Not just a chatbot — a complete intelligent travel companion.</p>
+      </div>
+      <div class="ai-grid">
+        <div class="ai-box"><div class="icon">🧠</div><h4>AI Trip Planner</h4><p>Complete itineraries in seconds</p></div>
+        <div class="ai-box"><div class="icon">💵</div><h4>Budget Planner</h4><p>Smart expense optimization</p></div>
+        <div class="ai-box"><div class="icon">🏨</div><h4>Hotel Suggestions</h4><p>Best stays for your style</p></div>
+        <div class="ai-box"><div class="icon">🛣️</div><h4>Route Optimizer</h4><p>Fastest & safest routes</p></div>
+        <div class="ai-box"><div class="icon">🧳</div><h4>Packing List</h4><p>Never forget essentials</p></div>
+        <div class="ai-box"><div class="icon">🌤️</div><h4>Weather Advisor</h4><p>Real-time weather intelligence</p></div>
+        <div class="ai-box"><div class="icon">🍛</div><h4>Food Suggestions</h4><p>Local culinary recommendations</p></div>
+        <div class="ai-box"><div class="icon">🗣️</div><h4>Language Help</h4><p>Talk like a local anywhere</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="destinations">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">GLOBAL STRUCTURE</div>
+        <h2>From Hadoti to the World</h2>
+        <p>A deeply structured destination system that scales from villages to continents.</p>
+      </div>
+      <div class="hierarchy">
+        <div class="hierarchy-item">🌍 World</div>
+        <div class="hierarchy-arrow">↓</div>
+        <div class="hierarchy-item">🌏 Asia</div>
+        <div class="hierarchy-arrow">↓</div>
+        <div class="hierarchy-item">🇮🇳 India</div>
+        <div class="hierarchy-arrow">↓</div>
+        <div class="hierarchy-item">🏰 Rajasthan</div>
+        <div class="hierarchy-arrow">↓</div>
+        <div class="hierarchy-item">📍 Bundi District (Hadoti)</div>
+        <div class="hierarchy-arrow">↓</div>
+        <div class="hierarchy-item">✨ Every Tourist Place</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="booking">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">ECOSYSTEM</div>
+        <h2>Book Everything. Earn Everything.</h2>
+        <p>Complete booking system for travelers + powerful tools for service providers.</p>
+      </div>
+      <div class="two-col">
+        <div class="info-card">
+          <h3>🧳 For Travelers</h3>
+          <ul class="info-list">
+            <li>Hotels, Homestays & Hostels</li>
+            <li>Flights, Trains & Buses</li>
+            <li>Taxi & Bike Rentals</li>
+            <li>Tour Guides & Photographers</li>
+            <li>Adventure Activities</li>
+            <li>Tour Packages & Event Tickets</li>
+            <li>UPI, Cards, Wallets & EMI</li>
+            <li>QR Tickets & Instant Confirmation</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3>💼 For Businesses</h3>
+          <ul class="info-list">
+            <li>Hotel & Homestay Owners</li>
+            <li>Taxi Drivers & Bike Rentals</li>
+            <li>Local Tour Guides</li>
+            <li>Photographers</li>
+            <li>Travel Agencies</li>
+            <li>Adventure Providers</li>
+            <li>Full Earnings Dashboard</li>
+            <li>Calendar, Pricing & Analytics</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="vision">
+    <div class="container">
+      <div class="vision-box">
+        <div class="section-tag">ULTIMATE GOAL</div>
+        <h2>Not Just a Website.<br>A Complete Travel OS.</h2>
+        <p>
+          HADOTI WALE BHAIYA will become India's largest travel ecosystem — where people discover places, plan trips with AI, book hotels & transport, share diaries, connect with travelers, and where businesses earn through the platform.
+        </p>
+        <div class="vision-tagline">
+          "One Platform for Every Traveler, Every Destination, Every Language, Everywhere."
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cta" style="padding-top:1.5rem;padding-bottom:5rem;text-align:center;">
+    <div class="container">
+      <h2 style="font-family:'Playfair Display',serif;font-size:2.2rem;margin-bottom:0.9rem;">
+        Ready to Build the Future of Travel?
+      </h2>
+      <p style="color:var(--muted);margin-bottom:1.8rem;font-size:1.05rem;">
+        This is just the beginning. The blueprint is ready. Now we execute.
+      </p>
+      <a href="#" class="btn-primary" style="font-size:1.05rem;padding:1rem 2.3rem;">
+        Start the Journey →
