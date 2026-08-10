@@ -1,954 +1,493 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <!-- Mobile Responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Basic SEO -->
+    <title>HADOTI WALE BHAIYA | Explore Hadoti</title>
     <meta
         name="description"
-        content="HADOTIWALEBHAIYA — Discover destinations, plan journeys and experience the world."
+        content="HADOTI WALE BHAIYA - Explore Hadoti's destinations, culture, food, hotels, homestays and travel experiences."
     >
-
     <meta
-        name="theme-color"
-        content="#07090d"
+        name="keywords"
+        content="Hadoti, Kota, Bundi, Baran, Jhalawar, Rajasthan, travel, tourism, hotels, homestay"
     >
+    <meta name="author" content="HADOTI WALE BHAIYA">
 
-    <title>HADOTIWALEBHAIYA | Explore Beyond</title>
+    <!-- Theme -->
+    <meta name="theme-color" content="#0b1220">
 
-
-    <!-- =====================================================
-         PRECONNECT
-    ====================================================== -->
-
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
+    <!-- Social Preview -->
+    <meta property="og:title" content="HADOTI WALE BHAIYA">
+    <meta
+        property="og:description"
+        content="Discover Hadoti like never before."
     >
+    <meta property="og:type" content="website">
 
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
-
-
-    <!-- =====================================================
-         GOOGLE FONTS
-    ====================================================== -->
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap"
         rel="stylesheet"
     >
-
-
-    <!-- =====================================================
-         FONT AWESOME
-    ====================================================== -->
-
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    >
-
-
-    <!-- =====================================================
-         MAIN CSS
-    ====================================================== -->
-
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
-
 </head>
-
 
 <body>
 
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+    <header class="site-header" id="top">
 
-<!-- =========================================================
-     PAGE LOADER
-========================================================= -->
+        <div class="container header-inner">
 
-<div
-    id="pageLoader"
-    class="page-loader"
-    aria-hidden="true"
->
+            <!-- Logo / Brand -->
+            <a href="#home" class="brand" aria-label="HADOTI WALE BHAIYA Home">
+                <span class="brand-icon">🏜️</span>
 
-    <div class="loader-content">
+                <span class="brand-text">
+                    <strong>HADOTI WALE BHAIYA</strong>
+                    <small>अपनी हाड़ौती • अपनी पहचान</small>
+                </span>
+            </a>
 
-        <div class="loader-orbit">
+            <!-- Desktop Navigation -->
+            <nav class="main-nav" aria-label="Main Navigation">
+                <a href="#home">Home</a>
+                <a href="#destinations">Destinations</a>
+                <a href="#experiences">Experiences</a>
+                <a href="#plan">Plan Trip</a>
+                <a href="#about">About</a>
+            </nav>
 
-            <span></span>
-            <span></span>
-            <span></span>
+            <!-- Header Actions -->
+            <div class="header-actions">
+
+                <button
+                    type="button"
+                    class="language-btn"
+                    id="languageBtn"
+                    aria-label="Change language"
+                >
+                    हिंदी
+                </button>
+
+                <button
+                    type="button"
+                    class="menu-btn"
+                    id="menuBtn"
+                    aria-label="Open menu"
+                    aria-expanded="false"
+                >
+                    ☰
+                </button>
+
+            </div>
 
         </div>
 
-        <div class="loader-brand">
-            HADOTIWALEBHAIYA
-        </div>
-
-        <div class="loader-text">
-            Preparing your journey...
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- =========================================================
-     HEADER
-========================================================= -->
-
-<header
-    id="siteHeader"
-    class="site-header"
->
-
-    <div class="header-container">
-
-
-        <!-- BRAND -->
-
-        <a
-            href="#home"
-            class="brand"
-            aria-label="HADOTIWALEBHAIYA Home"
-        >
-
-            <span class="brand-mark">
-
-                <i class="fa-solid fa-compass"></i>
-
-            </span>
-
-            <span class="brand-text">
-                HADOTIWALEBHAIYA
-            </span>
-
-        </a>
-
-
-        <!-- DESKTOP NAVIGATION -->
-
-        <nav
-            class="desktop-nav"
-            aria-label="Primary navigation"
-        >
-
-            <a
-                href="#home"
-                class="nav-link active"
-            >
-                Home
-            </a>
-
-            <a
-                href="#explore"
-                class="nav-link"
-            >
-                Explore
-            </a>
-
-            <a
-                href="#destinations"
-                class="nav-link"
-            >
-                Destinations
-            </a>
-
-            <a
-                href="#ai-planner"
-                class="nav-link"
-            >
-                AI Planner
-            </a>
-
-            <a
-                href="#stories"
-                class="nav-link"
-            >
-                Stories
-            </a>
-
+        <!-- Mobile Navigation -->
+        <nav class="mobile-nav" id="mobileNav" aria-label="Mobile Navigation">
+            <a href="#home">Home</a>
+            <a href="#destinations">Destinations</a>
+            <a href="#experiences">Experiences</a>
+            <a href="#plan">Plan Trip</a>
+            <a href="#about">About</a>
         </nav>
 
-
-        <!-- HEADER ACTIONS -->
-
-        <div class="header-actions">
-
-            <button
-                type="button"
-                class="header-icon-btn"
-                id="headerSearchButton"
-                aria-label="Open search"
-            >
-
-                <i class="fa-solid fa-magnifying-glass"></i>
-
-            </button>
-
-
-            <button
-                type="button"
-                class="header-login-btn"
-                id="loginButton"
-            >
-
-                <i class="fa-regular fa-user"></i>
-
-                <span>
-                    Sign In
-                </span>
-
-            </button>
-
-
-            <button
-                type="button"
-                class="mobile-menu-button"
-                id="mobileMenuButton"
-                aria-label="Open menu"
-                aria-expanded="false"
-                aria-controls="mobileMenu"
-            >
-
-                <span></span>
-                <span></span>
-                <span></span>
-
-            </button>
-
-        </div>
-
-    </div>
+    </header>
 
 
     <!-- =====================================================
-         MOBILE MENU
+         MAIN
     ====================================================== -->
+    <main>
 
-    <div
-        class="mobile-menu"
-        id="mobileMenu"
-        aria-hidden="true"
-    >
+        <!-- =================================================
+             HERO
+        ================================================== -->
+        <section class="hero" id="home">
 
-        <nav class="mobile-nav">
+            <div class="container hero-content">
 
-            <a
-                href="#home"
-                class="mobile-nav-link"
-            >
-
-                <i class="fa-solid fa-house"></i>
-
-                <span>
-                    Home
+                <span class="hero-badge">
+                    ❤️ हाड़ौती से दिल तक
                 </span>
 
-            </a>
-
-
-            <a
-                href="#explore"
-                class="mobile-nav-link"
-            >
-
-                <i class="fa-solid fa-earth-americas"></i>
-
-                <span>
+                <h1>
                     Explore
-                </span>
+                    <span>Hadoti</span>
+                    Like Never Before
+                </h1>
 
-            </a>
+                <p>
+                    हाड़ौती की खूबसूरती, इतिहास, संस्कृति, खाना,
+                    घूमने की जगहें और लोकल अनुभव — सब एक ही जगह।
+                </p>
 
+                <!-- Search -->
+                <form class="search-box" id="searchForm">
 
-            <a
-                href="#destinations"
-                class="mobile-nav-link"
-            >
+                    <label for="searchInput" class="sr-only">
+                        Search destinations
+                    </label>
 
-                <i class="fa-solid fa-location-dot"></i>
+                    <input
+                        type="search"
+                        id="searchInput"
+                        name="search"
+                        placeholder="कहाँ घूमना चाहते हैं?"
+                        autocomplete="off"
+                    >
 
-                <span>
-                    Destinations
-                </span>
+                    <button type="submit">
+                        🔍 Search
+                    </button>
 
-            </a>
+                </form>
 
-
-            <a
-                href="#ai-planner"
-                class="mobile-nav-link"
-            >
-
-                <i class="fa-solid fa-wand-magic-sparkles"></i>
-
-                <span>
-                    AI Planner
-                </span>
-
-            </a>
-
-
-            <a
-                href="#stories"
-                class="mobile-nav-link"
-            >
-
-                <i class="fa-solid fa-book-open"></i>
-
-                <span>
-                    Stories
-                </span>
-
-            </a>
-
-        </nav>
-
-    </div>
-
-</header>
-
-
-<!-- =========================================================
-     MAIN
-========================================================= -->
-
-<main id="mainContent">
-
-
-<!-- =========================================================
-     HERO SECTION
-========================================================= -->
-
-<section
-    id="home"
-    class="hero-section"
->
-
-    <div class="hero-background">
-
-        <div class="hero-gradient"></div>
-
-        <div class="hero-grid"></div>
-
-        <div class="hero-noise"></div>
-
-    </div>
-
-
-    <div class="hero-container">
-
-
-        <!-- HERO CONTENT -->
-
-        <div class="hero-content">
-
-            <div class="hero-eyebrow">
-
-                <span class="eyebrow-line"></span>
-
-                <span>
-                    YOUR JOURNEY STARTS HERE
-                </span>
-
-            </div>
-
-
-            <h1 class="hero-title">
-
-                <span>
-                    THE WORLD
-                </span>
-
-                <span class="hero-title-accent">
-                    IS WAITING.
-                </span>
-
-            </h1>
-
-
-            <p class="hero-subtitle">
-
-                Discover places, plan unforgettable journeys,
-                and experience the world with
-                <strong>
-                    HADOTIWALEBHAIYA
-                </strong>.
-
-            </p>
-
-
-            <!-- HERO SEARCH -->
-
-            <div
-                class="hero-search"
-                id="heroSearch"
-                role="button"
-                tabindex="0"
-                aria-label="Search destinations"
-            >
-
-                <div class="hero-search-icon">
-
-                    <i class="fa-solid fa-location-dot"></i>
-
-                </div>
-
-
-                <div class="hero-search-text">
-
-                    <span class="search-label">
-                        Where do you want to go?
-                    </span>
-
-                    <span class="search-placeholder">
-                        Search a country, city, destination...
-                    </span>
-
-                </div>
-
-
-                <div class="hero-search-arrow">
-
-                    <i class="fa-solid fa-arrow-right"></i>
-
+                <!-- Quick Links -->
+                <div class="hero-links">
+                    <a href="#destinations">🏰 Places</a>
+                    <a href="#experiences">🍲 Food</a>
+                    <a href="#stay">🏨 Stay</a>
+                    <a href="#plan">🗺️ Trip Plan</a>
                 </div>
 
             </div>
 
-
-            <!-- HERO BUTTONS -->
-
-            <div class="hero-actions">
-
-                <button
-                    type="button"
-                    class="primary-button"
-                    id="exploreButton"
-                >
-
-                    <i class="fa-solid fa-earth-americas"></i>
-
-                    <span>
-                        Explore the World
-                    </span>
-
-                </button>
-
-
-                <button
-                    type="button"
-                    class="secondary-button"
-                    id="heroAIButton"
-                >
-
-                    <i class="fa-solid fa-wand-magic-sparkles"></i>
-
-                    <span>
-                        Plan My Journey
-                    </span>
-
-                </button>
-
-            </div>
-
-
-            <!-- HERO TRUST -->
-
-            <div class="hero-trust">
-
-                <div class="trust-item">
-
-                    <i class="fa-solid fa-map-location-dot"></i>
-
-                    <span>
-                        Discover
-                    </span>
-
-                </div>
-
-
-                <div class="trust-divider"></div>
-
-
-                <div class="trust-item">
-
-                    <i class="fa-solid fa-route"></i>
-
-                    <span>
-                        Plan
-                    </span>
-
-                </div>
-
-
-                <div class="trust-divider"></div>
-
-
-                <div class="trust-item">
-
-                    <i class="fa-solid fa-compass"></i>
-
-                    <span>
-                        Experience
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
+        </section>
 
 
         <!-- =================================================
-             GLOBE
+             DESTINATIONS
         ================================================== -->
+        <section class="section destinations-section" id="destinations">
 
-        <div
-            class="hero-globe-area"
-            aria-label="Interactive world exploration visual"
-        >
+            <div class="container">
 
-            <div class="globe-orbit orbit-one"></div>
+                <div class="section-heading">
+                    <span class="section-label">EXPLORE</span>
 
-            <div class="globe-orbit orbit-two"></div>
+                    <h2>
+                        हाड़ौती के खूबसूरत Destinations
+                    </h2>
 
-            <div class="globe-orbit orbit-three"></div>
+                    <p>
+                        ऐसी जगहें जिन्हें आपको अपनी अगली यात्रा में जरूर देखना चाहिए।
+                    </p>
+                </div>
+
+                <!-- JavaScript will populate this -->
+                <div
+                    class="destination-grid"
+                    id="destinationGrid"
+                    aria-live="polite"
+                >
+                    <div class="loading-card">
+                        <span>⏳</span>
+                        <p>Destinations loading...</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
 
 
-            <div class="globe">
+        <!-- =================================================
+             EXPERIENCES
+        ================================================== -->
+        <section class="section experiences-section" id="experiences">
 
-                <div class="globe-surface">
+            <div class="container">
 
-                    <div class="globe-land land-one"></div>
+                <div class="section-heading">
+                    <span class="section-label">EXPERIENCE</span>
 
-                    <div class="globe-land land-two"></div>
+                    <h2>
+                        सिर्फ घूमना नहीं, अनुभव करना है
+                    </h2>
 
-                    <div class="globe-land land-three"></div>
+                    <p>
+                        हाड़ौती को tourist की तरह नहीं,
+                        local की तरह महसूस करें।
+                    </p>
+                </div>
 
 
-                    <div
-                        class="globe-location india-location"
-                        title="India"
+                <div class="experience-grid">
+
+                    <article class="experience-card">
+                        <div class="experience-icon">🏰</div>
+                        <h3>इतिहास और विरासत</h3>
+                        <p>
+                            किले, महल, बावड़ियाँ और सदियों पुरानी कहानियाँ।
+                        </p>
+                    </article>
+
+
+                    <article class="experience-card">
+                        <div class="experience-icon">🍛</div>
+                        <h3>हाड़ौती का खाना</h3>
+                        <p>
+                            Local food और उन स्वादों की खोज जो हर जगह नहीं मिलते।
+                        </p>
+                    </article>
+
+
+                    <article class="experience-card">
+                        <div class="experience-icon">🌿</div>
+                        <h3>Nature & Adventure</h3>
+                        <p>
+                            जंगल, झरने, नदियाँ और प्रकृति के बीच यादगार सफर।
+                        </p>
+                    </article>
+
+
+                    <article class="experience-card">
+                        <div class="experience-icon">🤝</div>
+                        <h3>Local Experiences</h3>
+                        <p>
+                            स्थानीय लोगों, संस्कृति और असली हाड़ौती से जुड़ें।
+                        </p>
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             STAY
+        ================================================== -->
+        <section class="section stay-section" id="stay">
+
+            <div class="container">
+
+                <div class="section-heading">
+                    <span class="section-label">STAY</span>
+
+                    <h2>
+                        कहाँ ठहरें?
+                    </h2>
+
+                    <p>
+                        Hotels, homestays और local stays की जानकारी जल्द यहाँ मिलेगी।
+                    </p>
+                </div>
+
+
+                <div class="feature-placeholder">
+
+                    <div class="placeholder-icon">
+                        🏨
+                    </div>
+
+                    <h3>
+                        Hotels & Homestays
+                    </h3>
+
+                    <p>
+                        हाड़ौती में रहने के लिए बेहतर options खोजने का आसान तरीका।
+                    </p>
+
+                    <button
+                        type="button"
+                        class="primary-btn"
+                        id="stayExploreBtn"
                     >
+                        Explore Stays
+                    </button>
 
-                        <span></span>
+                </div>
 
-                        <div class="location-label">
-                            INDIA
-                        </div>
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             PLAN YOUR TRIP
+        ================================================== -->
+        <section class="section plan-section" id="plan">
+
+            <div class="container">
+
+                <div class="plan-box">
+
+                    <div class="plan-content">
+
+                        <span class="section-label">
+                            PLAN YOUR JOURNEY
+                        </span>
+
+                        <h2>
+                            अपनी हाड़ौती Trip Plan करें
+                        </h2>
+
+                        <p>
+                            आपकी पसंद, समय और budget के हिसाब से
+                            perfect यात्रा plan बनाने का experience।
+                        </p>
+
+                        <button
+                            type="button"
+                            class="primary-btn"
+                            id="planTripBtn"
+                        >
+                            🗺️ Plan My Trip
+                        </button>
 
                     </div>
 
-
-                    <div
-                        class="globe-location rajasthan-location"
-                        title="Rajasthan"
-                    >
-
-                        <span></span>
-
-                        <div class="location-label">
-                            RAJASTHAN
-                        </div>
-
-                    </div>
-
-
-                    <div
-                        class="globe-location bundi-location"
-                        title="Bundi"
-                    >
-
-                        <span></span>
-
-                        <div class="location-label">
-                            BUNDI
-                        </div>
-
+                    <div class="plan-visual" aria-hidden="true">
+                        🧭
                     </div>
 
                 </div>
 
+            </div>
 
-                <div class="globe-shine"></div>
+        </section>
+
+
+        <!-- =================================================
+             ABOUT
+        ================================================== -->
+        <section class="section about-section" id="about">
+
+            <div class="container about-grid">
+
+                <div>
+
+                    <span class="section-label">
+                        ABOUT
+                    </span>
+
+                    <h2>
+                        HADOTI WALE BHAIYA
+                    </h2>
+
+                    <p>
+                        हमारा उद्देश्य हाड़ौती को भारत और दुनिया के
+                        यात्रियों तक एक नए और आसान तरीके से पहुँचाना है।
+                    </p>
+
+                    <p>
+                        यहाँ आपको destinations से लेकर food,
+                        culture, stays और travel planning तक
+                        एक complete travel experience मिलेगा।
+                    </p>
+
+                </div>
+
+
+                <div class="about-card">
+
+                    <div class="about-card-icon">
+                        ❤️
+                    </div>
+
+                    <h3>
+                        अपनी हाड़ौती
+                    </h3>
+
+                    <p>
+                        अपनी कहानी।
+                        अपना सफर।
+                        अपना अनुभव।
+                    </p>
+
+                </div>
 
             </div>
 
+        </section>
 
-            <!-- GLOBE CAPTION -->
+    </main>
 
-            <div class="globe-caption">
 
-                <span class="globe-caption-small">
-                    EXPLORE
-                </span>
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+    <footer class="site-footer">
 
-                <strong>
-                    EARTH → INDIA → RAJASTHAN
-                </strong>
+        <div class="container footer-grid">
 
-                <span class="globe-caption-small">
-                    YOUR NEXT STORY BEGINS HERE
-                </span>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- SCROLL -->
-
-    <a
-        href="#explore"
-        class="hero-scroll"
-        aria-label="Scroll to explore"
-    >
-
-        <span>
-            SCROLL TO EXPLORE
-        </span>
-
-        <i class="fa-solid fa-arrow-down"></i>
-
-    </a>
-
-</section>
-
-
-<!-- =========================================================
-     QUICK ACCESS
-========================================================= -->
-
-<section
-    id="explore"
-    class="quick-access-section"
->
-
-    <div class="section-container">
-
-        <div class="section-heading compact-heading">
-
-            <span class="section-kicker">
-                EXPLORE YOUR WAY
-            </span>
-
-            <h2>
-                Everything you need for the journey.
-            </h2>
-
-        </div>
-
-
-        <div class="quick-access-grid">
-
-
-            <button
-                type="button"
-                class="quick-card"
-                data-tool="explore"
-            >
-
-                <span class="quick-card-icon">
-                    <i class="fa-solid fa-earth-americas"></i>
-                </span>
-
-                <span class="quick-card-content">
-
-                    <strong>
-                        Explore
-                    </strong>
-
-                    <small>
-                        Discover destinations
-                    </small>
-
-                </span>
-
-                <i class="fa-solid fa-arrow-right quick-card-arrow"></i>
-
-            </button>
-
-
-            <button
-                type="button"
-                class="quick-card"
-                data-tool="ai"
-            >
-
-                <span class="quick-card-icon">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i>
-                </span>
-
-                <span class="quick-card-content">
-
-                    <strong>
-                        AI Trip Planner
-                    </strong>
-
-                    <small>
-                        Build your journey
-                    </small>
-
-                </span>
-
-                <i class="fa-solid fa-arrow-right quick-card-arrow"></i>
-
-            </button>
-
-
-            <button
-                type="button"
-                class="quick-card"
-                data-tool="maps"
-            >
-
-                <span class="quick-card-icon">
-                    <i class="fa-solid fa-map"></i>
-                </span>
-
-                <span class="quick-card-content">
-
-                    <strong>
-                        Maps
-                    </strong>
-
-                    <small>
-                        Find your route
-                    </small>
-
-                </span>
-
-                <i class="fa-solid fa-arrow-right quick-card-arrow"></i>
-
-            </button>
-
-
-            <button
-                type="button"
-                class="quick-card"
-                data-tool="stay"
-            >
-
-                <span class="quick-card-icon">
-                    <i class="fa-solid fa-bed"></i>
-                </span>
-
-                <span class="quick-card-content">
-
-                    <strong>
-                        Stay
-                    </strong>
-
-                    <small>
-                        Hotels & homestays
-                    </small>
-
-                </span>
-
-                <i class="fa-solid fa-arrow-right quick-card-arrow"></i>
-
-            </button>
-
-
-            <button
-                type="button"
-                class="quick-card"
-                data-tool="food"
-            >
-
-                <span class="quick-card-icon">
-                    <i class="fa-solid fa-utensils"></i>
-                </span>
-
-                <span class="quick-card-content">
-
-                    <strong>
-                        Food
-                    </strong>
-
-                    <small>
-                        Taste local flavours
-                    </small>
-
-                </span>
-
-                <i class="fa-solid fa-arrow-right quick-card-arrow"></i>
-
-            </button>
-
-
-            <button
-                type="button"
-                class="quick-card"
-                data-tool="stories"
-            >
-
-                <span class="quick-card-icon">
-                    <i class="fa-solid fa-book-open"></i>
-                </span>
-
-                <span class="quick-card-content">
-
-                    <strong>
-                        Stories
-                    </strong>
-
-                    <small>
-                        Travel experiences
-                    </small>
-
-                </span>
-
-                <i class="fa-solid fa-arrow-right quick-card-arrow"></i>
-
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================================================
-     RAJASTHAN
-========================================================= -->
-
-<section
-    class="rajasthan-section"
-    id="rajasthan"
->
-
-    <div class="section-container">
-
-        <div class="rajasthan-card">
-
-            <div class="rajasthan-content">
-
-                <span class="section-kicker">
-                    WHERE IT ALL BEGINS
-                </span>
+            <div class="footer-brand">
 
                 <h2>
-                    From <span>Hadoti</span>
-                    to the world.
+                    🏜️ HADOTI WALE BHAIYA
                 </h2>
 
                 <p>
-                    Discover Rajasthan through its hidden stories,
-                    ancient heritage, landscapes, food and people.
-                    Start local. Dream global.
+                    Explore Hadoti. Experience Rajasthan.
                 </p>
-
-
-                <div class="journey-path">
-
-                    <div class="journey-step active">
-
-                        <span>
-                            <i class="fa-solid fa-globe"></i>
-                        </span>
-
-                        <small>
-                            Earth
-                        </small>
-
-                    </div>
-
-
-                    <div class="journey-line"></div>
-
-
-                    <div class="journey-step active">
-
-                        <span>
-                            <i class="fa-solid fa-location-dot"></i>
-                        </span>
-
-                        <small>
-                            India
-                        </small>
-
-                    </div>
-
-
-                    <div class="journey-line"></div>
-
-
-                    <div class="journey-step active">
-
-                        <span>
-                            <i class="fa-solid fa-landmark"></i>
-                        </span>
-
-                        <small>
-                            Rajasthan
-                        </small>
-
-                    </div>
-
-
-                    <div class="journey-line"></div>
-
-
-                    <div class="journey-step highlight">
-
-                        <span>
-                            <i class="fa-solid fa-mountain-sun"></i>
-                        </span>
-
-                        <small>
-                            Bundi
-                        </small>
-
-                    </div>
-
-                </div>
-
-
-                <button
-                    type="button"
-                    class="text-button"
-                    id="rajasthanExploreButton"
-                >
-
-                    <span>
-                        Explore Rajasthan
-                    </span>
-
-                    <i class="fa-solid fa-arrow-right"></i>
-
-                </button>
 
             </div>
 
 
-            <div class="rajasthan-visual">
+            <div class="footer-links">
 
-                <div class="visual-ring ring-one"></div>
+                <h3>Explore</h3>
 
-                <div class="visual-ring ring-two"></div>
+                <a href="#destinations">Destinations</a>
+                <a href="#experiences">Experiences</a>
+                <a href="#stay">Stay</a>
+                <a href="#plan">Plan Trip</a>
 
-                <div class="visual-ring ring-three"></div>
+            </div>
 
 
-                <div class="rajasthan-emblem">
+            <div class="footer-links">
 
-                    <i class="fa-solid fa-landmark"><
+                <h3>Quick Links</h3>
+
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#top">Back to Top ↑</a>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <div class="container">
+
+                <p>
+                    © <span id="currentYear"></span>
+                    HADOTI WALE BHAIYA. All rights reserved.
+                </p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+         Important:
+         defer ensures HTML loads before JS executes.
+    ====================================================== -->
+
+    <script src="destinations.js" defer></script>
+    <script src="script.js" defer></script>
+
+</body>
+</html>
