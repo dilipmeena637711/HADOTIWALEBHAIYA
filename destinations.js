@@ -1,295 +1,184 @@
-/* =========================================================
-   HADOTIWALEBHAIYA
-   DESTINATION DATA
-   STEP 3
-========================================================= */
+/*
+=========================================================
+HADOTI WALE BHAIYA
+DESTINATIONS DATA
+=========================================================
 
-window.HWB_DESTINATIONS = [
+This file contains destination information only.
+Website functionality is handled by script.js.
+=========================================================
+*/
 
-    {
-        id: "bundi",
-        name: "Bundi",
-        state: "Rajasthan",
-        country: "India",
-        region: "Hadoti",
+"use strict";
 
-        category: [
-            "destination",
-            "heritage"
-        ],
-
-        tagline: "The blue city of palaces, paintings and hidden stories.",
-
-        description:
-            "Discover Bundi's forts, palaces, stepwells, paintings, lakes and local culture.",
-
-        popular: true,
-
-        tags: [
-            "fort",
-            "palace",
-            "heritage",
-            "stepwell",
-            "culture"
-        ],
-
-        icon: "fa-landmark",
-
-        coordinates: {
-            latitude: 25.4305,
-            longitude: 75.6499
-        }
-    },
-
-
-    {
-        id: "jaipur",
-        name: "Jaipur",
-        state: "Rajasthan",
-        country: "India",
-        region: "Rajasthan",
-
-        category: [
-            "destination",
-            "heritage"
-        ],
-
-        tagline: "Heritage, architecture and colour.",
-
-        description:
-            "Explore royal palaces, forts, markets, food and the architectural heritage of Jaipur.",
-
-        popular: true,
-
-        tags: [
-            "fort",
-            "palace",
-            "heritage",
-            "shopping",
-            "culture"
-        ],
-
-        icon: "fa-landmark",
-
-        coordinates: {
-            latitude: 26.9124,
-            longitude: 75.7873
-        }
-    },
-
-
-    {
-        id: "udaipur",
-        name: "Udaipur",
-        state: "Rajasthan",
-        country: "India",
-        region: "Mewar",
-
-        category: [
-            "destination",
-            "nature"
-        ],
-
-        tagline: "Lakes, palaces and slow travel.",
-
-        description:
-            "Experience lakes, palaces, heritage streets and the scenic landscape of Udaipur.",
-
-        popular: true,
-
-        tags: [
-            "lake",
-            "palace",
-            "heritage",
-            "romantic",
-            "nature"
-        ],
-
-        icon: "fa-water",
-
-        coordinates: {
-            latitude: 24.5854,
-            longitude: 73.7125
-        }
-    },
-
-
-    {
-        id: "jaisalmer",
-        name: "Jaisalmer",
-        state: "Rajasthan",
-        country: "India",
-        region: "Marwar",
-
-        category: [
-            "destination",
-            "nature"
-        ],
-
-        tagline: "Golden sands beneath endless skies.",
-
-        description:
-            "Discover the golden fort, desert landscapes, traditional culture and desert experiences.",
-
-        popular: true,
-
-        tags: [
-            "desert",
-            "fort",
-            "culture",
-            "camping",
-            "adventure"
-        ],
-
-        icon: "fa-sun",
-
-        coordinates: {
-            latitude: 26.9157,
-            longitude: 70.9083
-        }
-    },
-
+const HADOTI_DESTINATIONS = [
 
     {
         id: "kota",
         name: "Kota",
-        state: "Rajasthan",
-        country: "India",
-        region: "Hadoti",
-
-        category: [
-            "destination",
-            "nature"
-        ],
-
-        tagline: "Riverfronts, gardens and Hadoti heritage.",
-
+        nameHi: "कोटा",
+        region: "Hadoti, Rajasthan",
+        category: "City & Heritage",
+        emoji: "🏰",
         description:
-            "Explore the Chambal River, gardens, museums and the growing urban culture of Kota.",
-
-        popular: false,
-
+            "चंबल नदी, ऐतिहासिक स्थलों, बगीचों और आधुनिक शहर के लिए प्रसिद्ध।",
         tags: [
-            "river",
-            "heritage",
-            "garden",
-            "culture"
-        ],
-
-        icon: "fa-tree",
-
-        coordinates: {
-            latitude: 25.2138,
-            longitude: 75.8648
-        }
+            "Chambal",
+            "Heritage",
+            "Gardens",
+            "City"
+        ]
     },
 
-
     {
-        id: "ranthambore",
-        name: "Ranthambore",
-        state: "Rajasthan",
-        country: "India",
-        region: "Sawai Madhopur",
-
-        category: [
-            "destination",
-            "nature"
-        ],
-
-        tagline: "Wild landscapes and the thrill of the jungle.",
-
+        id: "bundi",
+        name: "Bundi",
+        nameHi: "बूंदी",
+        region: "Hadoti, Rajasthan",
+        category: "Fort & Heritage",
+        emoji: "🏯",
         description:
-            "Experience one of Rajasthan's famous wildlife landscapes and its historic fort.",
-
-        popular: true,
-
+            "किले, महल, बावड़ियों और खूबसूरत चित्रकारी के लिए प्रसिद्ध ऐतिहासिक शहर।",
         tags: [
-            "wildlife",
-            "tiger",
-            "forest",
-            "fort",
-            "adventure"
-        ],
-
-        icon: "fa-paw",
-
-        coordinates: {
-            latitude: 26.0173,
-            longitude: 76.5026
-        }
+            "Fort",
+            "Palace",
+            "Baori",
+            "History"
+        ]
     },
 
-
     {
-        id: "jodhpur",
-        name: "Jodhpur",
-        state: "Rajasthan",
-        country: "India",
-        region: "Marwar",
-
-        category: [
-            "destination",
-            "heritage"
-        ],
-
-        tagline: "A blue city beneath a mighty fort.",
-
+        id: "baran",
+        name: "Baran",
+        nameHi: "बारां",
+        region: "Hadoti, Rajasthan",
+        category: "Nature & Heritage",
+        emoji: "🌿",
         description:
-            "Explore Mehrangarh Fort, blue streets, local markets and Marwari culture.",
-
-        popular: true,
-
+            "प्राकृतिक सुंदरता, प्राचीन मंदिरों और स्थानीय संस्कृति से जुड़ा क्षेत्र।",
         tags: [
-            "fort",
-            "heritage",
-            "culture",
-            "food",
-            "shopping"
-        ],
-
-        icon: "fa-city",
-
-        coordinates: {
-            latitude: 26.2389,
-            longitude: 73.0243
-        }
+            "Nature",
+            "Temples",
+            "Culture",
+            "Heritage"
+        ]
     },
 
+    {
+        id: "jhalawar",
+        name: "Jhalawar",
+        nameHi: "झालावाड़",
+        region: "Hadoti, Rajasthan",
+        category: "Nature & Heritage",
+        emoji: "🌳",
+        description:
+            "हरे-भरे वातावरण, ऐतिहासिक इमारतों और आसपास के प्राकृतिक स्थलों के लिए जाना जाता है।",
+        tags: [
+            "Nature",
+            "Heritage",
+            "Palaces",
+            "Culture"
+        ]
+    },
 
     {
-        id: "mount-abu",
-        name: "Mount Abu",
-        state: "Rajasthan",
-        country: "India",
-        region: "Aravalli",
-
-        category: [
-            "destination",
-            "nature"
-        ],
-
-        tagline: "Rajasthan's hill escape.",
-
+        id: "mukundara",
+        name: "Mukundara Hills",
+        nameHi: "मुकुंदरा हिल्स",
+        region: "Hadoti, Rajasthan",
+        category: "Wildlife & Nature",
+        emoji: "🐅",
         description:
-            "Enjoy the cooler mountain landscape, lakes, viewpoints and temples of Mount Abu.",
-
-        popular: true,
-
+            "पहाड़ियों, जंगलों और वन्यजीवों से जुड़ा खूबसूरत प्राकृतिक क्षेत्र।",
         tags: [
-            "mountain",
-            "lake",
-            "nature",
-            "temple",
-            "adventure"
-        ],
+            "Wildlife",
+            "Hills",
+            "Forest",
+            "Nature"
+        ]
+    },
 
-        icon: "fa-mountain-sun",
-
-        coordinates: {
-            latitude: 24.5926,
-            longitude: 72.7156
-        }
+    {
+        id: "chambal",
+        name: "Chambal River",
+        nameHi: "चंबल नदी",
+        region: "Hadoti, Rajasthan",
+        category: "Nature",
+        emoji: "🌊",
+        description:
+            "हाड़ौती की पहचान से जुड़ी चंबल नदी और उसके आसपास के खूबसूरत प्राकृतिक दृश्य।",
+        tags: [
+            "River",
+            "Nature",
+            "Boating",
+            "Photography"
+        ]
     }
 
 ];
+
+
+/*
+=========================================================
+HELPER FUNCTIONS
+=========================================================
+*/
+
+function getAllDestinations() {
+    return [...HADOTI_DESTINATIONS];
+}
+
+
+function getDestinationById(id) {
+
+    if (!id) {
+        return null;
+    }
+
+    return HADOTI_DESTINATIONS.find(
+        destination => destination.id === String(id).toLowerCase()
+    ) || null;
+}
+
+
+function searchDestinations(query) {
+
+    if (!query || typeof query !== "string") {
+        return getAllDestinations();
+    }
+
+    const searchText = query.trim().toLowerCase();
+
+    if (!searchText) {
+        return getAllDestinations();
+    }
+
+    return HADOTI_DESTINATIONS.filter(destination => {
+
+        const searchableText = [
+            destination.id,
+            destination.name,
+            destination.nameHi,
+            destination.region,
+            destination.category,
+            destination.description,
+            ...(destination.tags || [])
+        ]
+        .join(" ")
+        .toLowerCase();
+
+        return searchableText.includes(searchText);
+    });
+}
+
+
+/*
+=========================================================
+OPTIONAL GLOBAL EXPORT
+=========================================================
+*/
+
+window.HADOTI_DESTINATIONS = HADOTI_DESTINATIONS;
+window.getAllDestinations = getAllDestinations;
+window.getDestinationById = getDestinationById;
+window.searchDestinations = searchDestinations;
