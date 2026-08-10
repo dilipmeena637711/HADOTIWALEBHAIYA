@@ -1,10 +1,21 @@
 /* =========================================================
    HADOTIWALEBHAIYA
    MAIN JAVASCRIPT
-   STEP 2
+   STEP 4
 ========================================================= */
 
 "use strict";
+
+
+/* =========================================================
+   GLOBAL STATE
+========================================================= */
+
+const HWB = {
+    searchCategory: "all",
+    savedDestinations: new Set(),
+    currentModal: null
+};
 
 
 /* =========================================================
@@ -13,735 +24,337 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    /* -----------------------------------------------------
-       ELEMENTS
-    ----------------------------------------------------- */
+    initializeLoader();
 
-    const pageLoader = document.getElementById("pageLoader");
-    const siteHeader = document.getElementById("siteHeader");
+    initializeNavigation();
 
-    const mobileMenuButton =
-        document.getElementById("mobileMenuButton");
+    initializeSearch();
 
-    const mobileMenu =
-        document.getElementById("mobileMenu");
+    initializeAIPlanner();
 
-    const headerSearchButton =
-        document.getElementById("headerSearchButton");
+    initializeDestinationCards();
 
-    const heroSearch =
-        document.getElementById("heroSearch");
+    initializeQuickAccess();
 
-    const searchModal =
-        document.getElementById("searchModal");
+    initializeButtons();
 
-    const destinationSearch =
-        document.getElementById("destinationSearch");
+    initializeModalSystem();
 
-    const searchResults =
-        document.getElementById("searchResults");
+    initializeYear();
 
-    const clearSearch =
-        document.getElementById("clearSearch");
+    initializeKeyboardSupport();
 
-    const aiPlannerModal =
-        document.getElementById("aiPlannerModal");
+    loadSavedDestinations();
 
-    const plannerForm =
-        document.getElementById("plannerForm");
-
-    const plannerResult =
-        document.getElementById("plannerResult");
-
-    const infoModal =
-        document.getElementById("infoModal");
-
-    const infoModalTitle =
-        document.getElementById("infoModalTitle");
-
-    const infoModalBody =
-        document.getElementById("infoModalBody");
-
-    const toast =
-        document.getElementById("toast");
-
-    const toastMessage =
-        document.getElementById("toastMessage");
-
-    const currentYear =
-        document.getElementById("currentYear");
+});
 
 
-    /* =====================================================
-       GLOBAL STATE
-    ===================================================== */
+/* =========================================================
+   PAGE LOADER
+========================================================= */
 
-    let activeSearchCategory = "all";
+function initializeLoader() {
 
-    let toastTimer = null;
+    const loader = document.getElementById("pageLoader");
 
-    let savedDestinations =
-        JSON.parse(
-            localStorage.getItem(
-                "hadotiSavedDestinations"
-            ) || "[]"
-        );
-
-
-    /* =====================================================
-       PAGE LOADER
-    ===================================================== */
+    if (!loader) return;
 
     window.addEventListener("load", () => {
 
         setTimeout(() => {
 
-            if (pageLoader) {
+            loader.classList.add("hidden");
 
-                pageLoader.classList.add("hidden");
-
-                pageLoader.setAttribute(
-                    "aria-hidden",
-                    "true"
-                );
-
-            }
+            setTimeout(() => {
+                loader.style.display = "none";
+            }, 700);
 
         }, 500);
 
     });
 
-
-    /* =====================================================
-       CURRENT YEAR
-    ===================================================== */
-
-    if (currentYear) {
-
-        currentYear.textContent =
-            new Date().getFullYear();
-
-    }
+}
 
 
-    /* =====================================================
-       HEADER SCROLL EFFECT
-    ===================================================== */
+/* =========================================================
+   NAVIGATION
+========================================================= */
 
-    function updateHeader() {
+function initializeNavigation() {
 
-        if (!siteHeader) return;
+    const header = document.getElementById("siteHeader");
+
+    const mobileButton =
+        document.getElementById("mobileMenuButton");
+
+    const mobileMenu =
+        document.getElementById("mobileMenu");
+
+    const mobileLinks =
+        document.querySelectorAll(".mobile-nav-link");
+
+    const navLinks =
+        document.querySelectorAll(".nav-link");
+
+
+    /* Header scroll */
+
+    window.addEventListener("scroll", () => {
+
+        if (!header) return;
 
         if (window.scrollY > 40) {
-
-            siteHeader.classList.add("scrolled");
-
+            header.classList.add("scrolled");
         } else {
-
-            siteHeader.classList.remove("scrolled");
-
+            header.classList.remove("scrolled");
         }
+
+        updateActiveNavigation();
+
+    });
+
+
+    /* Mobile menu */
+
+    if (mobileButton && mobileMenu) {
+
+        mobileButton.addEventListener("click", () => {
+
+            const isOpen =
+                mobileButton.getAttribute("aria-expanded") === "true";
+
+            mobileButton.setAttribute(
+                "aria-expanded",
+                String(!isOpen)
+            );
+
+            mobileMenu.setAttribute(
+                "aria-hidden",
+                String(isOpen)
+            );
+
+            mobileMenu.classList.toggle("open", !isOpen);
+
+            document.body.classList.toggle(
+                "menu-open",
+                !isOpen
+            );
+
+        });
 
     }
 
-    window.addEventListener(
-        "scroll",
-        updateHeader,
-        { passive: true }
+
+    /* Close mobile menu after navigation */
+
+    mobileLinks.forEach(link => {
+
+        link.addEventListener("click", () => {
+
+            closeMobileMenu();
+
+        });
+
+    });
+
+
+    /* Desktop navigation */
+
+    navLinks.forEach(link => {
+
+        link.addEventListener("click", () => {
+
+            navLinks.forEach(item => {
+                item.classList.remove("active");
+            });
+
+            link.classList.add("active");
+
+        });
+
+    });
+
+}
+
+
+function closeMobileMenu() {
+
+    const button =
+        document.getElementById("mobileMenuButton");
+
+    const menu =
+        document.getElementById("mobileMenu");
+
+    if (!button || !menu) return;
+
+    button.setAttribute(
+        "aria-expanded",
+        "false"
     );
 
-    updateHeader();
+    menu.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+    menu.classList.remove("open");
+
+    document.body.classList.remove("menu-open");
+
+}
 
 
-    /* =====================================================
-       MOBILE MENU
-    ===================================================== */
+/* =========================================================
+   ACTIVE NAVIGATION
+========================================================= */
 
-    function openMobileMenu() {
+function updateActiveNavigation() {
 
-        if (!mobileMenu || !mobileMenuButton) {
-            return;
+    const sections =
+        document.querySelectorAll("main section[id]");
+
+    const navLinks =
+        document.querySelectorAll(".nav-link");
+
+    let currentSection = "home";
+
+    sections.forEach(section => {
+
+        const sectionTop =
+            section.offsetTop - 180;
+
+        if (window.scrollY >= sectionTop) {
+            currentSection = section.id;
         }
 
-        mobileMenu.classList.add("open");
+    });
 
-        mobileMenu.setAttribute(
-            "aria-hidden",
-            "false"
+    navLinks.forEach(link => {
+
+        const href =
+            link.getAttribute("href");
+
+        link.classList.toggle(
+            "active",
+            href === `#${currentSection}`
         );
 
-        mobileMenuButton.classList.add("active");
+    });
 
-        mobileMenuButton.setAttribute(
-            "aria-expanded",
-            "true"
-        );
-
-        document.body.classList.add(
-            "menu-open"
-        );
-
-    }
+}
 
 
-    function closeMobileMenu() {
+/* =========================================================
+   SMOOTH SCROLL
+========================================================= */
 
-        if (!mobileMenu || !mobileMenuButton) {
-            return;
-        }
+function scrollToSection(id) {
 
-        mobileMenu.classList.remove("open");
+    const element =
+        document.getElementById(id);
 
-        mobileMenu.setAttribute(
-            "aria-hidden",
-            "true"
-        );
+    if (!element) return;
 
-        mobileMenuButton.classList.remove(
-            "active"
-        );
+    const header =
+        document.getElementById("siteHeader");
 
-        mobileMenuButton.setAttribute(
-            "aria-expanded",
-            "false"
-        );
+    const headerHeight =
+        header ? header.offsetHeight : 0;
 
-        document.body.classList.remove(
-            "menu-open"
-        );
+    const position =
+        element.getBoundingClientRect().top +
+        window.scrollY -
+        headerHeight -
+        15;
 
-    }
+    window.scrollTo({
+        top: position,
+        behavior: "smooth"
+    });
+
+}
 
 
-    if (mobileMenuButton) {
+/* =========================================================
+   SEARCH SYSTEM
+========================================================= */
 
-        mobileMenuButton.addEventListener(
-            "click",
-            () => {
+function initializeSearch() {
 
-                const isOpen =
-                    mobileMenuButton.getAttribute(
-                        "aria-expanded"
-                    ) === "true";
+    const headerSearch =
+        document.getElementById("headerSearchButton");
 
-                if (isOpen) {
+    const heroSearch =
+        document.getElementById("heroSearch");
 
-                    closeMobileMenu();
+    const destinationSearch =
+        document.getElementById("destinationSearch");
 
-                } else {
+    const clearSearch =
+        document.getElementById("clearSearch");
 
-                    openMobileMenu();
 
+    if (headerSearch) {
+
+        headerSearch.addEventListener("click", () => {
+
+            openModal("searchModal");
+
+            setTimeout(() => {
+
+                if (destinationSearch) {
+                    destinationSearch.focus();
                 }
 
-            }
-        );
-
-    }
-
-
-    /* -----------------------------------------------------
-       MOBILE NAV LINKS
-    ----------------------------------------------------- */
-
-    document
-        .querySelectorAll(".mobile-nav-link")
-        .forEach(link => {
-
-            link.addEventListener(
-                "click",
-                () => {
-
-                    closeMobileMenu();
-
-                }
-            );
+            }, 250);
 
         });
-
-
-    /* =====================================================
-       SMOOTH SCROLL
-    ===================================================== */
-
-    document
-        .querySelectorAll('a[href^="#"]')
-        .forEach(link => {
-
-            link.addEventListener(
-                "click",
-                event => {
-
-                    const targetId =
-                        link.getAttribute("href");
-
-                    if (
-                        !targetId ||
-                        targetId === "#"
-                    ) {
-                        return;
-                    }
-
-                    const target =
-                        document.querySelector(
-                            targetId
-                        );
-
-                    if (!target) return;
-
-                    event.preventDefault();
-
-                    target.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start"
-                    });
-
-                }
-            );
-
-        });
-
-
-    /* =====================================================
-       MODAL FUNCTIONS
-    ===================================================== */
-
-    function openModal(modal) {
-
-        if (!modal) return;
-
-        modal.classList.add("open");
-
-        modal.setAttribute(
-            "aria-hidden",
-            "false"
-        );
-
-        document.body.classList.add(
-            "modal-open"
-        );
-
-    }
-
-
-    function closeModal(modal) {
-
-        if (!modal) return;
-
-        modal.classList.remove("open");
-
-        modal.setAttribute(
-            "aria-hidden",
-            "true"
-        );
-
-        if (
-            !document.querySelector(
-                ".modal-overlay.open"
-            )
-        ) {
-
-            document.body.classList.remove(
-                "modal-open"
-            );
-
-        }
-
-    }
-
-
-    /* =====================================================
-       SEARCH MODAL
-    ===================================================== */
-
-    function openSearch() {
-
-        openModal(searchModal);
-
-        setTimeout(() => {
-
-            if (destinationSearch) {
-
-                destinationSearch.focus();
-
-            }
-
-        }, 150);
-
-        renderSearchResults(
-            destinationSearch
-                ? destinationSearch.value
-                : ""
-        );
-
-    }
-
-
-    if (headerSearchButton) {
-
-        headerSearchButton.addEventListener(
-            "click",
-            openSearch
-        );
 
     }
 
 
     if (heroSearch) {
 
-        heroSearch.addEventListener(
-            "click",
-            openSearch
-        );
+        heroSearch.addEventListener("click", () => {
 
+            openModal("searchModal");
 
-        heroSearch.addEventListener(
-            "keydown",
-            event => {
+            setTimeout(() => {
 
-                if (
-                    event.key === "Enter" ||
-                    event.key === " "
-                ) {
-
-                    event.preventDefault();
-
-                    openSearch();
-
+                if (destinationSearch) {
+                    destinationSearch.focus();
                 }
+
+            }, 250);
+
+        });
+
+
+        heroSearch.addEventListener("keydown", event => {
+
+            if (
+                event.key === "Enter" ||
+                event.key === " "
+            ) {
+
+                event.preventDefault();
+
+                openModal("searchModal");
+
+                setTimeout(() => {
+
+                    if (destinationSearch) {
+                        destinationSearch.focus();
+                    }
+
+                }, 250);
 
             }
-        );
+
+        });
 
     }
 
-
-    /* =====================================================
-       DESTINATION DATABASE
-    ===================================================== */
-
-    const defaultDestinations = [
-
-        {
-            id: "bundi",
-            name: "Bundi",
-            state: "Rajasthan",
-            country: "India",
-            category: "heritage",
-            type: "destination",
-            description:
-                "Historic palaces, stepwells, paintings and the blue streets of Hadoti."
-        },
-
-        {
-            id: "jaipur",
-            name: "Jaipur",
-            state: "Rajasthan",
-            country: "India",
-            category: "heritage",
-            type: "destination",
-            description:
-                "The Pink City known for forts, palaces and colourful markets."
-        },
-
-        {
-            id: "udaipur",
-            name: "Udaipur",
-            state: "Rajasthan",
-            country: "India",
-            category: "nature",
-            type: "destination",
-            description:
-                "Lakes, palaces and scenic landscapes of southern Rajasthan."
-        },
-
-        {
-            id: "jaisalmer",
-            name: "Jaisalmer",
-            state: "Rajasthan",
-            country: "India",
-            category: "nature",
-            type: "destination",
-            description:
-                "Golden architecture, desert landscapes and unforgettable sunsets."
-        },
-
-        {
-            id: "kota",
-            name: "Kota",
-            state: "Rajasthan",
-            country: "India",
-            category: "destination",
-            type: "destination",
-            description:
-                "A major city of Hadoti on the Chambal River."
-        },
-
-        {
-            id: "jodhpur",
-            name: "Jodhpur",
-            state: "Rajasthan",
-            country: "India",
-            category: "heritage",
-            type: "destination",
-            description:
-                "The Blue City dominated by the magnificent Mehrangarh Fort."
-        },
-
-        {
-            id: "mount-abu",
-            name: "Mount Abu",
-            state: "Rajasthan",
-            country: "India",
-            category: "nature",
-            type: "destination",
-            description:
-                "Rajasthan's famous hill destination with forests and mountain views."
-        },
-
-        {
-            id: "ranthambore",
-            name: "Ranthambore",
-            state: "Rajasthan",
-            country: "India",
-            category: "nature",
-            type: "destination",
-            description:
-                "A famous wildlife destination known for its tiger reserve."
-        }
-
-    ];
-
-
-    /*
-       If destinations.js exists and exposes
-       HADOTI_DESTINATIONS, use it.
-       Otherwise use the built-in list.
-    */
-
-    let destinations =
-        Array.isArray(
-            window.HADOTI_DESTINATIONS
-        )
-            ? window.HADOTI_DESTINATIONS
-            : defaultDestinations;
-
-
-    /* =====================================================
-       SEARCH RESULT ICON
-    ===================================================== */
-
-    function getCategoryIcon(category) {
-
-        if (category === "heritage") {
-
-            return "fa-landmark";
-
-        }
-
-        if (category === "nature") {
-
-            return "fa-mountain-sun";
-
-        }
-
-        return "fa-location-dot";
-
-    }
-
-
-    /* =====================================================
-       SEARCH RESULTS
-    ===================================================== */
-
-    function renderSearchResults(query = "") {
-
-        if (!searchResults) return;
-
-        const cleanQuery =
-            query.trim().toLowerCase();
-
-
-        let filtered =
-            destinations.filter(item => {
-
-                const categoryMatch =
-                    activeSearchCategory === "all" ||
-                    item.type === activeSearchCategory ||
-                    item.category === activeSearchCategory;
-
-                if (!categoryMatch) {
-                    return false;
-                }
-
-
-                if (!cleanQuery) {
-                    return true;
-                }
-
-
-                const searchableText = [
-
-                    item.name,
-                    item.state,
-                    item.country,
-                    item.category,
-                    item.description
-
-                ]
-                    .filter(Boolean)
-                    .join(" ")
-                    .toLowerCase();
-
-
-                return searchableText.includes(
-                    cleanQuery
-                );
-
-            });
-
-
-        filtered =
-            filtered.slice(0, 12);
-
-
-        if (filtered.length === 0) {
-
-            searchResults.innerHTML = `
-
-                <div class="search-empty">
-
-                    <i class="fa-solid fa-location-question"></i>
-
-                    <p>
-                        No destination found.
-                    </p>
-
-                    <small>
-                        Try another city, state or destination.
-                    </small>
-
-                </div>
-
-            `;
-
-            return;
-
-        }
-
-
-        searchResults.innerHTML =
-            filtered
-                .map(item => `
-
-                    <button
-                        type="button"
-                        class="search-result-item"
-                        data-destination-result="${escapeHTML(item.id)}"
-                    >
-
-                        <span class="search-result-icon">
-
-                            <i class="fa-solid ${getCategoryIcon(item.category)}"></i>
-
-                        </span>
-
-
-                        <span class="search-result-content">
-
-                            <strong>
-                                ${escapeHTML(item.name)}
-                            </strong>
-
-                            <small>
-                                ${escapeHTML(item.state || "")}
-                                ${item.state && item.country ? " • " : ""}
-                                ${escapeHTML(item.country || "")}
-                            </small>
-
-                            <p>
-                                ${escapeHTML(item.description || "")}
-                            </p>
-
-                        </span>
-
-
-                        <i class="fa-solid fa-arrow-right search-result-arrow"></i>
-
-                    </button>
-
-                `)
-                .join("");
-
-
-        document
-            .querySelectorAll(
-                "[data-destination-result]"
-            )
-            .forEach(button => {
-
-                button.addEventListener(
-                    "click",
-                    () => {
-
-                        const id =
-                            button.dataset
-                                .destinationResult;
-
-                        showDestination(
-                            id
-                        );
-
-                    }
-                );
-
-            });
-
-    }
-
-
-    /* =====================================================
-       ESCAPE HTML
-    ===================================================== */
-
-    function escapeHTML(value) {
-
-        if (value === null ||
-            value === undefined) {
-
-            return "";
-
-        }
-
-
-        return String(value)
-            .replace(
-                /[&<>"']/g,
-                character => {
-
-                    const entities = {
-
-                        "&": "&amp;",
-                        "<": "&lt;",
-                        ">": "&gt;",
-                        '"': "&quot;",
-                        "'": "&#039;"
-
-                    };
-
-                    return entities[
-                        character
-                    ];
-
-                }
-            );
-
-    }
-
-
-    /* =====================================================
-       SEARCH INPUT
-    ===================================================== */
 
     if (destinationSearch) {
 
@@ -750,7 +363,7 @@ document.addEventListener("DOMContentLoaded", () => {
             () => {
 
                 renderSearchResults(
-                    destinationSearch.value
+                    destinationSearch.value.trim()
                 );
 
             }
@@ -759,157 +372,696 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* =====================================================
-       CLEAR SEARCH
-    ===================================================== */
-
     if (clearSearch) {
 
-        clearSearch.addEventListener(
-            "click",
-            () => {
+        clearSearch.addEventListener("click", () => {
 
-                if (!destinationSearch) {
-                    return;
-                }
+            if (!destinationSearch) return;
 
-                destinationSearch.value = "";
+            destinationSearch.value = "";
 
-                destinationSearch.focus();
+            renderSearchResults("");
 
-                renderSearchResults("");
+            destinationSearch.focus();
 
-            }
-        );
+        });
 
     }
 
 
-    /* =====================================================
-       SEARCH CATEGORIES
-    ===================================================== */
+    /* Search categories */
 
-    document
-        .querySelectorAll(".search-category")
-        .forEach(button => {
+    const categories =
+        document.querySelectorAll(".search-category");
 
-            button.addEventListener(
+    categories.forEach(category => {
+
+        category.addEventListener("click", () => {
+
+            categories.forEach(item => {
+                item.classList.remove("active");
+            });
+
+            category.classList.add("active");
+
+            HWB.searchCategory =
+                category.dataset.category || "all";
+
+            const value =
+                destinationSearch
+                    ? destinationSearch.value.trim()
+                    : "";
+
+            renderSearchResults(value);
+
+        });
+
+    });
+
+
+    renderSearchResults("");
+
+}
+
+
+/* =========================================================
+   GET DESTINATION DATABASE
+========================================================= */
+
+function getDestinations() {
+
+    /*
+       destinations.js should create:
+
+       window.HADOTI_DESTINATIONS = [...]
+
+       If it doesn't exist, return an empty array.
+    */
+
+    if (
+        Array.isArray(
+            window.HADOTI_DESTINATIONS
+        )
+    ) {
+
+        return window.HADOTI_DESTINATIONS;
+
+    }
+
+    return [];
+
+}
+
+
+/* =========================================================
+   SEARCH RESULTS
+========================================================= */
+
+function renderSearchResults(query = "") {
+
+    const container =
+        document.getElementById("searchResults");
+
+    if (!container) return;
+
+
+    let destinations =
+        getDestinations();
+
+
+    /* Category filter */
+
+    if (HWB.searchCategory !== "all") {
+
+        destinations =
+            destinations.filter(item => {
+
+                return (
+                    item.category ===
+                    HWB.searchCategory
+                );
+
+            });
+
+    }
+
+
+    /* Text search */
+
+    if (query) {
+
+        const search =
+            query.toLowerCase();
+
+        destinations =
+            destinations.filter(item => {
+
+                const searchableText = [
+
+                    item.name,
+                    item.state,
+                    item.country,
+                    item.region,
+                    item.category,
+                    item.description
+
+                ]
+                .filter(Boolean)
+                .join(" ")
+                .toLowerCase();
+
+                return searchableText.includes(search);
+
+            });
+
+    }
+
+
+    /* Empty state */
+
+    if (!destinations.length) {
+
+        container.innerHTML = `
+
+            <div class="search-empty">
+
+                <i class="fa-solid fa-map-location-dot"></i>
+
+                <p>
+                    No destinations found.
+                </p>
+
+                <small>
+                    Try another city, state or destination.
+                </small>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    /* Show limited results */
+
+    const results =
+        destinations.slice(0, 12);
+
+
+    container.innerHTML =
+        results.map(destination => {
+
+            return `
+
+                <button
+                    type="button"
+                    class="search-result-item"
+                    data-destination-id="${escapeHTML(
+                        destination.id || ""
+                    )}"
+                >
+
+                    <span class="search-result-icon">
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+                    </span>
+
+                    <span class="search-result-content">
+
+                        <strong>
+                            ${escapeHTML(
+                                destination.name || "Unknown"
+                            )}
+                        </strong>
+
+                        <small>
+                            ${escapeHTML(
+                                destination.state || ""
+                            )}
+                            ${destination.country
+                                ? " • " +
+                                  escapeHTML(destination.country)
+                                : ""
+                            }
+                        </small>
+
+                    </span>
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </button>
+
+            `;
+
+        })
+        .join("");
+
+
+    /* Result click */
+
+    const resultButtons =
+        container.querySelectorAll(
+            ".search-result-item"
+        );
+
+
+    resultButtons.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            const id =
+                button.dataset.destinationId;
+
+            openDestination(id);
+
+        });
+
+    });
+
+}
+
+
+/* =========================================================
+   OPEN DESTINATION
+========================================================= */
+
+function openDestination(id) {
+
+    const destination =
+        getDestinations().find(
+            item => String(item.id) === String(id)
+        );
+
+
+    if (!destination) {
+
+        showToast(
+            "Destination information unavailable."
+        );
+
+        return;
+
+    }
+
+
+    closeModal("searchModal");
+
+
+    const title =
+        destination.name || "Destination";
+
+
+    const location = [
+
+        destination.region,
+        destination.state,
+        destination.country
+
+    ]
+    .filter(Boolean)
+    .join(" • ");
+
+
+    const body = `
+
+        <div class="destination-info">
+
+            <div class="destination-info-icon">
+
+                <i class="fa-solid fa-location-dot"></i>
+
+            </div>
+
+            <span class="modal-kicker">
+                ${escapeHTML(
+                    destination.category ||
+                    "DESTINATION"
+                )}
+            </span>
+
+            <h3>
+                ${escapeHTML(title)}
+            </h3>
+
+            <p class="destination-location">
+                ${escapeHTML(location)}
+            </p>
+
+            <p>
+                ${escapeHTML(
+                    destination.description ||
+                    "Discover this destination with HADOTIWALEBHAIYA."
+                )}
+            </p>
+
+            <button
+                type="button"
+                class="primary-button"
+                id="destinationPlanButton"
+            >
+
+                <i class="fa-solid fa-route"></i>
+
+                <span>
+                    Plan a trip here
+                </span>
+
+            </button>
+
+        </div>
+
+    `;
+
+
+    showInfoModal(
+        title,
+        body
+    );
+
+
+    setTimeout(() => {
+
+        const planButton =
+            document.getElementById(
+                "destinationPlanButton"
+            );
+
+        if (planButton) {
+
+            planButton.addEventListener(
                 "click",
                 () => {
 
-                    document
-                        .querySelectorAll(
-                            ".search-category"
-                        )
-                        .forEach(item => {
+                    closeModal("infoModal");
 
-                            item.classList.remove(
-                                "active"
-                            );
+                    openModal("aiPlannerModal");
 
-                        });
+                    const input =
+                        document.getElementById(
+                            "plannerDestination"
+                        );
 
-
-                    button.classList.add(
-                        "active"
-                    );
-
-
-                    activeSearchCategory =
-                        button.dataset.category ||
-                        "all";
-
-
-                    renderSearchResults(
-                        destinationSearch
-                            ? destinationSearch.value
-                            : ""
-                    );
+                    if (input) {
+                        input.value = title;
+                    }
 
                 }
             );
 
+        }
+
+    }, 50);
+
+}
+
+
+/* =========================================================
+   AI TRIP PLANNER
+========================================================= */
+
+function initializeAIPlanner() {
+
+    const buttons = [
+
+        document.getElementById("heroAIButton"),
+
+        document.getElementById("openAIPlanner")
+
+    ];
+
+
+    buttons.forEach(button => {
+
+        if (!button) return;
+
+        button.addEventListener("click", () => {
+
+            openModal("aiPlannerModal");
+
         });
 
+    });
 
-    /* =====================================================
-       SHOW DESTINATION
-    ===================================================== */
 
-    function showDestination(id) {
+    const form =
+        document.getElementById("plannerForm");
 
-        const destination =
-            destinations.find(
-                item => item.id === id
+
+    if (!form) return;
+
+
+    form.addEventListener("submit", event => {
+
+        event.preventDefault();
+
+        createTripPlan(form);
+
+    });
+
+}
+
+
+/* =========================================================
+   CREATE TRIP PLAN
+========================================================= */
+
+function createTripPlan(form) {
+
+    const destination =
+        document.getElementById(
+            "plannerDestination"
+        )?.value.trim();
+
+
+    const days =
+        document.getElementById(
+            "plannerDays"
+        )?.value;
+
+
+    const budget =
+        document.getElementById(
+            "plannerBudget"
+        )?.value;
+
+
+    const style =
+        document.getElementById(
+            "plannerStyle"
+        )?.value;
+
+
+    const result =
+        document.getElementById(
+            "plannerResult"
+        );
+
+
+    if (!destination) {
+
+        showToast(
+            "Please enter your destination."
+        );
+
+        return;
+
+    }
+
+
+    if (!result) return;
+
+
+    const dayCount =
+        Number(days) > 0
+            ? Number(days)
+            : 3;
+
+
+    const budgetText =
+        Number(budget) > 0
+            ? `₹${Number(budget).toLocaleString("en-IN")}`
+            : "Flexible";
+
+
+    const styleName =
+        getTravelStyleName(style);
+
+
+    result.hidden = false;
+
+
+    result.innerHTML = `
+
+        <div class="planner-result-inner">
+
+            <span class="modal-kicker">
+                YOUR TRAVEL BLUEPRINT
+            </span>
+
+            <h3>
+                ${escapeHTML(destination)}
+            </h3>
+
+            <div class="planner-summary">
+
+                <div>
+                    <strong>
+                        ${dayCount}
+                    </strong>
+                    <small>
+                        Days
+                    </small>
+                </div>
+
+                <div>
+                    <strong>
+                        ${escapeHTML(budgetText)}
+                    </strong>
+                    <small>
+                        Budget
+                    </small>
+                </div>
+
+                <div>
+                    <strong>
+                        ${escapeHTML(styleName)}
+                    </strong>
+                    <small>
+                        Style
+                    </small>
+                </div>
+
+            </div>
+
+
+            <div class="planner-placeholder">
+
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+                <p>
+                    Your AI-powered detailed itinerary
+                    will be generated here.
+                </p>
+
+                <small>
+                    This is the foundation layer.
+                    Real AI planning can be connected
+                    in the next development phase.
+                </small>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    result.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+    });
+
+
+    showToast(
+        "Your journey blueprint is ready."
+    );
+
+}
+
+
+/* =========================================================
+   TRAVEL STYLE NAME
+========================================================= */
+
+function getTravelStyleName(style) {
+
+    const styles = {
+
+        balanced: "Balanced",
+        budget: "Budget",
+        luxury: "Luxury",
+        adventure: "Adventure",
+        culture: "Culture",
+        nature: "Nature"
+
+    };
+
+    return styles[style] || "Balanced";
+
+}
+
+
+/* =========================================================
+   DESTINATION CARDS
+========================================================= */
+
+function initializeDestinationCards() {
+
+    const cards =
+        document.querySelectorAll(
+            ".destination-card"
+        );
+
+
+    cards.forEach(card => {
+
+        card.addEventListener("click", event => {
+
+            /*
+              Don't open destination when
+              heart button is clicked.
+            */
+
+            if (
+                event.target.closest(
+                    ".destination-save"
+                )
+            ) {
+                return;
+            }
+
+
+            const id =
+                card.dataset.destination;
+
+
+            if (id) {
+                openDestination(id);
+            }
+
+        });
+
+    });
+
+
+    const saveButtons =
+        document.querySelectorAll(
+            ".destination-save"
+        );
+
+
+    saveButtons.forEach(button => {
+
+        button.addEventListener("click", event => {
+
+            event.stopPropagation();
+
+            const id =
+                button.dataset.save;
+
+            if (!id) return;
+
+            toggleSavedDestination(
+                id,
+                button
             );
 
+        });
 
-        if (!destination) {
+    });
 
-            showToast(
-                "Destination information not available yet."
-            );
-
-            return;
-
-        }
+}
 
 
-        closeModal(searchModal);
+/* =========================================================
+   SAVE DESTINATION
+========================================================= */
 
+function toggleSavedDestination(
+    id,
+    button
+) {
 
-        if (infoModalTitle) {
+    if (
+        HWB.savedDestinations.has(id)
+    ) {
 
-            infoModalTitle.textContent =
-                destination.name;
+        HWB.savedDestinations.delete(id);
 
-        }
+        button.classList.remove("saved");
 
-
-        if (infoModalBody) {
-
-            infoModalBody.innerHTML = `
-
-                <div class="destination-info">
-
-                    <div class="destination-info-icon">
-
-                        <i class="fa-solid ${getCategoryIcon(destination.category)}"></i>
-
-                    </div>
-
-
-                    <div>
-
-                        <span class="modal-kicker">
-
-                            ${escapeHTML(
-                                destination.state || "INDIA"
-                            )}
-
-                        </span>
-
-
-                        <h3>
-
-                            ${escapeHTML(
-                                destination.name
-                            )}
-
-                        </h3>
-
-
-                        <p>
-
-                            ${escapeHTML(
-                                destination.description ||
-                                "Discover this destination with HADOTIWALEBHAIYA."
-                            )}
-
-                        </p>
-
-
-                        <button
-                            type="button"
-                            class="primary-button"
-      
+        button.innerHTML =
+            `<i class="fa-reg
