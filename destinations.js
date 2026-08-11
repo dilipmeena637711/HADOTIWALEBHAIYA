@@ -604,3 +604,29 @@ const HADOTI_DESTINATIONS = [
         region: "East India",
         category: ["Hill Station", "Tea", "Nature"],
         description: "चाय के बागानों और Kanchenjung
+// ===============================
+// HADOTI WALE BHAIYA - DATABASE API
+// ===============================
+
+const API_BASE_URL = "https://hadotiwalebhaiya.onrender.com";
+
+async function loadDestinationsFromDatabase() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/destinations`);
+
+        if (!response.ok) {
+            throw new Error(`API Error: ${response.status}`);
+        }
+
+        const result = await response.json();
+
+        console.log("Database destinations:", result);
+
+        return result;
+    } catch (error) {
+        console.error("Database connection error:", error);
+        return null;
+    }
+}
+
+loadDestinationsFromDatabase();
