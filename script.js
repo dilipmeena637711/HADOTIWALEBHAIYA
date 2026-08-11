@@ -1,78 +1,223 @@
-/* =========================================
+/* =========================================================
    HADOTI WALE BHAIYA
    MASTER FRONTEND JAVASCRIPT
-   Database-connected version
-========================================= */
+   STABLE VERSION
+   Search + Database + Destinations + Services
+========================================================= */
+
+"use strict";
+
+/* =========================================================
+   CONFIG
+========================================================= */
 
 const API_BASE_URL = "https://hadotiwalebhaiya.onrender.com";
 
-/* =========================================
-   FALLBACK DESTINATIONS
-========================================= */
+/* =========================================================
+   LOCAL FALLBACK DESTINATIONS
+   Database unavailable होने पर भी ये काम करेंगे
+========================================================= */
 
-let destinations = [
+const LOCAL_DESTINATIONS = [
   {
+    id: "jaipur",
     name: "Jaipur",
     state: "Rajasthan",
     rating: "4.9",
     reviews: "12K",
-    image: "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=800&q=80"
+    image:
+      "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=900&q=80",
+    description:
+      "The Pink City of India, famous for forts, palaces, markets and royal culture."
   },
+
   {
+    id: "udaipur",
     name: "Udaipur",
     state: "Rajasthan",
     rating: "4.8",
     reviews: "9K",
-    image: "https://images.unsplash.com/photo-1603262110263-fb0112e7cc33?auto=format&fit=crop&w=800&q=80"
+    image:
+      "https://images.unsplash.com/photo-1603262110263-fb0112e7cc33?auto=format&fit=crop&w=900&q=80",
+    description:
+      "The City of Lakes, known for beautiful palaces, lakes and romantic views."
   },
+
   {
+    id: "jaisalmer",
     name: "Jaisalmer",
     state: "Rajasthan",
     rating: "4.9",
     reviews: "7K",
-    image: "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=800&q=80"
+    image:
+      "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=900&q=80",
+    description:
+      "The Golden City of Rajasthan, famous for its fort and desert adventures."
   },
+
   {
+    id: "jodhpur",
+    name: "Jodhpur",
+    state: "Rajasthan",
+    rating: "4.8",
+    reviews: "8K",
+    image:
+      "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=900&q=80",
+    description:
+      "The Blue City, home to Mehrangarh Fort and colourful old streets."
+  },
+
+  {
+    id: "mount-abu",
+    name: "Mount Abu",
+    state: "Rajasthan",
+    rating: "4.7",
+    reviews: "5K",
+    image:
+      "https://images.unsplash.com/photo-1597074866923-dc0589150358?auto=format&fit=crop&w=900&q=80",
+    description:
+      "A beautiful hill station in Rajasthan with lakes, hills and temples."
+  },
+
+  {
+    id: "kota",
+    name: "Kota",
+    state: "Rajasthan",
+    rating: "4.6",
+    reviews: "4K",
+    image:
+      "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80",
+    description:
+      "A major city of Hadoti known for Chambal River, gardens and education."
+  },
+
+  {
+    id: "bundi",
+    name: "Bundi",
+    state: "Rajasthan",
+    rating: "4.7",
+    reviews: "3K",
+    image:
+      "https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&w=900&q=80",
+    description:
+      "A historic Hadoti destination famous for its palace, fort and stepwells."
+  },
+
+  {
+    id: "manali",
     name: "Manali",
     state: "Himachal Pradesh",
     rating: "4.8",
     reviews: "15K",
-    image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=80"
+    image:
+      "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=900&q=80",
+    description:
+      "A popular Himalayan destination surrounded by mountains, rivers and forests."
   },
+
   {
+    id: "varanasi",
     name: "Varanasi",
     state: "Uttar Pradesh",
     rating: "4.8",
     reviews: "11K",
-    image: "https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=800&q=80"
+    image:
+      "https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=900&q=80",
+    description:
+      "An ancient spiritual city famous for the Ganga ghats and culture."
   },
+
   {
+    id: "goa",
+    name: "Goa",
+    state: "Goa",
+    rating: "4.8",
+    reviews: "20K",
+    image:
+      "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=900&q=80",
+    description:
+      "A popular beach destination known for beaches, food, culture and nightlife."
+  },
+
+  {
+    id: "kerala",
+    name: "Kerala",
+    state: "Kerala",
+    rating: "4.8",
+    reviews: "14K",
+    image:
+      "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=900&q=80",
+    description:
+      "God's Own Country, famous for backwaters, beaches, hills and nature."
+  },
+
+  {
+    id: "leh-ladakh",
     name: "Leh Ladakh",
     state: "Ladakh",
     rating: "4.9",
     reviews: "8K",
-    image: "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=800&q=80"
+    image:
+      "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80",
+    description:
+      "A spectacular Himalayan region famous for mountains, monasteries and road trips."
   }
 ];
 
-/* =========================================
-   DOM ELEMENTS
-========================================= */
+/* =========================================================
+   GLOBAL DATA
+========================================================= */
 
-let destinationCards;
-let searchForm;
-let destinationInput;
-let modal;
-let modalContent;
+let destinations = [...LOCAL_DESTINATIONS];
 
-/* =========================================
-   LOAD DESTINATIONS FROM DATABASE
-========================================= */
+let destinationCards = null;
+let searchForm = null;
+let destinationInput = null;
+let modal = null;
+let modalContent = null;
+
+/* =========================================================
+   HELPER FUNCTIONS
+========================================================= */
+
+function escapeHTML(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function normalizeText(value) {
+  return String(value ?? "")
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, " ");
+}
+
+function escapeAttribute(value) {
+  return String(value ?? "")
+    .replace(/\\/g, "\\\\")
+    .replace(/'/g, "\\'");
+}
+
+/* =========================================================
+   DATABASE
+========================================================= */
 
 async function loadDestinationsFromDatabase() {
   try {
+    console.log("Connecting to HADOTI WALE BHAIYA database...");
+
     const response = await fetch(
-      `${API_BASE_URL}/api/destinations`
+      `${API_BASE_URL}/api/destinations`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json"
+        }
+      }
     );
 
     if (!response.ok) {
@@ -83,108 +228,170 @@ async function loadDestinationsFromDatabase() {
 
     console.log("DATABASE RESPONSE:", result);
 
-    const data = Array.isArray(result)
-      ? result
-      : result.data || result.destinations || [];
+    let databaseData = [];
 
-    if (Array.isArray(data) && data.length > 0) {
-      destinations = data.map((place) => ({
-        id: place.id,
-        name: place.name || place.title || "Unknown",
-        state: place.state || place.location || "",
-        rating:
-          place.rating ||
-          place.average_rating ||
-          "0",
-        reviews:
-          place.reviews ||
-          place.total_reviews ||
-          "0",
-        image:
-          place.image ||
-          place.image_url ||
-          "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80",
-        latitude:
-          place.latitude ||
-          place.lat ||
-          null,
-        longitude:
-          place.longitude ||
-          place.lng ||
-          null,
-        description:
-          place.description ||
-          "Beautiful destination to explore."
-      }));
-
-      console.log(
-        "DATABASE DESTINATIONS LOADED:",
-        destinations
-      );
-    } else {
-      console.log(
-        "No database destinations found. Using fallback data."
-      );
+    if (Array.isArray(result)) {
+      databaseData = result;
+    } else if (Array.isArray(result.data)) {
+      databaseData = result.data;
+    } else if (Array.isArray(result.destinations)) {
+      databaseData = result.destinations;
     }
 
+    if (databaseData.length > 0) {
+      const formattedDatabaseData = databaseData.map(
+        (place, index) => ({
+          id:
+            place.id ||
+            place.slug ||
+            `database-${index}`,
+
+          name:
+            place.name ||
+            place.title ||
+            place.destination ||
+            "Unknown Destination",
+
+          state:
+            place.state ||
+            place.location ||
+            place.city ||
+            "",
+
+          rating:
+            place.rating ||
+            place.average_rating ||
+            "0",
+
+          reviews:
+            place.reviews ||
+            place.total_reviews ||
+            "0",
+
+          image:
+            place.image ||
+            place.image_url ||
+            place.photo ||
+            "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
+
+          description:
+            place.description ||
+            "Explore this beautiful destination with HADOTI WALE BHAIYA.",
+
+          latitude:
+            place.latitude ||
+            place.lat ||
+            null,
+
+          longitude:
+            place.longitude ||
+            place.lng ||
+            null
+        })
+      );
+
+      /*
+        IMPORTANT:
+        Database data fallback ko replace nahi karega.
+        Dono merge honge.
+      */
+
+      const combined = [
+        ...LOCAL_DESTINATIONS,
+        ...formattedDatabaseData
+      ];
+
+      const unique = [];
+
+      const seen = new Set();
+
+      combined.forEach((place) => {
+        const key = normalizeText(place.name);
+
+        if (!seen.has(key)) {
+          seen.add(key);
+          unique.push(place);
+        }
+      });
+
+      destinations = unique;
+
+      console.log(
+        "Combined destinations:",
+        destinations.length
+      );
+    } else {
+      destinations = [...LOCAL_DESTINATIONS];
+
+      console.log(
+        "Database empty. Local destinations active."
+      );
+    }
   } catch (error) {
-    console.error(
-      "DATABASE CONNECTION ERROR:",
+    console.warn(
+      "Database unavailable. Using local destinations.",
       error
     );
+
+    destinations = [...LOCAL_DESTINATIONS];
   }
 
-  loadDestinations();
+  renderDestinations(destinations);
 }
 
-/* =========================================
+/* =========================================================
    DESTINATION CARDS
-========================================= */
+========================================================= */
 
-function loadDestinations(list = destinations) {
-
+function findDestinationContainer() {
   destinationCards =
-    document.querySelector(
-      "#destinationCards"
-    ) ||
-    document.querySelector(
-      ".destination-cards"
-    ) ||
-    document.querySelector(
-      ".destinations-grid"
-    );
+    document.getElementById("destinationCards") ||
+    document.querySelector(".destination-cards") ||
+    document.querySelector(".destinations-grid") ||
+    document.querySelector(".cards");
 
-  if (!destinationCards) {
+  return destinationCards;
+}
+
+function renderDestinations(list) {
+  const container = findDestinationContainer();
+
+  if (!container) {
     console.warn(
       "Destination cards container not found."
     );
     return;
   }
 
-  if (!list || list.length === 0) {
-    destinationCards.innerHTML = `
-      <div style="padding:30px;text-align:center;">
-        No destinations available.
+  if (!Array.isArray(list) || list.length === 0) {
+    container.innerHTML = `
+      <div style="
+        padding:30px;
+        text-align:center;
+        width:100%;
+      ">
+        <h3>🔍 No destinations found</h3>
+        <p>Try Jaipur, Rajasthan, Udaipur or Manali.</p>
       </div>
     `;
+
     return;
   }
 
-  destinationCards.innerHTML = "";
+  container.innerHTML = "";
 
-  list.forEach((place, index) => {
-
+  list.forEach((place) => {
     const card = document.createElement("div");
 
-    card.className =
-      "destination-card";
+    card.className = "destination-card";
 
     card.innerHTML = `
       <div class="destination-image">
         <img
-          src="${place.image}"
+          src="${escapeHTML(place.image)}"
           alt="${escapeHTML(place.name)}"
           loading="lazy"
+          onerror="this.src='https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80'"
         >
       </div>
 
@@ -195,19 +402,19 @@ function loadDestinations(list = destinations) {
         </h3>
 
         <p>
-          ${escapeHTML(place.state)}
+          ${escapeHTML(place.state || "")}
         </p>
 
         <div class="destination-rating">
-          ⭐ ${escapeHTML(String(place.rating))}
+          ⭐ ${escapeHTML(place.rating)}
           <span>
-            (${escapeHTML(String(place.reviews))})
+            (${escapeHTML(place.reviews)})
           </span>
         </div>
 
         <button
           class="destination-btn"
-          data-index="${index}"
+          type="button"
         >
           Explore
         </button>
@@ -215,52 +422,330 @@ function loadDestinations(list = destinations) {
       </div>
     `;
 
-    destinationCards.appendChild(card);
+    const exploreButton =
+      card.querySelector(".destination-btn");
+
+    if (exploreButton) {
+      exploreButton.addEventListener(
+        "click",
+        () => {
+          showDestination(place);
+        }
+      );
+    }
+
+    container.appendChild(card);
   });
+}
 
-  destinationCards
-    .querySelectorAll(".destination-btn")
-    .forEach((button) => {
+/* =========================================================
+   SEARCH ENGINE
+========================================================= */
 
+function searchDestinations(query) {
+  const cleanQuery = normalizeText(query);
+
+  if (!cleanQuery) {
+    return [...destinations];
+  }
+
+  return destinations.filter((place) => {
+    const name = normalizeText(place.name);
+    const state = normalizeText(place.state);
+    const description = normalizeText(
+      place.description
+    );
+
+    return (
+      name.includes(cleanQuery) ||
+      state.includes(cleanQuery) ||
+      description.includes(cleanQuery)
+    );
+  });
+}
+
+function performSearch() {
+  if (!destinationInput) {
+    destinationInput =
+      document.getElementById("destinationInput");
+  }
+
+  if (!destinationInput) return;
+
+  const query = destinationInput.value.trim();
+
+  if (!query) {
+    renderDestinations(destinations);
+    return;
+  }
+
+  const results = searchDestinations(query);
+
+  console.log(
+    `Search "${query}" results:`,
+    results
+  );
+
+  renderDestinations(results);
+
+  const placesSection =
+    document.getElementById("places");
+
+  if (placesSection) {
+    placesSection.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }
+}
+
+function setupSearch() {
+  searchForm =
+    document.getElementById("searchForm");
+
+  destinationInput =
+    document.getElementById(
+      "destinationInput"
+    );
+
+  if (!destinationInput) {
+    console.warn(
+      "destinationInput not found."
+    );
+
+    return;
+  }
+
+  /*
+    Form submit
+  */
+
+  if (searchForm) {
+    searchForm.addEventListener(
+      "submit",
+      function (event) {
+        event.preventDefault();
+
+        performSearch();
+      }
+    );
+  }
+
+  /*
+    Enter key
+  */
+
+  destinationInput.addEventListener(
+    "keydown",
+    function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+
+        performSearch();
+      }
+    }
+  );
+
+  /*
+    Live search
+  */
+
+  destinationInput.addEventListener(
+    "input",
+    function () {
+      const query =
+        this.value.trim();
+
+      if (!query) {
+        renderDestinations(
+          destinations
+        );
+
+        return;
+      }
+
+      const results =
+        searchDestinations(query);
+
+      renderDestinations(results);
+    }
+  );
+
+  /*
+    Popular searches
+  */
+
+  const popularButtons =
+    document.querySelectorAll(
+      "[data-place]"
+    );
+
+  popularButtons.forEach(
+    (button) => {
       button.addEventListener(
         "click",
         function () {
-
-          const index =
-            Number(
-              this.dataset.index
+          const place =
+            this.getAttribute(
+              "data-place"
             );
 
-          showDestination(
-            list[index]
-          );
+          destinationInput.value =
+            place;
+
+          performSearch();
         }
       );
-    });
+    }
+  );
+
+  console.log(
+    "Search system ready."
+  );
 }
 
-/* =========================================
-   DESTINATION MODAL
-========================================= */
+/* =========================================================
+   MODAL
+========================================================= */
+
+function setupModal() {
+  modal =
+    document.getElementById("modal");
+
+  if (!modal) {
+    createModal();
+    return;
+  }
+
+  modalContent =
+    document.getElementById(
+      "modalContent"
+    );
+
+  const closeButton =
+    document.getElementById(
+      "closeModal"
+    );
+
+  if (closeButton) {
+    closeButton.addEventListener(
+      "click",
+      closeModal
+    );
+  }
+
+  modal.addEventListener(
+    "click",
+    function (event) {
+      if (
+        event.target === modal
+      ) {
+        closeModal();
+      }
+    }
+  );
+}
+
+function createModal() {
+  modal =
+    document.createElement("div");
+
+  modal.id = "hwDynamicModal";
+
+  modal.style.cssText = `
+    position:fixed;
+    inset:0;
+    z-index:999999;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(0,0,0,.78);
+    overflow:auto;
+  `;
+
+  modal.innerHTML = `
+    <div
+      id="hwDynamicModalContent"
+      style="
+        width:100%;
+        max-width:720px;
+      "
+    ></div>
+  `;
+
+  document.body.appendChild(
+    modal
+  );
+
+  modalContent =
+    document.getElementById(
+      "hwDynamicModalContent"
+    );
+
+  modal.addEventListener(
+    "click",
+    function (event) {
+      if (
+        event.target === modal
+      ) {
+        closeModal();
+      }
+    }
+  );
+}
+
+function ensureModal() {
+  if (!modal) {
+    setupModal();
+  }
+
+  if (!modalContent) {
+    modalContent =
+      document.getElementById(
+        "modalContent"
+      ) ||
+      document.getElementById(
+        "hwDynamicModalContent"
+      );
+  }
+}
+
+function openModal(html) {
+  ensureModal();
+
+  if (!modalContent) return;
+
+  modalContent.innerHTML = html;
+
+  modal.style.display = "flex";
+}
+
+function closeModal() {
+  if (modal) {
+    modal.style.display = "none";
+  }
+}
+
+/* =========================================================
+   DESTINATION DETAILS
+========================================================= */
 
 function showDestination(place) {
-
   if (!place) return;
 
-  createModalIfNeeded();
-
-  modalContent.innerHTML = `
+  openModal(`
     <div style="
-      max-width:700px;
-      margin:auto;
       background:#fff;
-      border-radius:20px;
-      overflow:hidden;
       color:#111;
+      border-radius:22px;
+      overflow:hidden;
+      max-width:720px;
+      margin:auto;
     ">
 
       <img
-        src="${place.image}"
+        src="${escapeHTML(place.image)}"
         alt="${escapeHTML(place.name)}"
         style="
           width:100%;
@@ -269,41 +754,44 @@ function showDestination(place) {
         "
       >
 
-      <div style="padding:25px;">
+      <div style="
+        padding:25px;
+      ">
 
         <h2>
           ${escapeHTML(place.name)}
         </h2>
 
         <p>
-          ${escapeHTML(place.state || "")}
+          📍 ${escapeHTML(place.state)}
         </p>
 
         <p>
-          ⭐ ${escapeHTML(String(place.rating || "0"))}
+          ⭐ ${escapeHTML(place.rating)}
           ·
-          ${escapeHTML(String(place.reviews || "0"))}
+          ${escapeHTML(place.reviews)}
           reviews
         </p>
 
         <p>
           ${escapeHTML(
             place.description ||
-            "Explore this beautiful destination with HADOTI WALE BHAIYA."
+            "Explore this beautiful destination."
           )}
         </p>
 
         <div style="
           display:flex;
-          gap:10px;
           flex-wrap:wrap;
+          gap:10px;
           margin-top:20px;
         ">
 
           <button
-            onclick="openGoogleMaps('${escapeAttribute(place.name)}')"
+            type="button"
+            id="destinationMapButton"
             style="
-              padding:12px 18px;
+              padding:13px 18px;
               border:0;
               border-radius:10px;
               cursor:pointer;
@@ -313,9 +801,10 @@ function showDestination(place) {
           </button>
 
           <button
-            onclick="closeModal()"
+            type="button"
+            id="destinationCloseButton"
             style="
-              padding:12px 18px;
+              padding:13px 18px;
               border:0;
               border-radius:10px;
               cursor:pointer;
@@ -327,90 +816,44 @@ function showDestination(place) {
         </div>
 
       </div>
+
     </div>
-  `;
+  `);
 
-  modal.style.display = "flex";
-}
-
-/* =========================================
-   MODAL
-========================================= */
-
-function createModalIfNeeded() {
-
-  modal =
+  const mapButton =
     document.getElementById(
-      "hwModal"
+      "destinationMapButton"
     );
 
-  if (modal) {
-    modalContent =
-      modal.querySelector(
-        ".hw-modal-content"
-      );
-    return;
-  }
-
-  modal =
-    document.createElement("div");
-
-  modal.id = "hwModal";
-
-  modal.style.cssText = `
-    position:fixed;
-    inset:0;
-    z-index:99999;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    background:rgba(0,0,0,.75);
-    padding:20px;
-    overflow:auto;
-  `;
-
-  modal.innerHTML = `
-    <div
-      class="hw-modal-content"
-      style="
-        width:100%;
-        max-width:720px;
-      "
-    ></div>
-  `;
-
-  document.body.appendChild(modal);
-
-  modalContent =
-    modal.querySelector(
-      ".hw-modal-content"
-    );
-
-  modal.addEventListener(
-    "click",
-    function(event) {
-
-      if (event.target === modal) {
-        closeModal();
+  if (mapButton) {
+    mapButton.addEventListener(
+      "click",
+      function () {
+        openGoogleMaps(
+          place.name
+        );
       }
+    );
+  }
 
-    }
-  );
-}
+  const closeButton =
+    document.getElementById(
+      "destinationCloseButton"
+    );
 
-function closeModal() {
-
-  if (modal) {
-    modal.style.display = "none";
+  if (closeButton) {
+    closeButton.addEventListener(
+      "click",
+      closeModal
+    );
   }
 }
 
-/* =========================================
+/* =========================================================
    GOOGLE MAPS
-========================================= */
+========================================================= */
 
 function openGoogleMaps(placeName) {
-
   const url =
     "https://www.google.com/maps/search/?api=1&query=" +
     encodeURIComponent(placeName);
@@ -421,548 +864,114 @@ function openGoogleMaps(placeName) {
   );
 }
 
-/* =========================================
-   SEARCH
-========================================= */
-
-function setupSearch() {
-
-  searchForm =
-    document.querySelector(
-      "#searchForm"
-    ) ||
-    document.querySelector(
-      ".search-form"
-    );
-
-  destinationInput =
-    document.querySelector(
-      "#destinationInput"
-    ) ||
-    document.querySelector(
-      "#searchInput"
-    ) ||
-    document.querySelector(
-      ".destination-input"
-    );
-
-  if (!destinationInput) {
-    console.warn(
-      "Search input not found."
-    );
-    return;
-  }
-
-  destinationInput.addEventListener(
-    "input",
-    function () {
-
-      const query =
-        this.value
-          .trim()
-          .toLowerCase();
-
-      if (!query) {
-        loadDestinations();
-        return;
-      }
-
-      const filtered =
-        destinations.filter(
-          (place) =>
-            String(place.name)
-              .toLowerCase()
-              .includes(query) ||
-
-            String(place.state)
-              .toLowerCase()
-              .includes(query)
-        );
-
-      loadDestinations(
-        filtered
-      );
-    }
-  );
-
-  if (searchForm) {
-
-    searchForm.addEventListener(
-      "submit",
-      function(event) {
-
-        event.preventDefault();
-
-        const query =
-          destinationInput.value
-            .trim()
-            .toLowerCase();
-
-        const filtered =
-          destinations.filter(
-            (place) =>
-              String(place.name)
-                .toLowerCase()
-                .includes(query) ||
-
-              String(place.state)
-                .toLowerCase()
-                .includes(query)
-          );
-
-        loadDestinations(
-          filtered
-        );
-      }
-    );
-  }
-}
-
-/* =========================================
+/* =========================================================
    EXPLORE MAP
-========================================= */
-
-function setupExploreMap() {
-
-  const mapButtons =
-    document.querySelectorAll(
-      "[data-service='map'], #exploreMap, .explore-map"
-    );
-
-  mapButtons.forEach(
-    (button) => {
-
-      button.addEventListener(
-        "click",
-        function(event) {
-
-          event.preventDefault();
-
-          createModalIfNeeded();
-
-          modalContent.innerHTML = `
-            <div style="
-              background:#07111f;
-              color:white;
-              padding:30px;
-              border-radius:20px;
-              text-align:center;
-            ">
-
-              <h2>🗺️ Explore Map</h2>
-
-              <p>
-                Choose a destination to
-                open its location in Google Maps.
-              </p>
-
-              <div style="
-                display:grid;
-                gap:10px;
-                margin-top:20px;
-              ">
-
-                ${destinations
-                  .slice(0, 10)
-                  .map(
-                    (place) => `
-                      <button
-                        onclick="openGoogleMaps('${escapeAttribute(place.name)}')"
-                        style="
-                          padding:14px;
-                          border:0;
-                          border-radius:10px;
-                          cursor:pointer;
-                        "
-                      >
-                        📍 ${escapeHTML(place.name)}
-                      </button>
-                    `
-                  )
-                  .join("")}
-
-              </div>
-
-              <button
-                onclick="closeModal()"
-                style="
-                  margin-top:20px;
-                  padding:12px 20px;
-                  border:0;
-                  border-radius:10px;
-                "
-              >
-                Close
-              </button>
-
-            </div>
-          `;
-
-          modal.style.display =
-            "flex";
-        }
-      );
-
-    }
-  );
-}
-
-/* =========================================
-   BUDGET CALCULATOR
-========================================= */
-
-function setupBudgetCalculator() {
-
-  const buttons =
-    document.querySelectorAll(
-      "[data-service='calculator'], #budgetCalculator, .budget-calculator"
-    );
-
-  buttons.forEach(
-    (button) => {
-
-      button.addEventListener(
-        "click",
-        function(event) {
-
-          event.preventDefault();
-
-          createModalIfNeeded();
-
-          modalContent.innerHTML = `
-            <div style="
-              background:white;
-              padding:25px;
-              border-radius:20px;
-              color:#111;
-            ">
-
-              <h2>💰 Budget Calculator</h2>
-
-              <label>
-                People
-              </label>
-
-              <input
-                id="budgetPeople"
-                type="number"
-                value="2"
-                min="1"
-                style="
-                  width:100%;
-                  padding:12px;
-                  margin:8px 0 15px;
-                "
-              >
-
-              <label>
-                Days
-              </label>
-
-              <input
-                id="budgetDays"
-                type="number"
-                value="3"
-                min="1"
-                style="
-                  width:100%;
-                  padding:12px;
-                  margin:8px 0 15px;
-                "
-              >
-
-              <label>
-                Daily budget per person
-              </label>
-
-              <input
-                id="budgetDaily"
-                type="number"
-                value="2000"
-                min="0"
-                style="
-                  width:100%;
-                  padding:12px;
-                  margin:8px 0 15px;
-                "
-              >
-
-              <button
-                onclick="calculateBudget()"
-                style="
-                  width:100%;
-                  padding:14px;
-                  border:0;
-                  border-radius:10px;
-                  cursor:pointer;
-                "
-              >
-                Calculate
-              </button>
-
-              <div
-                id="budgetResult"
-                style="
-                  margin-top:20px;
-                  font-size:20px;
-                  font-weight:bold;
-                "
-              ></div>
-
-              <button
-                onclick="closeModal()"
-                style="
-                  margin-top:15px;
-                  padding:12px 18px;
-                  border:0;
-                  border-radius:10px;
-                "
-              >
-                Close
-              </button>
-
-            </div>
-          `;
-
-          modal.style.display =
-            "flex";
-        }
-      );
-
-    }
-  );
-}
-
-function calculateBudget() {
-
-  const people =
-    Number(
-      document.getElementById(
-        "budgetPeople"
-      ).value
-    ) || 1;
-
-  const days =
-    Number(
-      document.getElementById(
-        "budgetDays"
-      ).value
-    ) || 1;
-
-  const daily =
-    Number(
-      document.getElementById(
-        "budgetDaily"
-      ).value
-    ) || 0;
-
-  const total =
-    people *
-    days *
-    daily;
-
-  const result =
-    document.getElementById(
-      "budgetResult"
-    );
-
-  result.textContent =
-    `Estimated Budget: ₹${total.toLocaleString("en-IN")}`;
-}
-
-/* =========================================
-   HOSTEL BOOKING
-========================================= */
-
-function setupHostelBooking() {
-
-  const buttons =
-    document.querySelectorAll(
-      "[data-service='hostel'], #hostelBooking, .hostel-booking"
-    );
-
-  buttons.forEach(
-    (button) => {
-
-      button.addEventListener(
-        "click",
-        function(event) {
-
-          event.preventDefault();
-
-          createModalIfNeeded();
-
-          modalContent.innerHTML = `
-            <div style="
-              background:white;
-              color:#111;
-              padding:25px;
-              border-radius:20px;
-            ">
-
-              <h2>🏨 Hostel Booking</h2>
-
-              <p>
-                Select your destination.
-              </p>
-
-              <select
-                id="hostelDestination"
-                style="
-                  width:100%;
-                  padding:12px;
-                  margin:10px 0;
-                "
-              >
-
-                ${destinations
-                  .map(
-                    (place) =>
-                      `<option>
-                        ${escapeHTML(place.name)}
-                      </option>`
-                  )
-                  .join("")}
-
-              </select>
-
-              <input
-                id="hostelDate"
-                type="date"
-                style="
-                  width:100%;
-                  padding:12px;
-                  margin:10px 0;
-                "
-              >
-
-              <button
-                onclick="searchHostels()"
-                style="
-                  width:100%;
-                  padding:14px;
-                  border:0;
-                  border-radius:10px;
-                "
-              >
-                Search Hostels
-              </button>
-
-              <div
-                id="hostelResult"
-                style="
-                  margin-top:20px;
-                "
-              ></div>
-
-              <button
-                onclick="closeModal()"
-                style="
-                  margin-top:15px;
-                  padding:12px 18px;
-                  border:0;
-                  border-radius:10px;
-                "
-              >
-                Close
-              </button>
-
-            </div>
-          `;
-
-          modal.style.display =
-            "flex";
-        }
-      );
-
-    }
-  );
-}
-
-function searchHostels() {
-
-  const destination =
-    document.getElementById(
-      "hostelDestination"
-    ).value;
-
-  const result =
-    document.getElementById(
-      "hostelResult"
-    );
-
-  result.innerHTML = `
+========================================================= */
+
+function openExploreMap() {
+  const mapList =
+    destinations
+      .slice(0, 12)
+      .map(
+        (place) => `
+          <button
+            type="button"
+            class="hw-map-place"
+            data-map-place="${escapeHTML(place.name)}"
+            style="
+              padding:14px;
+              border:0;
+              border-radius:12px;
+              cursor:pointer;
+              text-align:left;
+            "
+          >
+            📍 ${escapeHTML(place.name)}
+          </button>
+        `
+      )
+      .join("");
+
+  openModal(`
     <div style="
-      padding:15px;
-      border-radius:10px;
-      background:#f2f2f2;
+      background:#07111f;
+      color:#fff;
+      padding:28px;
+      border-radius:22px;
     ">
-      🏨 Hostel search prepared for
-      <strong>
-        ${escapeHTML(destination)}
-      </strong>.
 
-      <br><br>
+      <h2>
+        🗺️ Explore Map
+      </h2>
 
-      Booking integration can be
-      connected to a hotel/hostel API
-      later.
+      <p>
+        Choose a destination.
+      </p>
+
+      <div style="
+        display:grid;
+        gap:10px;
+        margin-top:20px;
+      ">
+        ${mapList}
+      </div>
+
+      <button
+        type="button"
+        id="mapCloseButton"
+        style="
+          margin-top:20px;
+          padding:13px 20px;
+          border:0;
+          border-radius:10px;
+          cursor:pointer;
+        "
+      >
+        Close
+      </button>
+
     </div>
-  `;
-}
+  `);
 
-/* =========================================
-   LOGIN / OTP DEMO
-========================================= */
-
-function setupLogin() {
-
-  const loginButtons =
-    document.querySelectorAll(
-      "#loginBtn, .login-btn, [data-action='login']"
-    );
-
-  loginButtons.forEach(
-    (button) => {
-
+  document
+    .querySelectorAll(
+      ".hw-map-place"
+    )
+    .forEach((button) => {
       button.addEventListener(
         "click",
-        function(event) {
+        function () {
+          openGoogleMaps(
+            this.getAttribute(
+              "data-map-place"
+            )
+          );
+        }
+      );
+    });
 
-          event.preventDefault();
+  const closeButton =
+    document.getElementById(
+      "mapCloseButton"
+    );
 
-          createModalIfNeeded();
+  if (closeButton) {
+    closeButton.addEventListener(
+      "click",
+      closeModal
+    );
+  }
+}
 
-          modalContent.innerHTML = `
-            <div style="
-              background:white;
-              color:#111;
-              padding:25px;
-              border-radius:20px;
-            ">
+/* =========================================================
+   BUDGET CALCULATOR
+========================================================= */
 
-              <h2>🔐 Login</h2>
-
-              <input
-                id="loginPhone"
-                type="tel"
-                maxlength="10"
-                placeholder="Mobile Number"
-                style="
-                  width:100%;
-                  padding:13px;
-                  margin:10px 0;
-                "
-              >
-
-              <button
-                onclick="sendDemoOTP()"
-                style="
-                  width:100%;
-                  padding:13px;
-                  border:0;
-                  border-radius:10px;
-                "
-              >
-                Send OTP
-              </button
+function openBudgetCalculator() {
+  openModal(`
+    <div style="
+      background:#fff;
+      color:#111;
+      padding:25px;
+      border-radius:22px;
+    "
