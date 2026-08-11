@@ -1,1189 +1,968 @@
 /* =========================================
    HADOTI WALE BHAIYA
    MASTER FRONTEND JAVASCRIPT
+   Database-connected version
 ========================================= */
 
+const API_BASE_URL = "https://hadotiwalebhaiya.onrender.com";
 
 /* =========================================
-   DESTINATION DATA
+   FALLBACK DESTINATIONS
 ========================================= */
 
-const destinations = [
+let destinations = [
   {
     name: "Jaipur",
     state: "Rajasthan",
     rating: "4.9",
     reviews: "12K",
-    image:
-      "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=800&q=80"
+    image: "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=800&q=80"
   },
-
   {
     name: "Udaipur",
     state: "Rajasthan",
     rating: "4.8",
     reviews: "9K",
-    image:
-      "https://images.unsplash.com/photo-1603262110263-fb0112e7cc33?auto=format&fit=crop&w=800&q=80"
+    image: "https://images.unsplash.com/photo-1603262110263-fb0112e7cc33?auto=format&fit=crop&w=800&q=80"
   },
-
   {
     name: "Jaisalmer",
     state: "Rajasthan",
     rating: "4.9",
     reviews: "7K",
-    image:
-      "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=800&q=80"
+    image: "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=800&q=80"
   },
-
   {
     name: "Manali",
     state: "Himachal Pradesh",
-    rating: "4.7",
-    reviews: "8K",
-    image:
-      "https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=800&q=80"
+    rating: "4.8",
+    reviews: "15K",
+    image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=80"
   },
-
   {
     name: "Varanasi",
     state: "Uttar Pradesh",
-    rating: "4.9",
-    reviews: "10K",
-    image:
-      "https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=800&q=80"
+    rating: "4.8",
+    reviews: "11K",
+    image: "https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=800&q=80"
   },
-
   {
     name: "Leh Ladakh",
     state: "Ladakh",
-    rating: "4.8",
+    rating: "4.9",
     reviews: "8K",
-    image:
-      "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=800&q=80"
+    image: "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=800&q=80"
   }
 ];
 
-
 /* =========================================
-   SELECT ELEMENTS
+   DOM ELEMENTS
 ========================================= */
 
-const destinationCards =
-  document.getElementById("destinationCards");
+let destinationCards;
+let searchForm;
+let destinationInput;
+let modal;
+let modalContent;
 
-const searchForm =
-  document.getElementById("searchForm");
+/* =========================================
+   LOAD DESTINATIONS FROM DATABASE
+========================================= */
 
-const destinationInput =
-  document.getElementById("destinationInput");
+async function loadDestinationsFromDatabase() {
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/api/destinations`
+    );
 
-const modal =
-  document.getElementById("modal");
+    if (!response.ok) {
+      throw new Error(`API Error: ${response.status}`);
+    }
 
-const modalContent =
-  document.getElementById("modalContent");
+    const result = await response.json();
 
+    console.log("DATABASE RESPONSE:", result);
+
+    const data = Array.isArray(result)
+      ? result
+      : result.data || result.destinations || [];
+
+    if (Array.isArray(data) && data.length > 0) {
+      destinations = data.map((place) => ({
+        id: place.id,
+        name: place.name || place.title || "Unknown",
+        state: place.state || place.location || "",
+        rating:
+          place.rating ||
+          place.average_rating ||
+          "0",
+        reviews:
+          place.reviews ||
+          place.total_reviews ||
+          "0",
+        image:
+          place.image ||
+          place.image_url ||
+          "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80",
+        latitude:
+          place.latitude ||
+          place.lat ||
+          null,
+        longitude:
+          place.longitude ||
+          place.lng ||
+          null,
+        description:
+          place.description ||
+          "Beautiful destination to explore."
+      }));
+
+      console.log(
+        "DATABASE DESTINATIONS LOADED:",
+        destinations
+      );
+    } else {
+      console.log(
+        "No database destinations found. Using fallback data."
+      );
+    }
+
+  } catch (error) {
+    console.error(
+      "DATABASE CONNECTION ERROR:",
+      error
+    );
+  }
+
+  loadDestinations();
+}
 
 /* =========================================
    DESTINATION CARDS
 ========================================= */
 
-function loadDestinations() {
+function loadDestinations(list = destinations) {
 
-  if (!destinationCards) return;
+  destinationCards =
+    document.querySelector(
+      "#destinationCards"
+    ) ||
+    document.querySelector(
+      ".destination-cards"
+    ) ||
+    document.querySelector(
+      ".destinations-grid"
+    );
+
+  if (!destinationCards) {
+    console.warn(
+      "Destination cards container not found."
+    );
+    return;
+  }
+
+  if (!list || list.length === 0) {
+    destinationCards.innerHTML = `
+      <div style="padding:30px;text-align:center;">
+        No destinations available.
+      </div>
+    `;
+    return;
+  }
 
   destinationCards.innerHTML = "";
 
-  destinations.forEach((place, index) => {
+  list.forEach((place, index) => {
 
-    const card =
-      document.createElement("article");
+    const card = document.createElement("div");
 
-    card.className = "destination";
-
-    card.dataset.place = place.name;
+    card.className =
+      "destination-card";
 
     card.innerHTML = `
-
-      ${
-        index === 0
-          ? `<span class="badge">Popular</span>`
-          : ""
-      }
-
-      <img
-        src="${place.image}"
-        alt="${place.name}"
-        loading="lazy"
-      >
+      <div class="destination-image">
+        <img
+          src="${place.image}"
+          alt="${escapeHTML(place.name)}"
+          loading="lazy"
+        >
+      </div>
 
       <div class="destination-info">
 
-        <b>
-          ${place.name}
-        </b>
+        <h3>
+          ${escapeHTML(place.name)}
+        </h3>
 
-        <small>
-          ${place.state}
-        </small>
+        <p>
+          ${escapeHTML(place.state)}
+        </p>
 
-        <small class="rating">
-          ★ ${place.rating}
-          (${place.reviews})
-        </small>
+        <div class="destination-rating">
+          ⭐ ${escapeHTML(String(place.rating))}
+          <span>
+            (${escapeHTML(String(place.reviews))})
+          </span>
+        </div>
+
+        <button
+          class="destination-btn"
+          data-index="${index}"
+        >
+          Explore
+        </button>
 
       </div>
     `;
 
-    card.addEventListener(
-      "click",
-      () => openDestination(place)
-    );
-
     destinationCards.appendChild(card);
-
   });
 
+  destinationCards
+    .querySelectorAll(".destination-btn")
+    .forEach((button) => {
+
+      button.addEventListener(
+        "click",
+        function () {
+
+          const index =
+            Number(
+              this.dataset.index
+            );
+
+          showDestination(
+            list[index]
+          );
+        }
+      );
+    });
 }
 
+/* =========================================
+   DESTINATION MODAL
+========================================= */
+
+function showDestination(place) {
+
+  if (!place) return;
+
+  createModalIfNeeded();
+
+  modalContent.innerHTML = `
+    <div style="
+      max-width:700px;
+      margin:auto;
+      background:#fff;
+      border-radius:20px;
+      overflow:hidden;
+      color:#111;
+    ">
+
+      <img
+        src="${place.image}"
+        alt="${escapeHTML(place.name)}"
+        style="
+          width:100%;
+          height:280px;
+          object-fit:cover;
+        "
+      >
+
+      <div style="padding:25px;">
+
+        <h2>
+          ${escapeHTML(place.name)}
+        </h2>
+
+        <p>
+          ${escapeHTML(place.state || "")}
+        </p>
+
+        <p>
+          ⭐ ${escapeHTML(String(place.rating || "0"))}
+          ·
+          ${escapeHTML(String(place.reviews || "0"))}
+          reviews
+        </p>
+
+        <p>
+          ${escapeHTML(
+            place.description ||
+            "Explore this beautiful destination with HADOTI WALE BHAIYA."
+          )}
+        </p>
+
+        <div style="
+          display:flex;
+          gap:10px;
+          flex-wrap:wrap;
+          margin-top:20px;
+        ">
+
+          <button
+            onclick="openGoogleMaps('${escapeAttribute(place.name)}')"
+            style="
+              padding:12px 18px;
+              border:0;
+              border-radius:10px;
+              cursor:pointer;
+            "
+          >
+            📍 Open Map
+          </button>
+
+          <button
+            onclick="closeModal()"
+            style="
+              padding:12px 18px;
+              border:0;
+              border-radius:10px;
+              cursor:pointer;
+            "
+          >
+            Close
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+  `;
+
+  modal.style.display = "flex";
+}
 
 /* =========================================
    MODAL
 ========================================= */
 
-function openModal(content) {
+function createModalIfNeeded() {
 
-  if (!modal || !modalContent) return;
+  modal =
+    document.getElementById(
+      "hwModal"
+    );
 
-  modalContent.innerHTML = content;
+  if (modal) {
+    modalContent =
+      modal.querySelector(
+        ".hw-modal-content"
+      );
+    return;
+  }
 
-  modal.classList.add("open");
+  modal =
+    document.createElement("div");
 
-}
+  modal.id = "hwModal";
 
+  modal.style.cssText = `
+    position:fixed;
+    inset:0;
+    z-index:99999;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    background:rgba(0,0,0,.75);
+    padding:20px;
+    overflow:auto;
+  `;
 
-function closeModal() {
+  modal.innerHTML = `
+    <div
+      class="hw-modal-content"
+      style="
+        width:100%;
+        max-width:720px;
+      "
+    ></div>
+  `;
 
-  if (!modal) return;
+  document.body.appendChild(modal);
 
-  modal.classList.remove("open");
-
-}
-
-
-const closeModalButton =
-  document.getElementById("closeModal");
-
-if (closeModalButton) {
-
-  closeModalButton.addEventListener(
-    "click",
-    closeModal
-  );
-
-}
-
-
-if (modal) {
+  modalContent =
+    modal.querySelector(
+      ".hw-modal-content"
+    );
 
   modal.addEventListener(
     "click",
-    function (event) {
+    function(event) {
 
       if (event.target === modal) {
-
         closeModal();
-
       }
 
     }
   );
-
 }
 
+function closeModal() {
+
+  if (modal) {
+    modal.style.display = "none";
+  }
+}
 
 /* =========================================
-   DESTINATION DETAIL
+   GOOGLE MAPS
 ========================================= */
 
-function openDestination(place) {
+function openGoogleMaps(placeName) {
 
-  openModal(`
+  const url =
+    "https://www.google.com/maps/search/?api=1&query=" +
+    encodeURIComponent(placeName);
 
-    <h2>
-      📍 ${place.name}
-    </h2>
-
-    <p>
-      ${place.name}, ${place.state}
-    </p>
-
-    <br>
-
-    <p>
-      ⭐ Rating:
-      <strong>${place.rating}</strong>
-    </p>
-
-    <p>
-      👥 Reviews:
-      ${place.reviews}
-    </p>
-
-    <br>
-
-    <p>
-      इस destination के complete page में
-      history, culture, hotels, restaurants,
-      maps, weather, reviews, budget,
-      nearby places और AI travel assistant
-      उपलब्ध होंगे।
-    </p>
-
-    <button
-      class="primary"
-      onclick="closeModal()">
-
-      Explore Destination →
-
-    </button>
-
-  `);
-
+  window.open(
+    url,
+    "_blank"
+  );
 }
-
 
 /* =========================================
    SEARCH
 ========================================= */
 
-if (searchForm) {
+function setupSearch() {
 
-  searchForm.addEventListener(
-    "submit",
-    function (event) {
-
-      event.preventDefault();
-
-      const query =
-        destinationInput.value.trim();
-
-      if (!query) {
-
-        destinationInput.focus();
-
-        return;
-
-      }
-
-      const result =
-        destinations.find(
-          place =>
-            place.name.toLowerCase() ===
-            query.toLowerCase()
-        );
-
-      if (result) {
-
-        openDestination(result);
-
-        return;
-
-      }
-
-      openModal(`
-
-        <h2>
-          🔎 Searching...
-        </h2>
-
-        <p>
-          We are searching destinations
-          for:
-        </p>
-
-        <h3>
-          "${query}"
-        </h3>
-
-        <br>
-
-        <p>
-          Future database connection के बाद
-          यहां complete search results आएंगे।
-        </p>
-
-        <button
-          class="primary"
-          onclick="closeModal()">
-
-          Continue Exploring
-
-        </button>
-
-      `);
-
-    }
-  );
-
-}
-
-
-/* =========================================
-   POPULAR SEARCH
-========================================= */
-
-const popularButtons =
-  document.querySelectorAll(
-    ".popular button"
-  );
-
-
-popularButtons.forEach(button => {
-
-  button.addEventListener(
-    "click",
-    function () {
-
-      const place =
-        this.dataset.place;
-
-      destinationInput.value =
-        place;
-
-      searchForm.dispatchEvent(
-        new Event("submit")
-      );
-
-    }
-  );
-
-});
-
-
-/* =========================================
-   AI TRIP PLANNER
-========================================= */
-
-function openTripPlanner() {
-
-  openModal(`
-
-    <h2>
-      🤖 AI Trip Planner
-    </h2>
-
-    <p>
-      अपने trip की details डालें।
-    </p>
-
-    <input
-      id="tripDestination"
-      type="text"
-      placeholder="Destination">
-
-    <input
-      id="tripDays"
-      type="number"
-      min="1"
-      placeholder="How many days?">
-
-    <input
-      id="tripBudget"
-      type="number"
-      placeholder="Budget ₹">
-
-    <select
-      id="tripStyle"
-      style="
-        width:100%;
-        height:45px;
-        margin:8px 0;
-        padding:0 12px;
-        border-radius:10px;
-        background:#050b13;
-        color:white;
-        border:1px solid #35465b;
-      "
-    >
-
-      <option value="Family">
-        Family
-      </option>
-
-      <option value="Solo">
-        Solo
-      </option>
-
-      <option value="Couple">
-        Couple
-      </option>
-
-      <option value="Friends">
-        Friends
-      </option>
-
-    </select>
-
-
-    <button
-      class="primary"
-      id="generateTrip">
-
-      ✨ Generate My Trip
-
-    </button>
-
-  `);
-
-
-  const generateButton =
-    document.getElementById(
-      "generateTrip"
+  searchForm =
+    document.querySelector(
+      "#searchForm"
+    ) ||
+    document.querySelector(
+      ".search-form"
     );
 
-
-  if (!generateButton) return;
-
-
-  generateButton.addEventListener(
-    "click",
-    generateTrip
-  );
-
-}
-
-
-/* =========================================
-   GENERATE TRIP
-========================================= */
-
-function generateTrip() {
-
-  const destination =
-    document.getElementById(
-      "tripDestination"
-    ).value.trim()
-    || "Rajasthan";
-
-
-  const days =
-    document.getElementById(
-      "tripDays"
-    ).value
-    || 3;
-
-
-  const budget =
-    document.getElementById(
-      "tripBudget"
-    ).value
-    || 15000;
-
-
-  const style =
-    document.getElementById(
-      "tripStyle"
-    ).value;
-
-
-  openModal(`
-
-    <h2>
-      ✨ AI Trip Plan
-    </h2>
-
-    <p>
-      <strong>${destination}</strong>
-    </p>
-
-    <p>
-      👤 Travel Style:
-      ${style}
-    </p>
-
-    <p>
-      📅 Duration:
-      ${days} Days
-    </p>
-
-    <p>
-      💰 Budget:
-      ₹${budget}
-    </p>
-
-    <hr style="
-      margin:15px 0;
-      border-color:#27384d;
-    ">
-
-    <h3>
-      Suggested Itinerary
-    </h3>
-
-    <br>
-
-    <p>
-      🗓️ Day 1 —
-      Arrival + Local Exploration
-    </p>
-
-    <p>
-      🗓️ Day 2 —
-      Main Tourist Attractions
-    </p>
-
-    <p>
-      🗓️ Day 3 —
-      Hidden Gems + Local Food
-    </p>
-
-    <p>
-      🏨 Hotel Recommendation
-    </p>
-
-    <p>
-      🍛 Food Recommendation
-    </p>
-
-    <p>
-      🚗 Travel Route
-    </p>
-
-    <p>
-      🎒 Packing List
-    </p>
-
-    <br>
-
-    <button
-      class="primary"
-      onclick="closeModal()">
-
-      Save Trip
-
-    </button>
-
-  `);
-
-}
-
-
-/* =========================================
-   AI BUTTONS
-========================================= */
-
-const planButton =
-  document.getElementById("planBtn");
-
-const quickPlanner =
-  document.getElementById("quickPlanner");
-
-
-if (planButton) {
-
-  planButton.addEventListener(
-    "click",
-    openTripPlanner
-  );
-
-}
-
-
-if (quickPlanner) {
-
-  quickPlanner.addEventListener(
-    "click",
-    openTripPlanner
-  );
-
-}
-
-
-/* =========================================
-   LOGIN / OTP
-========================================= */
-
-const loginButton =
-  document.getElementById("loginBtn");
-
-
-if (loginButton) {
-
-  loginButton.addEventListener(
-    "click",
-    openLogin
-  );
-
-}
-
-
-function openLogin() {
-
-  openModal(`
-
-    <h2>
-      👋 Welcome Back
-    </h2>
-
-    <p>
-      HADOTI WALE BHAIYA में login करें।
-    </p>
-
-    <input
-      id="phoneNumber"
-      type="tel"
-      maxlength="10"
-      inputmode="numeric"
-      placeholder="10-digit mobile number"
-    >
-
-    <button
-      class="primary"
-      id="sendOTP">
-
-      Send OTP
-
-    </button>
-
-  `);
-
-
-  const sendOTP =
-    document.getElementById(
-      "sendOTP"
+  destinationInput =
+    document.querySelector(
+      "#destinationInput"
+    ) ||
+    document.querySelector(
+      "#searchInput"
+    ) ||
+    document.querySelector(
+      ".destination-input"
     );
 
-
-  sendOTP.addEventListener(
-    "click",
-    sendOTPCode
-  );
-
-}
-
-
-/* =========================================
-   SEND OTP DEMO
-========================================= */
-
-function sendOTPCode() {
-
-  const phone =
-    document.getElementById(
-      "phoneNumber"
-    ).value.trim();
-
-
-  if (!/^[0-9]{10}$/.test(phone)) {
-
-    alert(
-      "Please enter a valid 10 digit mobile number."
+  if (!destinationInput) {
+    console.warn(
+      "Search input not found."
     );
-
     return;
-
   }
 
+  destinationInput.addEventListener(
+    "input",
+    function () {
 
-  openModal(`
+      const query =
+        this.value
+          .trim()
+          .toLowerCase();
 
-    <h2>
-      🔐 Verify OTP
-    </h2>
-
-    <p>
-      OTP sent to
-      <strong>+91 ${phone}</strong>
-    </p>
-
-    <div
-      style="
-        display:flex;
-        gap:7px;
-        margin:15px 0;
-      "
-    >
-
-      ${[1,2,3,4,5,6]
-        .map(
-          number => `
-            <input
-              class="otp-box"
-              maxlength="1"
-              inputmode="numeric"
-              style="
-                width:45px;
-                height:45px;
-                text-align:center;
-                font-size:20px;
-                border-radius:8px;
-                border:1px solid #35465b;
-                background:#050b13;
-                color:white;
-              "
-            >
-          `
-        )
-        .join("")
+      if (!query) {
+        loadDestinations();
+        return;
       }
 
-    </div>
+      const filtered =
+        destinations.filter(
+          (place) =>
+            String(place.name)
+              .toLowerCase()
+              .includes(query) ||
 
-    <button
-      class="primary"
-      id="verifyOTP">
+            String(place.state)
+              .toLowerCase()
+              .includes(query)
+        );
 
-      Verify & Continue
+      loadDestinations(
+        filtered
+      );
+    }
+  );
 
-    </button>
+  if (searchForm) {
 
-  `);
+    searchForm.addEventListener(
+      "submit",
+      function(event) {
 
+        event.preventDefault();
 
-  setupOTP();
+        const query =
+          destinationInput.value
+            .trim()
+            .toLowerCase();
 
+        const filtered =
+          destinations.filter(
+            (place) =>
+              String(place.name)
+                .toLowerCase()
+                .includes(query) ||
 
-  document
-    .getElementById("verifyOTP")
-    .addEventListener(
-      "click",
-      verifyOTP
+              String(place.state)
+                .toLowerCase()
+                .includes(query)
+          );
+
+        loadDestinations(
+          filtered
+        );
+      }
     );
-
+  }
 }
 
-
 /* =========================================
-   OTP AUTO FOCUS
+   EXPLORE MAP
 ========================================= */
 
-function setupOTP() {
+function setupExploreMap() {
 
-  const boxes =
+  const mapButtons =
     document.querySelectorAll(
-      ".otp-box"
+      "[data-service='map'], #exploreMap, .explore-map"
     );
 
+  mapButtons.forEach(
+    (button) => {
 
-  boxes.forEach(
-    (box,index) => {
+      button.addEventListener(
+        "click",
+        function(event) {
 
-      box.addEventListener(
-        "input",
-        function () {
+          event.preventDefault();
 
-          this.value =
-            this.value.replace(
-              /[^0-9]/g,
-              ""
-            );
+          createModalIfNeeded();
 
-          if (
-            this.value &&
-            boxes[index + 1]
-          ) {
+          modalContent.innerHTML = `
+            <div style="
+              background:#07111f;
+              color:white;
+              padding:30px;
+              border-radius:20px;
+              text-align:center;
+            ">
 
-            boxes[index + 1].focus();
+              <h2>🗺️ Explore Map</h2>
 
-          }
+              <p>
+                Choose a destination to
+                open its location in Google Maps.
+              </p>
 
+              <div style="
+                display:grid;
+                gap:10px;
+                margin-top:20px;
+              ">
+
+                ${destinations
+                  .slice(0, 10)
+                  .map(
+                    (place) => `
+                      <button
+                        onclick="openGoogleMaps('${escapeAttribute(place.name)}')"
+                        style="
+                          padding:14px;
+                          border:0;
+                          border-radius:10px;
+                          cursor:pointer;
+                        "
+                      >
+                        📍 ${escapeHTML(place.name)}
+                      </button>
+                    `
+                  )
+                  .join("")}
+
+              </div>
+
+              <button
+                onclick="closeModal()"
+                style="
+                  margin-top:20px;
+                  padding:12px 20px;
+                  border:0;
+                  border-radius:10px;
+                "
+              >
+                Close
+              </button>
+
+            </div>
+          `;
+
+          modal.style.display =
+            "flex";
         }
       );
 
     }
   );
-
 }
 
-
 /* =========================================
-   VERIFY OTP DEMO
+   BUDGET CALCULATOR
 ========================================= */
 
-function verifyOTP() {
+function setupBudgetCalculator() {
 
-  const boxes =
+  const buttons =
     document.querySelectorAll(
-      ".otp-box"
+      "[data-service='calculator'], #budgetCalculator, .budget-calculator"
     );
 
+  buttons.forEach(
+    (button) => {
 
-  let otp = "";
+      button.addEventListener(
+        "click",
+        function(event) {
 
+          event.preventDefault();
 
-  boxes.forEach(
-    box => {
-      otp += box.value;
+          createModalIfNeeded();
+
+          modalContent.innerHTML = `
+            <div style="
+              background:white;
+              padding:25px;
+              border-radius:20px;
+              color:#111;
+            ">
+
+              <h2>💰 Budget Calculator</h2>
+
+              <label>
+                People
+              </label>
+
+              <input
+                id="budgetPeople"
+                type="number"
+                value="2"
+                min="1"
+                style="
+                  width:100%;
+                  padding:12px;
+                  margin:8px 0 15px;
+                "
+              >
+
+              <label>
+                Days
+              </label>
+
+              <input
+                id="budgetDays"
+                type="number"
+                value="3"
+                min="1"
+                style="
+                  width:100%;
+                  padding:12px;
+                  margin:8px 0 15px;
+                "
+              >
+
+              <label>
+                Daily budget per person
+              </label>
+
+              <input
+                id="budgetDaily"
+                type="number"
+                value="2000"
+                min="0"
+                style="
+                  width:100%;
+                  padding:12px;
+                  margin:8px 0 15px;
+                "
+              >
+
+              <button
+                onclick="calculateBudget()"
+                style="
+                  width:100%;
+                  padding:14px;
+                  border:0;
+                  border-radius:10px;
+                  cursor:pointer;
+                "
+              >
+                Calculate
+              </button>
+
+              <div
+                id="budgetResult"
+                style="
+                  margin-top:20px;
+                  font-size:20px;
+                  font-weight:bold;
+                "
+              ></div>
+
+              <button
+                onclick="closeModal()"
+                style="
+                  margin-top:15px;
+                  padding:12px 18px;
+                  border:0;
+                  border-radius:10px;
+                "
+              >
+                Close
+              </button>
+
+            </div>
+          `;
+
+          modal.style.display =
+            "flex";
+        }
+      );
+
     }
   );
-
-
-  if (otp.length !== 6) {
-
-    alert(
-      "Please enter complete 6 digit OTP."
-    );
-
-    return;
-
-  }
-
-
-  openModal(`
-
-    <h2>
-      ✅ Login Successful
-    </h2>
-
-    <p>
-      Welcome to HADOTI WALE BHAIYA!
-    </p>
-
-    <p>
-      आपका profile system अब backend
-      database से connect किया जा सकता है।
-    </p>
-
-    <button
-      class="primary"
-      onclick="closeModal()">
-
-      Continue
-
-    </button>
-
-  `);
-
 }
 
+function calculateBudget() {
 
-/* =========================================
-   DARK / LIGHT MODE
-========================================= */
+  const people =
+    Number(
+      document.getElementById(
+        "budgetPeople"
+      ).value
+    ) || 1;
 
-const themeButton =
-  document.getElementById(
-    "themeBtn"
-  );
+  const days =
+    Number(
+      document.getElementById(
+        "budgetDays"
+      ).value
+    ) || 1;
 
+  const daily =
+    Number(
+      document.getElementById(
+        "budgetDaily"
+      ).value
+    ) || 0;
 
-if (themeButton) {
+  const total =
+    people *
+    days *
+    daily;
 
-  themeButton.addEventListener(
-    "click",
-    toggleTheme
-  );
-
-}
-
-
-function toggleTheme() {
-
-  document.body.classList.toggle(
-    "light"
-  );
-
-
-  const isLight =
-    document.body.classList.contains(
-      "light"
-    );
-
-
-  localStorage.setItem(
-    "hadotiTheme",
-    isLight
-      ? "light"
-      : "dark"
-  );
-
-}
-
-
-/* =========================================
-   LOAD SAVED THEME
-========================================= */
-
-const savedTheme =
-  localStorage.getItem(
-    "hadotiTheme"
-  );
-
-
-if (savedTheme === "light") {
-
-  document.body.classList.add(
-    "light"
-  );
-
-}
-
-
-/* =========================================
-   ROUTE PLANNER
-========================================= */
-
-const routeButton =
-  document.getElementById(
-    "routeBtn"
-  );
-
-
-if (routeButton) {
-
-  routeButton.addEventListener(
-    "click",
-    showRoute
-  );
-
-}
-
-
-function showRoute() {
-
-  const routeTo =
+  const result =
     document.getElementById(
-      "routeTo"
+      "budgetResult"
     );
 
+  result.textContent =
+    `Estimated Budget: ₹${total.toLocaleString("en-IN")}`;
+}
+
+/* =========================================
+   HOSTEL BOOKING
+========================================= */
+
+function setupHostelBooking() {
+
+  const buttons =
+    document.querySelectorAll(
+      "[data-service='hostel'], #hostelBooking, .hostel-booking"
+    );
+
+  buttons.forEach(
+    (button) => {
+
+      button.addEventListener(
+        "click",
+        function(event) {
+
+          event.preventDefault();
+
+          createModalIfNeeded();
+
+          modalContent.innerHTML = `
+            <div style="
+              background:white;
+              color:#111;
+              padding:25px;
+              border-radius:20px;
+            ">
+
+              <h2>🏨 Hostel Booking</h2>
+
+              <p>
+                Select your destination.
+              </p>
+
+              <select
+                id="hostelDestination"
+                style="
+                  width:100%;
+                  padding:12px;
+                  margin:10px 0;
+                "
+              >
+
+                ${destinations
+                  .map(
+                    (place) =>
+                      `<option>
+                        ${escapeHTML(place.name)}
+                      </option>`
+                  )
+                  .join("")}
+
+              </select>
+
+              <input
+                id="hostelDate"
+                type="date"
+                style="
+                  width:100%;
+                  padding:12px;
+                  margin:10px 0;
+                "
+              >
+
+              <button
+                onclick="searchHostels()"
+                style="
+                  width:100%;
+                  padding:14px;
+                  border:0;
+                  border-radius:10px;
+                "
+              >
+                Search Hostels
+              </button>
+
+              <div
+                id="hostelResult"
+                style="
+                  margin-top:20px;
+                "
+              ></div>
+
+              <button
+                onclick="closeModal()"
+                style="
+                  margin-top:15px;
+                  padding:12px 18px;
+                  border:0;
+                  border-radius:10px;
+                "
+              >
+                Close
+              </button>
+
+            </div>
+          `;
+
+          modal.style.display =
+            "flex";
+        }
+      );
+
+    }
+  );
+}
+
+function searchHostels() {
 
   const destination =
-    routeTo.value.trim();
+    document.getElementById(
+      "hostelDestination"
+    ).value;
 
-
-  if (!destination) {
-
-    alert(
-      "Please enter your destination."
+  const result =
+    document.getElementById(
+      "hostelResult"
     );
 
-    routeTo.focus();
-
-    return;
-
-  }
-
-
-  openModal(`
-
-    <h2>
-      🗺️ Route Planner
-    </h2>
-
-    <p>
-      📍 Jaipur
-      →
+  result.innerHTML = `
+    <div style="
+      padding:15px;
+      border-radius:10px;
+      background:#f2f2f2;
+    ">
+      🏨 Hostel search prepared for
       <strong>
-        ${destination}
-      </strong>
-    </p>
+        ${escapeHTML(destination)}
+      </strong>.
 
-    <br>
+      <br><br>
 
-    <p>
-      🚗 Driving Route
-    </p>
-
-    <p>
-      ⏱️ Travel Time
-    </p>
-
-    <p>
-      ⛽ Estimated Fuel Cost
-    </p>
-
-    <p>
-      🛣️ Best Route
-    </p>
-
-    <br>
-
-    <p style="color:#9faabb;">
-      Production version में Google Maps
-      या अन्य Maps API connect करके
-      live route, distance और traffic
-      दिखाया जाएगा।
-    </p>
-
-    <button
-      class="primary"
-      onclick="closeModal()">
-
-      Close
-
-    </button>
-
-  `);
-
+      Booking integration can be
+      connected to a hotel/hostel API
+      later.
+    </div>
+  `;
 }
 
-
 /* =========================================
-   QUICK SERVICE CARDS
+   LOGIN / OTP DEMO
 ========================================= */
 
-const quickCards =
-  document.querySelectorAll(
-    ".quick-card"
-  );
+function setupLogin() {
 
-
-quickCards.forEach(
-  (card,index) => {
-
-    if (index === 1) return;
-
-
-    card.addEventListener(
-      "click",
-      function () {
-
-        const title =
-          this.querySelector(
-            "b"
-          )?.textContent
-          || "Travel Service";
-
-
-        openModal(`
-
-          <h2>
-            ${title}
-          </h2>
-
-          <p>
-            यह feature HADOTI WALE BHAIYA
-            Travel OS का हिस्सा है।
-          </p>
-
-          <p>
-            Database और backend connect
-            होने के बाद यह module पूरी तरह
-            functional होगा।
-          </p>
-
-          <br>
-
-          <button
-            class="primary"
-            onclick="closeModal()">
-
-            Continue
-
-          </button>
-
-        `);
-
-      }
+  const loginButtons =
+    document.querySelectorAll(
+      "#loginBtn, .login-btn, [data-action='login']"
     );
 
-  }
-);
+  loginButtons.forEach(
+    (button) => {
 
+      button.addEventListener(
+        "click",
+        function(event) {
 
-/* =========================================
-   MOBILE MENU
-========================================= */
+          event.preventDefault();
 
-const menuButton =
-  document.getElementById(
-    "menuBtn"
-  );
+          createModalIfNeeded();
 
+          modalContent.innerHTML = `
+            <div style="
+              background:white;
+              color:#111;
+              padding:25px;
+              border-radius:20px;
+            ">
 
-if (menuButton) {
+              <h2>🔐 Login</h2>
 
-  menuButton.addEventListener(
-    "click",
-    function () {
+              <input
+                id="loginPhone"
+                type="tel"
+                maxlength="10"
+                placeholder="Mobile Number"
+                style="
+                  width:100%;
+                  padding:13px;
+                  margin:10px 0;
+                "
+              >
 
-      openModal(`
-
-        <h2>
-          ☰ HADOTI WALE BHAIYA
-        </h2>
-
-        <br>
-
-        <p>
-          🌍 Explore
-        </p>
-
-        <p>
-          🗺️ Destinations
-        </p>
-
-        <p>
-          🤖 AI Trip Planner
-        </p>
-
-        <p>
-          🏨 Hotels
-        </p>
-
-        <p>
-          📖 Travel Stories
-        </p>
-
-        <p>
-          👤 My Profile
-        </p>
-
-        <p>
-          ⚙️ Settings
-        </p>
-
-        <br>
-
-        <button
-          class="primary"
-          onclick="closeModal()">
-
-          Close
-
-        </button>
-
-      `);
-
-    }
-  );
-
-}
-
-
-/* =========================================
-   KEYBOARD ESC
-========================================= */
-
-document.addEventListener(
-  "keydown",
-  function(event) {
-
-    if (event.key === "Escape") {
-
-      closeModal();
-
-    }
-
-  }
-);
-
-
-/* =========================================
-   INITIALIZE
-========================================= */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  function() {
-
-    loadDestinations();
-
-    console.log(
-      "HADOTI WALE BHAIYA Travel OS loaded successfully."
-    );
-
-  }
-);
+              <button
+                onclick="sendDemoOTP()"
+                style="
+                  width:100%;
+                  padding:13px;
+                  border:0;
+                  border-radius:10px;
+                "
+              >
+                Send OTP
+              </button
