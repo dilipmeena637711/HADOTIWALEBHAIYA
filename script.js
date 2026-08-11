@@ -1591,3 +1591,505 @@ function verifyDemoOTP() {
 
   }
 }
+/* =========================================================
+HADOTI WALE BHAIYA
+FINAL INITIALIZATION + BUTTON FIX
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+console.log("HADOTI WALE BHAIYA: Starting...");
+
+/* -------------------------
+   MODAL
+------------------------- */
+setupModal();
+
+/* -------------------------
+   DESTINATIONS
+------------------------- */
+renderDestinations(destinations);
+
+/* -------------------------
+   SEARCH
+------------------------- */
+setupSearch();
+
+/* -------------------------
+   AI TRIP PLANNER
+------------------------- */
+const planBtn = document.getElementById("planBtn");
+const quickPlanner = document.getElementById("quickPlanner");
+
+if (planBtn && !planBtn.dataset.hwBound) {
+    planBtn.dataset.hwBound = "1";
+
+    planBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        openTripPlanner();
+    });
+}
+
+if (quickPlanner && !quickPlanner.dataset.hwBound) {
+    quickPlanner.dataset.hwBound = "1";
+
+    quickPlanner.addEventListener("click", function (e) {
+        e.preventDefault();
+        openTripPlanner();
+    });
+}
+
+/* -------------------------
+   LOGIN
+------------------------- */
+const loginBtn = document.getElementById("loginBtn");
+
+if (loginBtn && !loginBtn.dataset.hwBound) {
+
+    loginBtn.dataset.hwBound = "1";
+
+    loginBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        openLogin();
+    });
+}
+
+/* -------------------------
+   ROUTE
+------------------------- */
+const routeBtn = document.getElementById("routeBtn");
+
+if (routeBtn && !routeBtn.dataset.hwBound) {
+
+    routeBtn.dataset.hwBound = "1";
+
+    routeBtn.addEventListener("click", function (e) {
+
+        e.preventDefault();
+
+        const routeTo =
+            document.getElementById("routeTo")?.value.trim();
+
+        if (!routeTo) {
+
+            alert("Please enter a destination.");
+
+            return;
+        }
+
+        openGoogleMaps(routeTo);
+    });
+}
+
+/* -------------------------
+   QUICK SERVICES
+------------------------- */
+
+document.querySelectorAll(".quick-card").forEach(function (card) {
+
+    if (card.dataset.hwBound) return;
+
+    card.dataset.hwBound = "1";
+
+    card.addEventListener("click", function (e) {
+
+        e.preventDefault();
+
+        const title =
+            card.querySelector("b")?.innerText
+            ?.toLowerCase()
+            .trim() || "";
+
+        if (title.includes("explore map")) {
+
+            openMapService();
+
+        } else if (title.includes("ai trip planner")) {
+
+            openTripPlanner();
+
+        } else if (title.includes("budget calculator")) {
+
+            openBudgetCalculator();
+
+        } else if (title.includes("hotel booking")) {
+
+            openHotelBooking();
+
+        } else if (title.includes("local guides")) {
+
+            openSimpleMessage(
+                "🧑‍✈️ Local Guides",
+                "Local guide service will be connected to the database."
+            );
+
+        } else if (title.includes("travel stories")) {
+
+            openSimpleMessage(
+                "📖 Travel Stories",
+                "Travel stories module is ready."
+            );
+
+        } else if (title.includes("offers")) {
+
+            openSimpleMessage(
+                "🏷️ Offers & Deals",
+                "Offers and deals module is ready."
+            );
+
+        } else if (title.includes("emergency")) {
+
+            openSimpleMessage(
+                "🆘 Emergency",
+                "Emergency support module is ready."
+            );
+        }
+
+    });
+});
+
+/* -------------------------
+   THEME
+------------------------- */
+
+const themeBtn = document.getElementById("themeBtn");
+
+if (themeBtn && !themeBtn.dataset.hwBound) {
+
+    themeBtn.dataset.hwBound = "1";
+
+    themeBtn.addEventListener("click", function () {
+
+        document.body.classList.toggle("dark-mode");
+
+        const enabled =
+            document.body.classList.contains("dark-mode");
+
+        localStorage.setItem(
+            "HW_DARK_MODE",
+            enabled ? "true" : "false"
+        );
+    });
+
+    if (
+        localStorage.getItem("HW_DARK_MODE") === "true"
+    ) {
+        document.body.classList.add("dark-mode");
+    }
+}
+
+/* -------------------------
+   MOBILE MENU
+------------------------- */
+
+const menuBtn = document.getElementById("menuBtn");
+const nav = document.querySelector(".desktop-nav");
+
+if (menuBtn && nav && !menuBtn.dataset.hwBound) {
+
+    menuBtn.dataset.hwBound = "1";
+
+    menuBtn.addEventListener("click", function () {
+
+        nav.classList.toggle("mobile-nav-open");
+
+    });
+}
+
+/* -------------------------
+   DATABASE
+------------------------- */
+
+loadDestinationsFromDatabase();
+
+/* -------------------------
+   ESCAPE KEY
+------------------------- */
+
+document.addEventListener("keydown", function (e) {
+
+    if (e.key === "Escape") {
+
+        closeModal();
+
+    }
+});
+
+console.log(
+    "HADOTI WALE BHAIYA: Website initialized successfully."
+);
+
+});
+
+/* =========================================================
+SIMPLE INFORMATION MODAL
+========================================================= */
+
+function openSimpleMessage(title, message) {
+
+openModal(`
+
+    <div style="
+        color:white;
+        text-align:left;
+    ">
+
+        <h2>${esc(title)}</h2>
+
+        <p style="
+            color:#b8c0cd;
+            line-height:1.7;
+            margin-top:12px;
+        ">
+            ${esc(message)}
+        </p>
+
+        <button
+            id="hwSimpleClose"
+            type="button"
+            style="
+                margin-top:20px;
+                padding:12px 20px;
+                border:0;
+                border-radius:10px;
+                cursor:pointer;
+            "
+        >
+            Close
+        </button>
+
+    </div>
+
+`);
+
+document
+    .getElementById("hwSimpleClose")
+    ?.addEventListener(
+        "click",
+        closeModal
+    );
+
+}
+
+/* =========================================================
+FIXED OTP SYSTEM
+========================================================= */
+
+function sendDemoOTP() {
+
+const phone =
+    document.getElementById("hwPhone")
+    ?.value
+    .trim();
+
+const area =
+    document.getElementById("hwOtpArea");
+
+if (!/^[0-9]{10}$/.test(phone)) {
+
+    if (area) {
+
+        area.innerHTML = `
+
+            <div style="
+                color:#ff6b6b;
+                padding:10px 0;
+            ">
+                Enter a valid 10 digit mobile number.
+            </div>
+
+        `;
+    }
+
+    return;
+}
+
+const otp =
+    String(
+        Math.floor(
+            100000 +
+            Math.random() * 900000
+        )
+    );
+
+sessionStorage.setItem(
+    "HW_DEMO_OTP",
+    otp
+);
+
+if (!area) return;
+
+area.innerHTML = `
+
+    <div style="
+        padding:14px;
+        border-radius:12px;
+        background:#101c2d;
+    ">
+
+        <p>
+            Demo OTP:
+            <strong>${otp}</strong>
+        </p>
+
+        <input
+            id="hwVerifyOtpInput"
+            type="text"
+            inputmode="numeric"
+            maxlength="6"
+            placeholder="Enter OTP"
+            style="
+                width:100%;
+                box-sizing:border-box;
+                padding:13px;
+                margin:8px 0 12px;
+                border-radius:10px;
+                border:1px solid #394b65;
+            "
+        >
+
+        <button
+            id="hwVerifyOtpButton"
+            type="button"
+            style="
+                width:100%;
+                padding:13px;
+                border:0;
+                border-radius:10px;
+                cursor:pointer;
+            "
+        >
+            Verify OTP
+        </button>
+
+        <div
+            id="hwOtpMessage"
+            style="
+                margin-top:12px;
+            "
+        ></div>
+
+    </div>
+
+`;
+
+document
+    .getElementById("hwVerifyOtpButton")
+    ?.addEventListener(
+        "click",
+        verifyDemoOTP
+    );
+
+}
+
+/* =========================================================
+VERIFY OTP
+========================================================= */
+
+function verifyDemoOTP() {
+
+const entered =
+    document.getElementById(
+        "hwVerifyOtpInput"
+    )
+    ?.value
+    .trim();
+
+const saved =
+    sessionStorage.getItem(
+        "HW_DEMO_OTP"
+    );
+
+const message =
+    document.getElementById(
+        "hwOtpMessage"
+    );
+
+if (
+    entered &&
+    saved &&
+    entered === saved
+) {
+
+    sessionStorage.setItem(
+        "HW_LOGGED_IN",
+        "true"
+    );
+
+    if (message) {
+
+        message.innerHTML = `
+
+            <strong style="
+                color:#39d98a;
+            ">
+                ✅ Login successful!
+            </strong>
+
+        `;
+    }
+
+} else {
+
+    if (message) {
+
+        message.innerHTML = `
+
+            <strong style="
+                color:#ff6b6b;
+            ">
+                ❌ Wrong OTP.
+            </strong>
+
+        `;
+    }
+}
+
+}
+
+/* =========================================================
+GLOBAL FUNCTIONS
+========================================================= */
+
+window.searchDestinations =
+searchDestinations;
+
+window.openGoogleMaps =
+openGoogleMaps;
+
+window.openMapService =
+openMapService;
+
+window.openBudgetCalculator =
+openBudgetCalculator;
+
+window.openHotelBooking =
+openHotelBooking;
+
+window.openTripPlanner =
+openTripPlanner;
+
+window.openLogin =
+openLogin;
+
+window.closeModal =
+closeModal;
+
+window.showDestination =
+showDestination;
+
+window.sendDemoOTP =
+sendDemoOTP;
+
+window.verifyDemoOTP =
+verifyDemoOTP;
+
+window.generateTripPlan =
+generateTripPlan;
+
+window.calculateBudget =
+calculateBudget;
+
+console.log(
+"HADOTI WALE BHAIYA FINAL FIX LOADED."
+);
