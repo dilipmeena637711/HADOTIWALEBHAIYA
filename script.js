@@ -1702,8 +1702,9 @@ document.querySelectorAll(".quick-card").forEach(function (card) {
 
         if (title.includes("explore map")) {
 
-            openMapService();
+    window.location.href = "earth-%20test.html";
 
+}
         } else if (title.includes("ai trip planner")) {
 
             openTripPlanner();
