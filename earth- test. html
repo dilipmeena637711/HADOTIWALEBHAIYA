@@ -133,7 +133,7 @@
       Do NOT publish a private token publicly.
     */
 
-    Cesium.Ion.defaultAccessToken = "PASTE_YOUR_CESIUM_TOKEN_HERE";
+    Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIwNjA5ODQ3Yi1mMTlhLTQxNzktYWRlNS05YjllYTVmMzZkODEiLCJpZCI6NDY3MDczLCJpc3MiOiJodHRwczovL2FwaS5jZXNpdW0uY29tIiwiYXVkIjoidW5kZWZpbmVkX2RlZmF1bHQiLCJpYXQiOjE3ODY1MjYzNjB9.NLVOlApe4_bVIjY6NBWAgj5gqSEYpHf_pSeIhiVHCJQ";
 
     const viewer = new Cesium.Viewer("cesiumContainer", {
 
