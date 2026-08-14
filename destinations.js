@@ -603,7 +603,6 @@ const HADOTI_DESTINATIONS = [
         state: "West Bengal",
         region: "East India",
         category: ["Hill Station", "Tea", "Nature"],
-        description: "चाय के बागानों और Kanchenjung
 description: "चाय के बागानों, हिमालयी दृश्यों और प्रसिद्ध Darjeeling Himalayan Railway के लिए प्रसिद्ध।",
 
 popularFor: [
@@ -618,9 +617,7 @@ tags: [
     "Himalaya",
     "Toy Train"
 ]
-
-}
-
+    }
 ];
 
 // Make destination data available to the frontend
