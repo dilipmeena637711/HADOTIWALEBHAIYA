@@ -604,29 +604,24 @@ const HADOTI_DESTINATIONS = [
         region: "East India",
         category: ["Hill Station", "Tea", "Nature"],
         description: "चाय के बागानों और Kanchenjung
-// ===============================
-// HADOTI WALE BHAIYA - DATABASE API
-// ===============================
+description: "चाय के बागानों, हिमालयी दृश्यों और प्रसिद्ध Darjeeling Himalayan Railway के लिए प्रसिद्ध।",
 
-const API_BASE_URL = "https://hadotiwalebhaiya.onrender.com";
+popularFor: [
+    "Tiger Hill",
+    "Darjeeling Himalayan Railway",
+    "Batasia Loop"
+],
 
-async function loadDestinationsFromDatabase() {
-    try {
-        const response = await fetch(`${API_BASE_URL}/api/destinations`);
+tags: [
+    "West Bengal",
+    "Tea",
+    "Himalaya",
+    "Toy Train"
+]
 
-        if (!response.ok) {
-            throw new Error(`API Error: ${response.status}`);
-        }
-
-        const result = await response.json();
-
-        console.log("Database destinations:", result);
-
-        return result;
-    } catch (error) {
-        console.error("Database connection error:", error);
-        return null;
-    }
 }
 
-loadDestinationsFromDatabase();
+];
+
+// Make destination data available to the frontend
+window.HADOTI_DESTINATIONS = HADOTI_DESTINATIONS;
