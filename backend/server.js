@@ -19,9 +19,10 @@ const pool = new Pool({
       : false
 });
 
-/* =========================
+
+/* =========================================================
    HEALTH CHECK
-========================= */
+========================================================= */
 
 app.get("/", (req, res) => {
   res.json({
@@ -31,9 +32,9 @@ app.get("/", (req, res) => {
 });
 
 
-/* =========================
+/* =========================================================
    DATABASE TEST
-========================= */
+========================================================= */
 
 app.get("/api/db-test", async (req, res) => {
 
@@ -51,7 +52,7 @@ app.get("/api/db-test", async (req, res) => {
 
   } catch (error) {
 
-    console.error(error);
+    console.error("Database error:", error);
 
     res.status(500).json({
       success: false,
@@ -63,9 +64,9 @@ app.get("/api/db-test", async (req, res) => {
 });
 
 
-/* =========================
-   DESTINATIONS
-========================= */
+/* =========================================================
+   ALL DESTINATIONS
+========================================================= */
 
 app.get("/api/destinations", async (req, res) => {
 
@@ -79,12 +80,13 @@ app.get("/api/destinations", async (req, res) => {
 
     res.json({
       success: true,
+      count: result.rows.length,
       data: result.rows
     });
 
   } catch (error) {
 
-    console.error(error);
+    console.error("Destinations API error:", error);
 
     res.status(500).json({
       success: false,
@@ -96,9 +98,9 @@ app.get("/api/destinations", async (req, res) => {
 });
 
 
-/* =========================
+/* =========================================================
    SINGLE DESTINATION
-========================= */
+========================================================= */
 
 app.get("/api/destinations/:id", async (req, res) => {
 
@@ -129,7 +131,7 @@ app.get("/api/destinations/:id", async (req, res) => {
 
   } catch (error) {
 
-    console.error(error);
+    console.error("Single destination error:", error);
 
     res.status(500).json({
       success: false,
@@ -141,9 +143,9 @@ app.get("/api/destinations/:id", async (req, res) => {
 });
 
 
-/* =========================
+/* =========================================================
    CREATE USER
-========================= */
+========================================================= */
 
 app.post("/api/users", async (req, res) => {
 
@@ -185,7 +187,7 @@ app.post("/api/users", async (req, res) => {
 
   } catch (error) {
 
-    console.error(error);
+    console.error("Create user error:", error);
 
     res.status(500).json({
       success: false,
@@ -197,17 +199,23 @@ app.post("/api/users", async (req, res) => {
 });
 
 
-/* =========================
-   404
-========================= */
 /* =========================================================
    WORLD LOCATION APIs
-   Country → State/Province → District → City → Destination
-   ========================================================= */
+   Country
+   ↓
+   State / Province
+   ↓
+   District
+   ↓
+   City
+   ↓
+   Destination
+========================================================= */
 
-/* -------------------------
+
+/* =========================================================
    ALL COUNTRIES
-------------------------- */
+========================================================= */
 
 app.get("/api/countries", async (req, res) => {
 
@@ -247,10 +255,10 @@ app.get("/api/countries", async (req, res) => {
 });
 
 
-/* -------------------------
+/* =========================================================
    STATES / PROVINCES
    BY COUNTRY
-------------------------- */
+========================================================= */
 
 app.get("/api/countries/:countryId/states", async (req, res) => {
 
@@ -267,7 +275,8 @@ app.get("/api/countries/:countryId/states", async (req, res) => {
 
     }
 
-    const result = await pool.query(`
+    const result = await pool.query(
+      `
       SELECT
         id,
         country_id,
@@ -279,7 +288,9 @@ app.get("/api/countries/:countryId/states", async (req, res) => {
       FROM states
       WHERE country_id = $1
       ORDER BY name ASC
-    `, [countryId]);
+      `,
+      [countryId]
+    );
 
     res.json({
       success: true,
@@ -302,10 +313,10 @@ app.get("/api/countries/:countryId/states", async (req, res) => {
 });
 
 
-/* -------------------------
+/* =========================================================
    DISTRICTS
    BY STATE
-------------------------- */
+========================================================= */
 
 app.get("/api/states/:stateId/districts", async (req, res) => {
 
@@ -322,7 +333,8 @@ app.get("/api/states/:stateId/districts", async (req, res) => {
 
     }
 
-    const result = await pool.query(`
+    const result = await pool.query(
+      `
       SELECT
         id,
         state_id,
@@ -334,7 +346,9 @@ app.get("/api/states/:stateId/districts", async (req, res) => {
       FROM districts
       WHERE state_id = $1
       ORDER BY name ASC
-    `, [stateId]);
+      `,
+      [stateId]
+    );
 
     res.json({
       success: true,
@@ -357,10 +371,10 @@ app.get("/api/states/:stateId/districts", async (req, res) => {
 });
 
 
-/* -------------------------
+/* =========================================================
    CITIES
    BY DISTRICT
-------------------------- */
+========================================================= */
 
 app.get("/api/districts/:districtId/cities", async (req, res) => {
 
@@ -377,7 +391,8 @@ app.get("/api/districts/:districtId/cities", async (req, res) => {
 
     }
 
-    const result = await pool.query(`
+    const result = await pool.query(
+      `
       SELECT
         id,
         district_id,
@@ -393,7 +408,9 @@ app.get("/api/districts/:districtId/cities", async (req, res) => {
       FROM cities
       WHERE district_id = $1
       ORDER BY name ASC
-    `, [districtId]);
+      `,
+      [districtId]
+    );
 
     res.json({
       success: true,
@@ -416,10 +433,10 @@ app.get("/api/districts/:districtId/cities", async (req, res) => {
 });
 
 
-/* -------------------------
+/* =========================================================
    DESTINATIONS
    BY CITY
-------------------------- */
+========================================================= */
 
 app.get("/api/cities/:cityId/destinations", async (req, res) => {
 
@@ -436,7 +453,8 @@ app.get("/api/cities/:cityId/destinations", async (req, res) => {
 
     }
 
-    const result = await pool.query(`
+    const result = await pool.query(
+      `
       SELECT
         id,
         country_id,
@@ -474,7 +492,9 @@ app.get("/api/cities/:cityId/destinations", async (req, res) => {
       WHERE city_id = $1
         AND is_active = TRUE
       ORDER BY is_featured DESC, name ASC
-    `, [cityId]);
+      `,
+      [cityId]
+    );
 
     res.json({
       success: true,
@@ -496,6 +516,13 @@ app.get("/api/cities/:cityId/destinations", async (req, res) => {
 
 });
 
+
+/* =========================================================
+   404 HANDLER
+   IMPORTANT:
+   यह सभी API routes के बाद होना चाहिए।
+========================================================= */
+
 app.use((req, res) => {
 
   res.status(404).json({
@@ -506,9 +533,9 @@ app.use((req, res) => {
 });
 
 
-/* =========================
+/* =========================================================
    START SERVER
-========================= */
+========================================================= */
 
 app.listen(PORT, () => {
 
