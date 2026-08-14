@@ -1600,10 +1600,6 @@ function verifyDemoOTP() {
 
   }
 }
-/* =========================================================
-HADOTI WALE BHAIYA
-FINAL INITIALIZATION + BUTTON FIX
-========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
 
