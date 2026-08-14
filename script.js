@@ -23,7 +23,15 @@ const LOCAL_DESTINATIONS = [
   {name:"Leh Ladakh",state:"Ladakh",rating:"4.9",reviews:"8K",image:"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80",description:"High-altitude Himalayan destination with spectacular landscapes."}
 ];
 
-let destinations = [...LOCAL_DESTINATIONS];
+const MASTER_DESTINATIONS =
+  Array.isArray(window.HADOTTI_DESTINATIONS)
+    ? window.HADOTTI_DESTINATIONS
+    : [];
+
+let destinations = [
+  ...MASTER_DESTINATIONS,
+  ...LOCAL_DESTINATIONS
+];
 let modal = null;
 let modalContent = null;
 
