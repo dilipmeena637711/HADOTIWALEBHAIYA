@@ -305,10 +305,11 @@ async function loadDestinationsFromDatabase() {
       }));
 
     const merged =
-      [
-        ...LOCAL_DESTINATIONS,
-        ...converted
-      ];
+  [
+    ...MASTER_DESTINATIONS,
+    ...LOCAL_DESTINATIONS,
+    ...converted
+  ];
 
     const seen =
       new Set();
