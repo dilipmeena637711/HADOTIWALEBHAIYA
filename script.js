@@ -1704,8 +1704,7 @@ document.querySelectorAll(".quick-card").forEach(function (card) {
 
     window.location.href = "earth-%20test.html";
 
-}
-        } else if (title.includes("ai trip planner")) {
+} else if (title.includes("ai trip planner")) {
 
             openTripPlanner();
 
