@@ -135,31 +135,26 @@
 
     Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIwNjA5ODQ3Yi1mMTlhLTQxNzktYWRlNS05YjllYTVmMzZkODEiLCJpZCI6NDY3MDczLCJpc3MiOiJodHRwczovL2FwaS5jZXNpdW0uY29tIiwiYXVkIjoidW5kZWZpbmVkX2RlZmF1bHQiLCJpYXQiOjE3ODY1MjYzNjB9.NLVOlApe4_bVIjY6NBWAgj5gqSEYpHf_pSeIhiVHCJQ";
 
-    const viewer = new Cesium.Viewer("cesiumContainer", {
+    
+ 
+      const viewer = new Cesium.Viewer("cesiumContainer", {
+    baseLayer: false,
+    terrain: false,
 
-      // Global 3D terrain
-      terrain: Cesium.Terrain.fromWorldTerrain({
-        requestWaterMask: true,
-        requestVertexNormals: true
-      }),
+    animation: false,
+    timeline: false,
+    baseLayerPicker: false,
+    geocoder: false,
+    homeButton: false,
+    sceneModePicker: false,
+    navigationHelpButton: false,
+    fullscreenButton: false,
+    vrButton: false,
+    infoBox: false,
+    selectionIndicator: false,
 
-      // UI controls
-      animation: false,
-      timeline: false,
-      baseLayerPicker: false,
-      geocoder: false,
-      homeButton: false,
-      sceneModePicker: false,
-      navigationHelpButton: false,
-      fullscreenButton: false,
-      vrButton: false,
-      infoBox: false,
-      selectionIndicator: false,
-
-      // Keep globe visible
-      globe: true
-    });
-
+    globe: true
+});
 
     /*
       Beautiful Earth lighting
