@@ -139,7 +139,11 @@
  
       const viewer = new Cesium.Viewer("cesiumContainer", {
     baseLayer: false,
-    terrain: false,
+
+    terrain: Cesium.Terrain.fromWorldTerrain({
+        requestWaterMask: true,
+        requestVertexNormals: true
+    }),
 
     animation: false,
     timeline: false,
@@ -152,7 +156,6 @@
     vrButton: false,
     infoBox: false,
     selectionIndicator: false,
-
     globe: true
 });
 
