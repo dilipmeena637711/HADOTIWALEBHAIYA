@@ -1709,53 +1709,53 @@ document.querySelectorAll(".quick-card").forEach(function (card) {
             ?.toLowerCase()
             .trim() || "";
 
-        if (title.includes("explore map")) {
+if (title.includes("explore map")) {
 
     window.location.href = "earth-%20test.html";
 
+} else if (title.includes("ai trip planner")) {
+
+    openTripPlanner();
+
+} else if (title.includes("budget calculator")) {
+
+    openBudgetCalculator();
+
+} else if (title.includes("hotel booking")) {
+
+    openHotelBooking();
+
+} else if (title.includes("local guides")) {
+
+    openSimpleMessage(
+        "🧑‍✈️ Local Guides",
+        "Local guide service will be connected to the database."
+    );
+
+} else if (title.includes("travel stories")) {
+
+    openSimpleMessage(
+        "📖 Travel Stories",
+        "Travel stories module is ready."
+    );
+
+} else if (title.includes("offers")) {
+
+    openSimpleMessage(
+        "🏷️ Offers & Deals",
+        "Offers and deals module is ready."
+    );
+
+} else if (title.includes("emergency")) {
+
+    openSimpleMessage(
+        "🆘 Emergency",
+        "Emergency support module is ready."
+    );
+
 }
-        } else if (title.includes("ai trip planner")) {
 
-            openTripPlanner();
-
-        } else if (title.includes("budget calculator")) {
-
-            openBudgetCalculator();
-
-        } else if (title.includes("hotel booking")) {
-
-            openHotelBooking();
-
-        } else if (title.includes("local guides")) {
-
-            openSimpleMessage(
-                "🧑‍✈️ Local Guides",
-                "Local guide service will be connected to the database."
-            );
-
-        } else if (title.includes("travel stories")) {
-
-            openSimpleMessage(
-                "📖 Travel Stories",
-                "Travel stories module is ready."
-            );
-
-        } else if (title.includes("offers")) {
-
-            openSimpleMessage(
-                "🏷️ Offers & Deals",
-                "Offers and deals module is ready."
-            );
-
-        } else if (title.includes("emergency")) {
-
-            openSimpleMessage(
-                "🆘 Emergency",
-                "Emergency support module is ready."
-            );
-        }
-
-    });
+});
 });
 
 /* -------------------------
