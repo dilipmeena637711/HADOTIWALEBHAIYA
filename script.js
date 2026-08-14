@@ -24,8 +24,8 @@ const LOCAL_DESTINATIONS = [
 ];
 
 const MASTER_DESTINATIONS =
-    Array.isArray(window.HADOTTI_DESTINATIONS)
-        ? window.HADOTTI_DESTINATIONS
+    Array.isArray(window.HADOTI_DESTINATIONS)
+        ? window.HADOTI_DESTINATIONS
         : [];
 
 let destinations = [
