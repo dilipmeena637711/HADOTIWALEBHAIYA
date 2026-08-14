@@ -217,22 +217,17 @@
       Loading complete
     */
 
-    viewer.scene.globe.tileLoadProgressEvent.addEventListener(
-      function(queuedTiles) {
+    setTimeout(() => {
+    const loading = document.getElementById("loading");
 
-        if (queuedTiles === 0) {
+    if (loading) {
+        loading.style.opacity = "0";
 
-          const loading =
-            document.getElementById("loading");
-
-          loading.style.opacity = "0";
-
-          setTimeout(() => {
+        setTimeout(() => {
             loading.style.display = "none";
-          }, 800);
-        }
-      }
-    );
+        }, 800);
+    }
+}, 3000);
 
 
     /*
