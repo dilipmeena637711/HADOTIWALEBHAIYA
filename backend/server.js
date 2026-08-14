@@ -25,10 +25,12 @@ const pool = new Pool({
 ========================================================= */
 
 app.get("/", (req, res) => {
+
   res.json({
     success: true,
     message: "HADOTI WALE BHAIYA API is running 🚀"
   });
+
 });
 
 
@@ -106,13 +108,24 @@ app.get("/api/destinations/:id", async (req, res) => {
 
   try {
 
+    const destinationId = Number(req.params.id);
+
+    if (!Number.isInteger(destinationId)) {
+
+      return res.status(400).json({
+        success: false,
+        message: "Invalid destination ID"
+      });
+
+    }
+
     const result = await pool.query(
       `
       SELECT *
       FROM destinations
       WHERE id = $1
       `,
-      [req.params.id]
+      [destinationId]
     );
 
     if (result.rows.length === 0) {
@@ -201,14 +214,15 @@ app.post("/api/users", async (req, res) => {
 
 /* =========================================================
    WORLD LOCATION APIs
+
    Country
-   ↓
+      ↓
    State / Province
-   ↓
+      ↓
    District
-   ↓
+      ↓
    City
-   ↓
+      ↓
    Destination
 ========================================================= */
 
@@ -519,6 +533,7 @@ app.get("/api/cities/:cityId/destinations", async (req, res) => {
 
 /* =========================================================
    404 HANDLER
+
    IMPORTANT:
    यह सभी API routes के बाद होना चाहिए।
 ========================================================= */
