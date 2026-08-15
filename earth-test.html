@@ -158,8 +158,7 @@ window.addEventListener("unhandledrejection", function (e) {
 Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub25jZSI6InFpUEREWFh1clZEOGxOUUEiLCJqdGkiOiJkZTIzMmJiYS04MGM5LTQyMjctYTg4Yi1kYjAzZjIyZjAxNWYiLCJpZCI6NDY3MDczLCJzdWIiOiJESUxJUE1FRU5BNjM3NzExIiwiaXNzIjoiaHR0cHM6Ly9hcGkuY2VzaXVtLmNvbSIsImF1ZCI6IkRJTElQTUVFTkE2Mzc3MTFfZGVmYXVsdCIsImlhdCI6MTc4Njc1NjkzNH0.tKEK2O0L7A2ldI3UFMcA0xCya2uNy6I99-Gmb6vBMb4";
 
 const viewer = new Cesium.Viewer("cesiumContainer", {
-  baseLayer: false,
-  terrain: false,
+  baseLayer: Cesium.ImageryLayer.fromWorldImagery(),
 
   animation: false,
   timeline: false,
