@@ -1,269 +1,350 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-  >
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
 
-  <title>HADOTI WALE BHAIYA - 3D Earth Test</title>
+<title>HADOTI WALE BHAIYA - 3D Earth</title>
 
-  <!-- CesiumJS -->
-  <script src="https://cesium.com/downloads/cesiumjs/releases/1.143/Build/Cesium/Cesium.js"></script>
+<script src="https://cesium.com/downloads/cesiumjs/releases/1.143/Build/Cesium/Cesium.js"></script>
 
-  <link
-    href="https://cesium.com/downloads/cesiumjs/releases/1.143/Build/Cesium/Widgets/widgets.css"
-    rel="stylesheet"
-  >
+<link
+  href="https://cesium.com/downloads/cesiumjs/releases/1.143/Build/Cesium/Widgets/widgets.css"
+  rel="stylesheet"
+>
 
-  <style>
-    html,
-    body,
-    #cesiumContainer {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
+<style>
 
-    body {
-      background: #000;
-      font-family: Arial, sans-serif;
-    }
+html,
+body,
+#cesiumContainer {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
 
-    /* Loading screen */
-    #loading {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
+body {
+  background: #000;
+  font-family: Arial, sans-serif;
+}
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
+/* Loading Screen */
 
-      background:
-        radial-gradient(circle at center, #12345c 0%, #020711 55%, #000 100%);
+#loading {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
 
-      color: white;
-      transition: opacity 0.8s ease;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 
-    #loading h1 {
-      margin: 0 0 12px;
-      font-size: 28px;
-      letter-spacing: 1px;
-    }
+  background:
+    radial-gradient(
+      circle at center,
+      #12345c 0%,
+      #020711 55%,
+      #000 100%
+    );
 
-    #loading p {
-      margin: 0;
-      opacity: 0.75;
-      font-size: 14px;
-    }
+  color: white;
 
-    .loader {
-      width: 42px;
-      height: 42px;
-      margin-bottom: 20px;
+  transition: opacity 0.8s ease;
+}
 
-      border: 4px solid rgba(255,255,255,0.2);
-      border-top-color: white;
-      border-radius: 50%;
+#loading h1 {
+  margin: 0 0 12px;
+  font-size: 28px;
+  letter-spacing: 1px;
+}
 
-      animation: spin 1s linear infinite;
-    }
+#loading p {
+  margin: 0;
+  opacity: 0.75;
+  font-size: 14px;
+}
 
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
+.loader {
+  width: 42px;
+  height: 42px;
 
-    /* Small instruction */
-    #hint {
-      position: fixed;
-      left: 50%;
-      bottom: 25px;
-      transform: translateX(-50%);
+  margin-bottom: 20px;
 
-      z-index: 1000;
+  border: 4px solid rgba(255,255,255,0.2);
+  border-top-color: white;
 
-      padding: 10px 16px;
-      border-radius: 30px;
+  border-radius: 50%;
 
-      background: rgba(0,0,0,0.55);
-      backdrop-filter: blur(8px);
+  animation: spin 1s linear infinite;
+}
 
-      color: white;
-      font-size: 13px;
-      text-align: center;
+@keyframes spin {
 
-      pointer-events: none;
-    }
-  </style>
+  to {
+    transform: rotate(360deg);
+  }
+
+}
+
+/* Bottom Hint */
+
+#hint {
+  position: fixed;
+
+  left: 50%;
+  bottom: 25px;
+
+  transform: translateX(-50%);
+
+  z-index: 1000;
+
+  padding: 10px 16px;
+
+  border-radius: 30px;
+
+  background: rgba(0,0,0,0.55);
+
+  backdrop-filter: blur(8px);
+
+  color: white;
+
+  font-size: 13px;
+
+  text-align: center;
+
+  pointer-events: none;
+}
+
+</style>
+
 </head>
 
 <body>
 
-  <div id="loading">
-    <div class="loader"></div>
-    <h1>🌍 HADOTI WALE BHAIYA</h1>
-    <p>Loading 3D Earth...</p>
-  </div>
+<!-- Loading -->
 
-  <div id="cesiumContainer"></div>
+<div id="loading">
 
-  <div id="hint">
-    👆 Drag = Rotate &nbsp; • &nbsp;
-    🤏 Pinch = Zoom &nbsp; • &nbsp;
-    🖱️ Mouse Wheel = Zoom
-  </div>
+  <div class="loader"></div>
 
-  <script>
+  <h1>🌍 HADOTI WALE BHAIYA</h1>
+
+  <p>Loading 3D Earth...</p>
+
+</div>
+
+
+<!-- Cesium -->
+
+<div id="cesiumContainer"></div>
+
+
+<!-- Instructions -->
+
+<div id="hint">
+
+  👆 Drag = Rotate
+  &nbsp; • &nbsp;
+  🤏 Pinch = Zoom
+  &nbsp; • &nbsp;
+  🖱️ Mouse Wheel = Zoom
+
+</div>
+
+
+<script>
 
 /*
-IMPORTANT:
-STEP 1 is only a TEST.
-
-For Cesium World Terrain you need a Cesium ion
-access token.
-
-Do NOT publish a private token publicly.
+==================================================
+CESIUM TOKEN
+==================================================
 */
 
+Cesium.Ion.defaultAccessToken =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub25jZSI6Ilg3SU42Y0hPMi12a2p2UmkiLCJqdGkiOiJmOTA1NzhjZC05NGY4LTQwYzAtODE4MS00MzNmNDk4ZmYxMWUiLCJpZCI6NDY3MDczLCJzdWIiOiJESUxJUE1FRU5BNjM3NzExIiwiaXNzIjoiaHR0cHM6Ly9hcGkuY2VzaXVtLmNvbSIsImF1ZCI6IkRJTElQTUVFTkE2Mzc3MTFfZGVmYXVsdCIsImlhdCI6MTc4Njc2MDI3Nn0.pBF-YOXeINumtdEFJ6b7hvZMWtCXViNsdgk1llhlPnE";
 
-window.addEventListener("error", function (e) {
-    const loading = document.getElementById("loading");
 
-    if (loading) {
-        loading.innerHTML =
-            "<h1>⚠️ JavaScript Error</h1>" +
-            "<p>" + (e.message || "Unknown error") + "</p>";
-    }
+/*
+==================================================
+CREATE CESIUM VIEWER
+==================================================
+*/
+
+const viewer = new Cesium.Viewer(
+  "cesiumContainer",
+  {
+
+    /*
+    Global Earth imagery
+    */
+
+    baseLayer:
+      Cesium.ImageryLayer.fromWorldImagery(),
+
+    /*
+    IMPORTANT:
+    Terrain अभी OFF है।
+    पहले basic Earth verify करेंगे।
+    */
+
+    terrain: false,
+
+    /*
+    UI controls
+    */
+
+    animation: false,
+
+    timeline: false,
+
+    baseLayerPicker: false,
+
+    geocoder: false,
+
+    homeButton: false,
+
+    sceneModePicker: false,
+
+    navigationHelpButton: false,
+
+    fullscreenButton: false,
+
+    vrButton: false,
+
+    infoBox: false,
+
+    selectionIndicator: false
+
+  }
+);
+
+
+/*
+==================================================
+EARTH LIGHTING
+==================================================
+*/
+
+viewer.scene.globe.enableLighting = true;
+
+viewer.scene.globe.showGroundAtmosphere = true;
+
+viewer.scene.skyAtmosphere.show = true;
+
+viewer.scene.sun.show = true;
+
+viewer.scene.moon.show = true;
+
+
+/*
+==================================================
+SPACE BACKGROUND
+==================================================
+*/
+
+viewer.scene.backgroundColor =
+  Cesium.Color.BLACK;
+
+
+/*
+==================================================
+INITIAL CAMERA
+==================================================
+*/
+
+/*
+India के ऊपर से global Earth view
+*/
+
+viewer.camera.setView({
+
+  destination:
+    Cesium.Cartesian3.fromDegrees(
+      78.9629,
+      22.5937,
+      18000000
+    ),
+
+  orientation: {
+
+    heading:
+      Cesium.Math.toRadians(0),
+
+    pitch:
+      Cesium.Math.toRadians(-90),
+
+    roll: 0
+
+  }
+
 });
 
-window.addEventListener("unhandledrejection", function (e) {
-    const loading = document.getElementById("loading");
 
-    if (loading) {
-        loading.innerHTML =
-            "<h1>⚠️ Promise Error</h1>" +
-            "<p>" + (e.reason?.message || e.reason || "Unknown error") + "</p>";
-    }
-});
+/*
+==================================================
+TOUCH / MOUSE CONTROLS
+==================================================
+*/
 
-Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub25jZSI6InFpUEREWFh1clZEOGxOUUEiLCJqdGkiOiJkZTIzMmJiYS04MGM5LTQyMjctYTg4Yi1kYjAzZjIyZjAxNWYiLCJpZCI6NDY3MDczLCJzdWIiOiJESUxJUE1FRU5BNjM3NzExIiwiaXNzIjoiaHR0cHM6Ly9hcGkuY2VzaXVtLmNvbSIsImF1ZCI6IkRJTElQTUVFTkE2Mzc3MTFfZGVmYXVsdCIsImlhdCI6MTc4Njc1NjkzNH0.tKEK2O0L7A2ldI3UFMcA0xCya2uNy6I99-Gmb6vBMb4";
-
-const viewer = new Cesium.Viewer("cesiumContainer", {
-
-  baseLayer: Cesium.ImageryLayer.fromWorldImagery(),
-
-  terrain: Cesium.Terrain.fromWorldTerrain({
-    requestWaterMask: true,
-    requestVertexNormals: true
-  }),
-
-  animation: false,
-  timeline: false,
-  baseLayerPicker: false,
-  geocoder: false,
-  homeButton: false,
-  sceneModePicker: false,
-  navigationHelpButton: false,
-  fullscreenButton: false,
-  vrButton: false,
-  infoBox: false,
-  selectionIndicator: false,
-  selectionIndicator: false
-
-});
-
-    /*
-      Beautiful Earth lighting
-    */
-
-    viewer.scene.globe.enableLighting = true;
-
-    viewer.scene.globe.showGroundAtmosphere = true;
-
-    viewer.scene.skyAtmosphere.show = true;
-
-    viewer.scene.sun.show = true;
-
-    viewer.scene.moon.show = true;
+const controller =
+  viewer.scene.screenSpaceCameraController;
 
 
-    /*
-      Space background
-    */
+controller.enableRotate = true;
 
-    viewer.scene.backgroundColor =
-      Cesium.Color.BLACK;
+controller.enableZoom = true;
 
+controller.enableTilt = true;
 
-    /*
-      Initial Earth position
-
-      India/Rajasthan की तरफ थोड़ा orientation
-    */
-
-    viewer.camera.setView({
-      destination: Cesium.Cartesian3.fromDegrees(
-        78.9629,
-        22.5937,
-        18000000
-      ),
-
-      orientation: {
-        heading: Cesium.Math.toRadians(0),
-        pitch: Cesium.Math.toRadians(-90),
-        roll: 0
-      }
-    });
+controller.enableLook = true;
 
 
-    /*
-      Smooth camera movement
-    */
+/*
+==================================================
+LOADING SCREEN
+==================================================
+*/
 
-    viewer.scene.screenSpaceCameraController.enableRotate = true;
+setTimeout(() => {
 
-    viewer.scene.screenSpaceCameraController.enableZoom = true;
+  const loading =
+    document.getElementById("loading");
 
-    viewer.scene.screenSpaceCameraController.enableTilt = true;
+  if (loading) {
 
-    viewer.scene.screenSpaceCameraController.enableLook = true;
-
-
-    /*
-      Loading complete
-    */
+    loading.style.opacity = "0";
 
     setTimeout(() => {
-    const loading = document.getElementById("loading");
 
-    if (loading) {
-        loading.style.opacity = "0";
+      loading.style.display = "none";
 
-        setTimeout(() => {
-            loading.style.display = "none";
-        }, 800);
-    }
+    }, 800);
+
+  }
+
 }, 3000);
 
 
-    /*
-      Remove default Cesium credit only visually
-      DON'T remove required attribution in production.
-    */
+/*
+==================================================
+DEBUG MESSAGE
+==================================================
+*/
 
-    console.log(
-      "HADOTI WALE BHAIYA 3D Earth initialized."
-    );
-  </script>
+console.log(
+  "HADOTI WALE BHAIYA 3D Earth initialized."
+);
+
+</script>
 
 </body>
+
 </html>
