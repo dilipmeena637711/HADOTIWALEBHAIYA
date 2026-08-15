@@ -638,19 +638,12 @@ try {
   const worldTerrain =
     Cesium.Terrain
       .fromWorldTerrain({
-
         requestWaterMask:
           true,
 
         requestVertexNormals:
           true
-
       });
-
-
-  /*
-     Listen for terrain creation errors.
-  */
 
   if (
     worldTerrain.errorEvent
@@ -673,11 +666,6 @@ try {
       );
 
   }
-
-
-  /*
-     Apply terrain after Viewer exists.
-  */
 
   viewer.scene.setTerrain(
     worldTerrain
