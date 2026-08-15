@@ -159,6 +159,7 @@ Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub25jZS
 
 const viewer = new Cesium.Viewer("cesiumContainer", {
   terrain: Cesium.Terrain.fromWorldTerrain(),
+  baseLayer: Cesium.ImageryLayer.fromWorldImagery(),
 
   animation: false,
   timeline: false,
