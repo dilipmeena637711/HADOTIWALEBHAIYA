@@ -624,69 +624,6 @@ viewer.camera.setView({
 
 
 /* =========================================================
-   12. TERRAIN — SECONDARY STEP
-   =========================================================
-
-   Earth is already created above.
-
-   Terrain failure should NOT destroy
-   the basic Earth viewer.
-*/
-
-try {
-
-  const worldTerrain =
-    Cesium.Terrain
-      .fromWorldTerrain({
-        requestWaterMask:
-          true,
-
-        requestVertexNormals:
-          true
-      });
-
-  if (
-    worldTerrain.errorEvent
-  ) {
-
-    worldTerrain.errorEvent
-      .addEventListener(
-        function(error) {
-
-          showError(
-            "World Terrain failed to load. Basic Earth remains available."
-          );
-
-          console.error(
-            "World Terrain error:",
-            error
-          );
-
-        }
-      );
-
-  }
-
-  viewer.scene.setTerrain(
-    worldTerrain
-  );
-
-}
-catch (error) {
-
-  showError(
-    "Terrain could not be enabled. Basic Earth remains available."
-  );
-
-  console.error(
-    "Terrain initialization error:",
-    error
-  );
-
-}
-
-
-/* =========================================================
    13. IMAGERY ERROR MONITOR
    ========================================================= */
 
