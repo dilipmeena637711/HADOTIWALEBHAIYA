@@ -137,13 +137,11 @@
 
     
  
-      const viewer = new Cesium.Viewer("cesiumContainer", {
+     const viewer = new Cesium.Viewer("cesiumContainer", {
+
     baseLayer: false,
 
-    terrain: Cesium.Terrain.fromWorldTerrain({
-        requestWaterMask: true,
-        requestVertexNormals: true
-    }),
+    terrain: false,
 
     animation: false,
     timeline: false,
