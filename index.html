@@ -28,7 +28,7 @@
       </div>
     </a>
 
-    <nav class="desktop-nav">
+    <nav class="desktop-nav" id="desktopNav">
       <a href="#explore">Explore</a>
       <a href="#states">States</a>
       <a href="#districts">Districts</a>
@@ -42,25 +42,25 @@
 
     <div class="header-actions">
 
-      <button class="lang">
+      <button class="lang" id="langBtn" aria-label="Change language">
         🌐 EN⌄
       </button>
 
-      <button class="icon-btn" id="themeBtn">
+      <button class="icon-btn" id="themeBtn" aria-label="Toggle light/dark theme">
         ◔
       </button>
 
-      <button class="icon-btn">
+      <button class="icon-btn" id="wishlistBtn" aria-label="Wishlist">
         ♧
       </button>
 
-      <button class="avatar" id="loginBtn">
+      <button class="avatar" id="loginBtn" aria-label="Login">
         👨🏻
       </button>
 
     </div>
 
-    <button class="mobile-menu" id="menuBtn">
+    <button class="mobile-menu" id="menuBtn" aria-label="Open menu">
       ☰
     </button>
 
@@ -75,7 +75,7 @@
       <div class="hero-copy">
 
         <div class="eyebrow">
-          ♛ India's Most Intelligent Travel & Knowledge Platform
+          ♛ India's Most Intelligent Travel &amp; Knowledge Platform
         </div>
 
         <h1>
@@ -108,7 +108,7 @@
 
           <div>
             <strong>50K+</strong>
-            <small>Stays & Hotels</small>
+            <small>Stays &amp; Hotels</small>
           </div>
 
           <div>
@@ -122,7 +122,7 @@
 
 
       <!-- EARTH -->
-      <div class="earth">
+      <div class="earth" id="earthGlobe" role="button" tabindex="0" aria-label="Explore map">
 
         <div class="earth-glow"></div>
 
@@ -232,7 +232,8 @@
 
           <button
             class="search-button"
-            type="submit">
+            type="submit"
+            aria-label="Search">
 
             ⌕
 
@@ -338,19 +339,19 @@
     <!-- QUICK SERVICES -->
     <section class="quick-grid">
 
-      <button class="quick-card" onclick="window.location.href='earth-%20test.html'">
+      <button class="quick-card" id="qExploreMap">
 
-  <span>🌍</span>
+        <span>🌍</span>
 
-  <b>
-    Explore Map
-  </b>
+        <b>
+          Explore Map
+        </b>
 
-  <small>
-    Interactive World
-  </small>
+        <small>
+          Interactive World
+        </small>
 
-</button>
+      </button>
 
       <button
         class="quick-card"
@@ -369,7 +370,7 @@
       </button>
 
 
-      <button class="quick-card">
+      <button class="quick-card" id="qBudget">
 
         <span>🧮</span>
 
@@ -384,7 +385,7 @@
       </button>
 
 
-      <button class="quick-card">
+      <button class="quick-card" id="qHotel">
 
         <span>🛏️</span>
 
@@ -399,7 +400,7 @@
       </button>
 
 
-      <button class="quick-card">
+      <button class="quick-card" id="qGuides">
 
         <span>🧑‍✈️</span>
 
@@ -414,7 +415,7 @@
       </button>
 
 
-      <button class="quick-card">
+      <button class="quick-card" id="qStories">
 
         <span>📖</span>
 
@@ -423,18 +424,18 @@
         </b>
 
         <small>
-          Share & Inspire
+          Share &amp; Inspire
         </small>
 
       </button>
 
 
-      <button class="quick-card">
+      <button class="quick-card" id="qOffers">
 
         <span>🏷️</span>
 
         <b>
-          Offers & Deals
+          Offers &amp; Deals
         </b>
 
         <small>
@@ -444,7 +445,7 @@
       </button>
 
 
-      <button class="quick-card danger">
+      <button class="quick-card danger" id="qEmergency">
 
         <span>🆘</span>
 
@@ -475,7 +476,7 @@
             Trending Destinations
           </h2>
 
-          <a href="#">
+          <a href="#" id="viewAllBtn">
             View All Destinations →
           </a>
 
@@ -504,7 +505,7 @@
 
             <small>
               Get best routes, distance,
-              time & cost
+              time &amp; cost
             </small>
 
           </div>
@@ -523,6 +524,7 @@
           </span>
 
           <input
+            id="routeFrom"
             value="Jaipur, Rajasthan">
 
         </div>
@@ -578,7 +580,7 @@
       <div>
         🔒
         <b>Secure Payments</b>
-        <small>Safe & Fast</small>
+        <small>Safe &amp; Fast</small>
       </div>
 
       <div>
@@ -601,7 +603,8 @@
 
       <button
         class="close"
-        id="closeModal">
+        id="closeModal"
+        aria-label="Close">
 
         ×
 
