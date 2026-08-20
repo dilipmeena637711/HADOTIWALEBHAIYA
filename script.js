@@ -7,7 +7,6 @@
 "use strict";
 
 const API_BASE_URL = "https://hadotiwalebhaiya.onrender.com";
-
 const LOCAL_DESTINATIONS = [
   {name:"Jaipur",state:"Rajasthan",rating:"4.9",reviews:"12K",image:"https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=900&q=80",description:"The Pink City of Rajasthan, famous for forts, palaces and royal culture."},
   {name:"Udaipur",state:"Rajasthan",rating:"4.8",reviews:"9K",image:"https://images.unsplash.com/photo-1603262110263-fb0112e7cc33?auto=format&fit=crop&w=900&q=80",description:"The City of Lakes, famous for beautiful palaces and lakes."},
@@ -45,7 +44,6 @@ function getDestinationContainer() {
 }
 
 /* ---------------- MODAL ---------------- */
-
 function setupModal() {
   modal = document.getElementById("modal");
   modalContent = document.getElementById("modalContent");
@@ -61,11 +59,17 @@ function setupModal() {
 
   if (!modal.dataset.hwBound) {
     modal.dataset.hwBound = "1";
-
     modal.addEventListener("click", e => {
       if (e.target === modal) {
         closeModal();
       }
+    });
+  }
+
+  if (!document.body.dataset.hwEscBound) {
+    document.body.dataset.hwEscBound = "1";
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") closeModal();
     });
   }
 }
@@ -85,7 +89,6 @@ function openModal(html) {
 
 function closeModal() {
   if (!modal) return;
-
   modal.classList.remove("active");
   modal.style.display = "none";
   document.body.style.overflow = "";
@@ -127,11 +130,13 @@ function renderDestinations(list) {
   box.innerHTML = "";
 
   list.forEach(place => {
-
     const card =
       document.createElement("article");
 
     card.className = "destination";
+    card.setAttribute("tabindex", "0");
+    card.setAttribute("role", "button");
+    card.setAttribute("aria-label", place.name + ", " + (place.state || ""));
 
     card.innerHTML = `
       <img
@@ -164,6 +169,13 @@ function renderDestinations(list) {
       () => showDestination(place)
     );
 
+    card.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        showDestination(place);
+      }
+    });
+
     box.appendChild(card);
   });
 }
@@ -179,11 +191,9 @@ function searchDestinations(query) {
 
   const results =
     destinations.filter(p =>
-
       text(p.name).includes(q) ||
       text(p.state).includes(q) ||
       text(p.description).includes(q)
-
     );
 
   renderDestinations(results);
@@ -230,13 +240,11 @@ async function loadDestinationsFromDatabase() {
     if (Array.isArray(result)) {
       rows = result;
     }
-
     else if (
       Array.isArray(result.data)
     ) {
       rows = result.data;
     }
-
     else if (
       Array.isArray(result.destinations)
     ) {
@@ -319,7 +327,6 @@ async function loadDestinationsFromDatabase() {
         }
 
         seen.add(key);
-
         return true;
       });
 
@@ -451,7 +458,6 @@ function showDestination(place) {
       <img
         src="${esc(place.image)}"
         alt="${esc(place.name)}"
-
         style="
           width:100%;
           height:230px;
@@ -603,7 +609,6 @@ function openMapService() {
             class="hw-place"
             type="button"
             data-name="${esc(p.name)}"
-
             style="
               padding:13px;
               border:1px solid #33445d;
@@ -690,6 +695,30 @@ function openMapService() {
       closeModal
     );
 }
+
+function showRoute() {
+
+  const from =
+    document.getElementById("routeFrom")?.value.trim() || "Jaipur, Rajasthan";
+
+  const to =
+    document.getElementById("routeTo")?.value.trim();
+
+  if (!to) {
+    const toInput = document.getElementById("routeTo");
+    toInput?.focus();
+    return;
+  }
+
+  const url =
+    "https://www.google.com/maps/dir/?api=1&origin=" +
+    encodeURIComponent(from) +
+    "&destination=" +
+    encodeURIComponent(to);
+
+  window.open(url, "_blank", "noopener");
+}
+
 /* =========================================================
    BUDGET CALCULATOR
    ========================================================= */
@@ -835,7 +864,6 @@ function openBudgetCalculator(destinationName = "") {
     );
 }
 
-
 function calculateBudget() {
 
   const people =
@@ -957,1139 +985,4 @@ function openHotelBooking() {
       </label>
 
       <input
-        id="hwHotelDate"
-        type="date"
-        style="
-          width:100%;
-          box-sizing:border-box;
-          padding:13px;
-          margin:8px 0 15px;
-          border-radius:10px;
-          border:1px solid #394b65;
-        "
-      >
-
-      <button
-        id="hwHotelSearch"
-        type="button"
-        style="
-          width:100%;
-          padding:14px;
-          border:0;
-          border-radius:10px;
-          cursor:pointer;
-          background:linear-gradient(135deg,#7c2bff,#2389ff);
-          color:white;
-          font-weight:bold;
-        "
-      >
-        Search Stays
-      </button>
-
-      <div
-        id="hwHotelResult"
-        style="
-          margin-top:20px;
-        "
-      ></div>
-
-      <button
-        id="hwHotelClose"
-        type="button"
-        style="
-          margin-top:15px;
-          padding:12px 18px;
-          border:1px solid #394b65;
-          border-radius:10px;
-          background:#091321;
-          color:white;
-          cursor:pointer;
-        "
-      >
-        Close
-      </button>
-
-    </div>
-
-  `);
-
-  document
-    .getElementById(
-      "hwHotelSearch"
-    )
-    ?.addEventListener(
-      "click",
-      searchHotels
-    );
-
-  document
-    .getElementById(
-      "hwHotelClose"
-    )
-    ?.addEventListener(
-      "click",
-      closeModal
-    );
-}
-
-
-function searchHotels() {
-
-  const destination =
-    document.getElementById(
-      "hwHotelDestination"
-    )?.value || "";
-
-  const date =
-    document.getElementById(
-      "hwHotelDate"
-    )?.value || "";
-
-  const result =
-    document.getElementById(
-      "hwHotelResult"
-    );
-
-  if (!result) return;
-
-  result.innerHTML = `
-
-    <div style="
-      padding:16px;
-      border-radius:12px;
-      background:#101c2d;
-    ">
-
-      <h3>
-        🏨 Stay Search
-      </h3>
-
-      <p style="
-        color:#dce1e9;
-      ">
-        Destination:
-        <strong>
-          ${esc(destination)}
-        </strong>
-      </p>
-
-      ${
-        date
-          ? `
-            <p style="
-              color:#b8c0cd;
-            ">
-              📅 Check-in:
-              ${esc(date)}
-            </p>
-          `
-          : ""
-      }
-
-      <p style="
-        color:#b8c0cd;
-        line-height:1.6;
-      ">
-        Stay-search interface is ready.
-        Real hotel inventory will require
-        a connected booking provider/API.
-      </p>
-
-    </div>
-
-  `;
-}
-
-
-/* =========================================================
-   AI TRIP PLANNER
-   ========================================================= */
-
-function openTripPlanner() {
-
-  openModal(`
-
-    <div style="
-      color:white;
-      text-align:left;
-    ">
-
-      <h2>🤖 AI Trip Planner</h2>
-
-      <p style="
-        color:#b8c0cd;
-      ">
-        Create a simple travel plan.
-      </p>
-
-      <label>
-        📍 Destination
-      </label>
-
-      <input
-        id="hwPlannerDestination"
-        type="text"
-        placeholder="Example: Rajasthan"
-        style="
-          width:100%;
-          box-sizing:border-box;
-          padding:13px;
-          margin:8px 0 15px;
-          border-radius:10px;
-          border:1px solid #394b65;
-        "
-      >
-
-      <label>
-        📅 Number of days
-      </label>
-
-      <input
-        id="hwPlannerDays"
-        type="number"
-        min="1"
-        value="3"
-        style="
-          width:100%;
-          box-sizing:border-box;
-          padding:13px;
-          margin:8px 0 15px;
-          border-radius:10px;
-          border:1px solid #394b65;
-        "
-      >
-
-      <button
-        id="hwPlannerGenerate"
-        type="button"
-        style="
-          width:100%;
-          padding:14px;
-          border:0;
-          border-radius:10px;
-          cursor:pointer;
-          background:linear-gradient(135deg,#7c2bff,#2389ff);
-          color:white;
-          font-weight:bold;
-        "
-      >
-        ✨ Create My Trip
-      </button>
-
-      <div
-        id="hwPlannerResult"
-        style="
-          margin-top:20px;
-        "
-      ></div>
-
-      <button
-        id="hwPlannerClose"
-        type="button"
-        style="
-          margin-top:15px;
-          padding:12px 18px;
-          border:1px solid #394b65;
-          border-radius:10px;
-          background:#091321;
-          color:white;
-          cursor:pointer;
-        "
-      >
-        Close
-      </button>
-
-    </div>
-
-  `);
-
-  document
-    .getElementById(
-      "hwPlannerGenerate"
-    )
-    ?.addEventListener(
-      "click",
-      generateTripPlan
-    );
-
-  document
-    .getElementById(
-      "hwPlannerClose"
-    )
-    ?.addEventListener(
-      "click",
-      closeModal
-    );
-}
-
-
-function generateTripPlan() {
-
-  const destination =
-    document.getElementById(
-      "hwPlannerDestination"
-    )?.value.trim();
-
-  const days =
-    Number(
-      document.getElementById(
-        "hwPlannerDays"
-      )?.value
-    ) || 3;
-
-  const result =
-    document.getElementById(
-      "hwPlannerResult"
-    );
-
-  if (!result) return;
-
-  if (!destination) {
-
-    result.innerHTML = `
-      <div style="
-        color:#ff6b6b;
-        padding:12px;
-      ">
-        Please enter a destination.
-      </div>
-    `;
-
-    return;
-  }
-
-  const safe =
-    esc(destination);
-
-  let itinerary = "";
-
-  for (
-    let i = 1;
-    i <= days;
-    i++
-  ) {
-
-    if (i === 1) {
-
-      itinerary += `
-        <li>
-          <strong>Day 1:</strong>
-          Arrival and local exploration
-        </li>
-      `;
-
-    } else if (i === days) {
-
-      itinerary += `
-        <li>
-          <strong>Day ${i}:</strong>
-          Shopping, local food and departure
-        </li>
-      `;
-
-    } else {
-
-      itinerary += `
-        <li>
-          <strong>Day ${i}:</strong>
-          Main attractions and local experiences
-        </li>
-      `;
-
-    }
-  }
-
-  result.innerHTML = `
-
-    <div style="
-      padding:16px;
-      border-radius:12px;
-      background:#101c2d;
-    ">
-
-      <h3>
-        ✈️ ${safe}
-      </h3>
-
-      <p>
-        ${days}-day suggested itinerary
-      </p>
-
-      <ol style="
-        line-height:1.8;
-        padding-left:22px;
-      ">
-        ${itinerary}
-      </ol>
-
-    </div>
-
-  `;
-}
-
-
-/* =========================================================
-   LOGIN / DEMO OTP
-   ========================================================= */
-
-function openLogin() {
-
-  openModal(`
-
-    <div style="
-      color:white;
-      text-align:left;
-    ">
-
-      <h2>🔐 Login</h2>
-
-      <p style="
-        color:#b8c0cd;
-      ">
-        Enter your 10-digit mobile number.
-      </p>
-
-      <input
-        id="hwPhone"
-        type="tel"
-        inputmode="numeric"
-        maxlength="10"
-        placeholder="10 digit mobile number"
-        style="
-          width:100%;
-          box-sizing:border-box;
-          padding:13px;
-          margin:10px 0 15px;
-          border-radius:10px;
-          border:1px solid #394b65;
-        "
-      >
-
-      <button
-        id="hwSendOtp"
-        type="button"
-        style="
-          width:100%;
-          padding:14px;
-          border:0;
-          border-radius:10px;
-          cursor:pointer;
-          background:linear-gradient(135deg,#7c2bff,#2389ff);
-          color:white;
-          font-weight:bold;
-        "
-      >
-        Send OTP
-      </button>
-
-      <div
-        id="hwOtpArea"
-        style="
-          margin-top:18px;
-        "
-      ></div>
-
-      <button
-        id="hwLoginClose"
-        type="button"
-        style="
-          margin-top:15px;
-          padding:12px 18px;
-          border:1px solid #394b65;
-          border-radius:10px;
-          background:#091321;
-          color:white;
-          cursor:pointer;
-        "
-      >
-        Close
-      </button>
-
-    </div>
-
-  `);
-
-  document
-    .getElementById("hwSendOtp")
-    ?.addEventListener(
-      "click",
-      sendDemoOTP
-    );
-
-  document
-    .getElementById("hwLoginClose")
-    ?.addEventListener(
-      "click",
-      closeModal
-    );
-}
-
-
-function sendDemoOTP() {
-
-  const phone =
-    document.getElementById(
-      "hwPhone"
-    )?.value.trim();
-
-  const area =
-    document.getElementById(
-      "hwOtpArea"
-    );
-
-  if (!/^[0-9]{10}$/.test(phone)) {
-
-    if (area) {
-
-      area.innerHTML = `
-        <div style="
-          color:#ff6b6b;
-        ">
-          Enter a valid 10 digit mobile number.
-        </div>
-      `;
-
-    }
-
-    return;
-  }
-
-  const otp =
-    String(
-      Math.floor(
-        100000 +
-        Math.random() * 900000
-      )
-    );
-
-  sessionStorage.setItem(
-    "HW_DEMO_OTP",
-    otp
-  );
-
-  if (area) {
-
-    area.innerHTML = `
-
-      <div style="
-        padding:14px;
-        border-radius:12px;
-        background:#101c2d;
-      ">
-
-        <p>
-          Demo OTP:
-          <strong>${otp}</strong>
-        </p>
-
-        <input
-          id="hwVerifyOtp"
-          type="text"
-          inputmode="numeric"
-          maxlength="6"
-          placeholder="Enter OTP"
-          style="
-            width:100%;
-            box-sizing:border-box;
-            padding:13px;
-            margin:8px 0 12px;
-            border-radius:10px;
-            border:1px solid #394b65;
-          "
-        >
-
-        <button
-          id="hwVerifyOtp"
-          type="button"
-          style="
-            width:100%;
-            padding:13px;
-            border:0;
-            border-radius:10px;
-            cursor:pointer;
-          "
-        >
-          Verify OTP
-        </button>
-
-        <div
-          id="hwOtpMessage"
-          style="
-            margin-top:12px;
-          "
-        ></div>
-
-      </div>
-
-    `;
-
-    document
-      .getElementById(
-        "hwVerifyOtp"
-      )
-      ?.addEventListener(
-        "click",
-        verifyDemoOTP
-      );
-  }
-}
-
-
-function verifyDemoOTP() {
-
-  const entered =
-    document.getElementById(
-      "hwVerifyOtp"
-    )?.value.trim();
-
-  const saved =
-    sessionStorage.getItem(
-      "HW_DEMO_OTP"
-    );
-
-  const message =
-    document.getElementById(
-      "hwOtpMessage"
-    );
-
-  if (
-    entered &&
-    saved &&
-    entered === saved
-  ) {
-
-    sessionStorage.setItem(
-      "HW_LOGGED_IN",
-      "true"
-    );
-
-    if (message) {
-
-      message.innerHTML = `
-        <strong style="
-          color:#39d98a;
-        ">
-          ✅ Login successful!
-        </strong>
-      `;
-
-    }
-
-  } else {
-
-    if (message) {
-
-      message.innerHTML = `
-        <strong style="
-          color:#ff6b6b;
-        ">
-          ❌ Wrong OTP.
-        </strong>
-      `;
-
-    }
-
-  }
-}
-/* =========================================================
-HADOTI WALE BHAIYA
-FINAL INITIALIZATION + BUTTON FIX
-========================================================= */
-
-document.addEventListener("DOMContentLoaded", function () {
-
-console.log("HADOTI WALE BHAIYA: Starting...");
-
-/* -------------------------
-   MODAL
-------------------------- */
-setupModal();
-
-/* -------------------------
-   DESTINATIONS
-------------------------- */
-renderDestinations(destinations);
-
-/* -------------------------
-   SEARCH
-------------------------- */
-setupSearch();
-
-/* -------------------------
-   AI TRIP PLANNER
-------------------------- */
-const planBtn = document.getElementById("planBtn");
-const quickPlanner = document.getElementById("quickPlanner");
-
-if (planBtn && !planBtn.dataset.hwBound) {
-    planBtn.dataset.hwBound = "1";
-
-    planBtn.addEventListener("click", function (e) {
-        e.preventDefault();
-        openTripPlanner();
-    });
-}
-
-if (quickPlanner && !quickPlanner.dataset.hwBound) {
-    quickPlanner.dataset.hwBound = "1";
-
-    quickPlanner.addEventListener("click", function (e) {
-        e.preventDefault();
-        openTripPlanner();
-    });
-}
-
-/* -------------------------
-   LOGIN
-------------------------- */
-const loginBtn = document.getElementById("loginBtn");
-
-if (loginBtn && !loginBtn.dataset.hwBound) {
-
-    loginBtn.dataset.hwBound = "1";
-
-    loginBtn.addEventListener("click", function (e) {
-        e.preventDefault();
-        openLogin();
-    });
-}
-
-/* -------------------------
-   ROUTE
-------------------------- */
-const routeBtn = document.getElementById("routeBtn");
-
-if (routeBtn && !routeBtn.dataset.hwBound) {
-
-    routeBtn.dataset.hwBound = "1";
-
-    routeBtn.addEventListener("click", function (e) {
-
-        e.preventDefault();
-
-        const routeTo =
-            document.getElementById("routeTo")?.value.trim();
-
-        if (!routeTo) {
-
-            alert("Please enter a destination.");
-
-            return;
-        }
-
-        openGoogleMaps(routeTo);
-    });
-}
-
-/* -------------------------
-   QUICK SERVICES
-------------------------- */
-
-document.querySelectorAll(".quick-card").forEach(function (card) {
-
-    if (card.dataset.hwBound) return;
-
-    card.dataset.hwBound = "1";
-
-    card.addEventListener("click", function (e) {
-
-        e.preventDefault();
-
-        const title =
-            card.querySelector("b")?.innerText
-            ?.toLowerCase()
-            .trim() || "";
-
-        if (title.includes("explore map")) {
-
-    window.location.href = "earth-test.html";
-
-} else if (title.includes("ai trip planner")) {
-
-            openTripPlanner();
-
-        } else if (title.includes("budget calculator")) {
-
-            openBudgetCalculator();
-
-        } else if (title.includes("hotel booking")) {
-
-            openHotelBooking();
-
-        } else if (title.includes("local guides")) {
-
-            openSimpleMessage(
-                "🧑‍✈️ Local Guides",
-                "Local guide service will be connected to the database."
-            );
-
-        } else if (title.includes("travel stories")) {
-
-            openSimpleMessage(
-                "📖 Travel Stories",
-                "Travel stories module is ready."
-            );
-
-        } else if (title.includes("offers")) {
-
-            openSimpleMessage(
-                "🏷️ Offers & Deals",
-                "Offers and deals module is ready."
-            );
-
-        } else if (title.includes("emergency")) {
-
-            openSimpleMessage(
-                "🆘 Emergency",
-                "Emergency support module is ready."
-            );
-        }
-
-    });
-});
-
-/* -------------------------
-   THEME
-------------------------- */
-
-const themeBtn = document.getElementById("themeBtn");
-
-if (themeBtn && !themeBtn.dataset.hwBound) {
-
-    themeBtn.dataset.hwBound = "1";
-
-    themeBtn.addEventListener("click", function () {
-
-        document.body.classList.toggle("dark-mode");
-
-        const enabled =
-            document.body.classList.contains("dark-mode");
-
-        localStorage.setItem(
-            "HW_DARK_MODE",
-            enabled ? "true" : "false"
-        );
-    });
-
-    if (
-        localStorage.getItem("HW_DARK_MODE") === "true"
-    ) {
-        document.body.classList.add("dark-mode");
-    }
-}
-
-/* -------------------------
-   MOBILE MENU
-------------------------- */
-
-const menuBtn = document.getElementById("menuBtn");
-const nav = document.querySelector(".desktop-nav");
-
-if (menuBtn && nav && !menuBtn.dataset.hwBound) {
-
-    menuBtn.dataset.hwBound = "1";
-
-    menuBtn.addEventListener("click", function () {
-
-        nav.classList.toggle("mobile-nav-open");
-
-    });
-}
-
-/* -------------------------
-   DATABASE
-------------------------- */
-
-loadDestinationsFromDatabase();
-
-/* -------------------------
-   ESCAPE KEY
-------------------------- */
-
-document.addEventListener("keydown", function (e) {
-
-    if (e.key === "Escape") {
-
-        closeModal();
-
-    }
-});
-
-console.log(
-    "HADOTI WALE BHAIYA: Website initialized successfully."
-);
-
-});
-
-/* =========================================================
-SIMPLE INFORMATION MODAL
-========================================================= */
-
-function openSimpleMessage(title, message) {
-
-openModal(`
-
-    <div style="
-        color:white;
-        text-align:left;
-    ">
-
-        <h2>${esc(title)}</h2>
-
-        <p style="
-            color:#b8c0cd;
-            line-height:1.7;
-            margin-top:12px;
-        ">
-            ${esc(message)}
-        </p>
-
-        <button
-            id="hwSimpleClose"
-            type="button"
-            style="
-                margin-top:20px;
-                padding:12px 20px;
-                border:0;
-                border-radius:10px;
-                cursor:pointer;
-            "
-        >
-            Close
-        </button>
-
-    </div>
-
-`);
-
-document
-    .getElementById("hwSimpleClose")
-    ?.addEventListener(
-        "click",
-        closeModal
-    );
-
-}
-
-/* =========================================================
-FIXED OTP SYSTEM
-========================================================= */
-
-function sendDemoOTP() {
-
-const phone =
-    document.getElementById("hwPhone")
-    ?.value
-    .trim();
-
-const area =
-    document.getElementById("hwOtpArea");
-
-if (!/^[0-9]{10}$/.test(phone)) {
-
-    if (area) {
-
-        area.innerHTML = `
-
-            <div style="
-                color:#ff6b6b;
-                padding:10px 0;
-            ">
-                Enter a valid 10 digit mobile number.
-            </div>
-
-        `;
-    }
-
-    return;
-}
-
-const otp =
-    String(
-        Math.floor(
-            100000 +
-            Math.random() * 900000
-        )
-    );
-
-sessionStorage.setItem(
-    "HW_DEMO_OTP",
-    otp
-);
-
-if (!area) return;
-
-area.innerHTML = `
-
-    <div style="
-        padding:14px;
-        border-radius:12px;
-        background:#101c2d;
-    ">
-
-        <p>
-            Demo OTP:
-            <strong>${otp}</strong>
-        </p>
-
-        <input
-            id="hwVerifyOtpInput"
-            type="text"
-            inputmode="numeric"
-            maxlength="6"
-            placeholder="Enter OTP"
-            style="
-                width:100%;
-                box-sizing:border-box;
-                padding:13px;
-                margin:8px 0 12px;
-                border-radius:10px;
-                border:1px solid #394b65;
-            "
-        >
-
-        <button
-            id="hwVerifyOtpButton"
-            type="button"
-            style="
-                width:100%;
-                padding:13px;
-                border:0;
-                border-radius:10px;
-                cursor:pointer;
-            "
-        >
-            Verify OTP
-        </button>
-
-        <div
-            id="hwOtpMessage"
-            style="
-                margin-top:12px;
-            "
-        ></div>
-
-    </div>
-
-`;
-
-document
-    .getElementById("hwVerifyOtpButton")
-    ?.addEventListener(
-        "click",
-        verifyDemoOTP
-    );
-
-}
-
-/* =========================================================
-VERIFY OTP
-========================================================= */
-
-function verifyDemoOTP() {
-
-const entered =
-    document.getElementById(
-        "hwVerifyOtpInput"
-    )
-    ?.value
-    .trim();
-
-const saved =
-    sessionStorage.getItem(
-        "HW_DEMO_OTP"
-    );
-
-const message =
-    document.getElementById(
-        "hwOtpMessage"
-    );
-
-if (
-    entered &&
-    saved &&
-    entered === saved
-) {
-
-    sessionStorage.setItem(
-        "HW_LOGGED_IN",
-        "true"
-    );
-
-    if (message) {
-
-        message.innerHTML = `
-
-            <strong style="
-                color:#39d98a;
-            ">
-                ✅ Login successful!
-            </strong>
-
-        `;
-    }
-
-} else {
-
-    if (message) {
-
-        message.innerHTML = `
-
-            <strong style="
-                color:#ff6b6b;
-            ">
-                ❌ Wrong OTP.
-            </strong>
-
-        `;
-    }
-}
-
-}
-
-/* =========================================================
-GLOBAL FUNCTIONS
-========================================================= */
-
-window.searchDestinations =
-searchDestinations;
-
-window.openGoogleMaps =
-openGoogleMaps;
-
-window.openMapService =
-openMapService;
-
-window.openBudgetCalculator =
-openBudgetCalculator;
-
-window.openHotelBooking =
-openHotelBooking;
-
-window.openTripPlanner =
-openTripPlanner;
-
-window.openLogin =
-openLogin;
-
-window.closeModal =
-closeModal;
-
-window.showDestination =
-showDestination;
-
-window.sendDemoOTP =
-sendDemoOTP;
-
-window.verifyDemoOTP =
-verifyDemoOTP;
-
-window.generateTripPlan =
-generateTripPlan;
-
-window.calculateBudget =
-calculateBudget;
-
-console.log(
-"HADOTI WALE BHAIYA FINAL FIX LOADED."
-);
+        i
