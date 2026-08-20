@@ -16,6 +16,20 @@ body {
 }
 
 /* =========================
+   FOCUS STATES (ACCESSIBILITY)
+========================= */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #7c2bff;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* =========================
    BACKGROUND
 ========================= */
 
@@ -28,7 +42,6 @@ body::before {
 
   background-image:
     radial-gradient(circle, rgba(255,255,255,.55) 1px, transparent 1px);
-
   background-size: 90px 90px;
   opacity: .18;
 }
@@ -70,7 +83,6 @@ body::before {
   min-width: 320px;
 
   color: #fff;
-
   text-decoration: none;
 }
 
@@ -119,7 +131,6 @@ body::before {
 
   gap: 22px;
 }
-
 .desktop-nav a {
   color: #fff;
 
@@ -170,7 +181,6 @@ body::before {
 
   cursor: pointer;
 }
-
 .lang {
   padding: 0 12px;
 }
@@ -201,6 +211,29 @@ body::before {
   color: white;
 
   font-size: 25px;
+  cursor: pointer;
+}
+
+/* Mobile nav shown as dropdown when opened */
+.topbar.nav-open .desktop-nav {
+  display: flex;
+  position: absolute;
+  top: 66px;
+  left: 0;
+  right: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  padding: 10px 20px;
+  background: rgba(3,7,14,.98);
+  border-bottom: 1px solid #263040;
+}
+
+.topbar.nav-open .desktop-nav a {
+  width: 100%;
+  padding: 12px 0;
+  border-bottom: 1px solid #182234;
+  font-size: 14px;
 }
 
 
@@ -216,7 +249,6 @@ body::before {
   overflow: hidden;
 
   padding: 55px 38px 110px;
-
   background:
     radial-gradient(
       circle at 65% 50%,
@@ -259,7 +291,6 @@ body::before {
 
 .hero h1 {
   font-size: 48px;
-
   line-height: 1;
 
   font-weight: 900;
@@ -307,7 +338,6 @@ body::before {
   display: flex;
 
   margin-top: 20px;
-
   max-width: 590px;
 
   overflow: hidden;
@@ -352,7 +382,6 @@ body::before {
   right: -70px;
 
   top: -20px;
-
   width: 850px;
 
   height: 570px;
@@ -372,6 +401,13 @@ body::before {
     0 0 80px rgba(26,110,255,.15);
 
   transform: rotate(-5deg);
+  cursor: pointer;
+  animation: earth-spin 90s linear infinite;
+}
+
+@keyframes earth-spin {
+  from { filter: hue-rotate(0deg); }
+  to { filter: hue-rotate(8deg); }
 }
 
 .earth::before {
@@ -388,7 +424,6 @@ body::before {
   box-shadow:
     0 0 25px rgba(70,160,255,.5);
 }
-
 .earth-glow {
   position: absolute;
 
@@ -438,7 +473,6 @@ body::before {
   font-size: 55px;
 
   color: white;
-
   text-shadow:
     0 0 18px #ffbd18;
 }
@@ -486,7 +520,6 @@ body::before {
   width: 280px;
 
   display: flex;
-
   gap: 14px;
 
   padding: 17px;
@@ -506,7 +539,6 @@ body::before {
 }
 
 @keyframes floating {
-
   0% {
     transform: translateY(0);
   }
@@ -532,7 +564,6 @@ body::before {
 
   font-size: 16px;
 }
-
 .ai-card p {
   margin-bottom: 12px;
 
@@ -576,7 +607,6 @@ body::before {
 
 .primary:hover {
   transform: translateY(-2px);
-
   box-shadow:
     0 0 30px rgba(103,54,255,.6);
 }
@@ -618,7 +648,6 @@ body::before {
   color: #ffc21e;
 }
 
-
 /* =========================
    SEARCH PANEL
 ========================= */
@@ -627,7 +656,6 @@ body::before {
   position: absolute;
 
   left: 10%;
-
   right: 10%;
 
   bottom: 0;
@@ -660,7 +688,6 @@ body::before {
 
 .search-main {
   display: flex;
-
   align-items: center;
 
   gap: 10px;
@@ -710,7 +737,6 @@ body::before {
   border-radius: 50%;
 
   color: white;
-
   background:
     linear-gradient(
       135deg,
@@ -759,7 +785,6 @@ body::before {
   max-width: 110px;
 
   border: 0;
-
   outline: 0;
 
   background: transparent;
@@ -807,7 +832,6 @@ body::before {
 
   cursor: pointer;
 }
-
 .popular button:hover {
   border-color: #7d58ff;
 
@@ -823,7 +847,7 @@ body::before {
   display: grid;
 
   grid-template-columns:
-    repeat(8, 1fr);
+    repeat(auto-fit, minmax(130px, 1fr));
 
   gap: 12px;
 
@@ -849,7 +873,6 @@ body::before {
   color: white;
 
   cursor: pointer;
-
   transition: .25s;
 }
 
@@ -886,6 +909,15 @@ body::before {
   font-size: 9px;
 }
 
+.quick-card.danger {
+  border-color: #7a2f3a;
+  background: linear-gradient(180deg, #2a0d12, #150609);
+}
+
+.quick-card.danger b {
+  color: #ff6b6b;
+}
+
 
 /* =========================
    CONTENT
@@ -893,7 +925,6 @@ body::before {
 
 .content-row {
   display: grid;
-
   grid-template-columns: 2fr 1fr;
 
   gap: 20px;
@@ -939,7 +970,6 @@ body::before {
   text-decoration: none;
 }
 
-
 /* =========================
    DESTINATION CARDS
 ========================= */
@@ -983,7 +1013,6 @@ body::before {
 
 .destination:hover img {
   transform: scale(1.08);
-
   opacity: 1;
 }
 
@@ -1033,7 +1062,6 @@ body::before {
 
 .badge {
   position: absolute;
-
   top: 8px;
 
   left: 8px;
@@ -1077,7 +1105,6 @@ body::before {
 
 .route-head {
   display: flex;
-
   justify-content: space-between;
 
   gap: 10px;
@@ -1127,7 +1154,6 @@ body::before {
   width: 30px;
 
   color: #b8c0cd;
-
   font-size: 9px;
 }
 
@@ -1175,7 +1201,6 @@ body::before {
 
 .trust-bar div {
   display: grid;
-
   grid-template-columns: 35px 1fr;
 
   align-items: center;
@@ -1218,13 +1243,13 @@ body::before {
   align-items: center;
 
   justify-content: center;
-
   background: rgba(0,0,0,.75);
 
   backdrop-filter: blur(10px);
 }
 
-.modal.open {
+.modal.open,
+.modal.active {
   display: flex;
 }
 
@@ -1232,6 +1257,8 @@ body::before {
   position: relative;
 
   width: min(520px,92vw);
+  max-height: 88vh;
+  overflow-y: auto;
 
   padding: 28px;
 
@@ -1308,7 +1335,6 @@ footer a {
   color: #b9c1cc;
 
   text-decoration: none;
-
   font-size: 11px;
 }
 
@@ -1325,6 +1351,17 @@ body.light {
 
 body.light .topbar {
   background: rgba(245,248,252,.95);
+  border-bottom-color: #dde3ec;
+}
+
+body.light .topbar.nav-open .desktop-nav {
+  background: rgba(245,248,252,.98);
+  border-bottom-color: #dde3ec;
+}
+
+body.light .topbar.nav-open .desktop-nav a {
+  color: #101621;
+  border-bottom-color: #e3e8ef;
 }
 
 body.light .desktop-nav a {
@@ -1332,10 +1369,16 @@ body.light .desktop-nav a {
 }
 
 body.light .lang,
-body.light .icon-btn {
+body.light .icon-btn,
+body.light .avatar {
   background: white;
 
   color: #111;
+  border-color: #d7dce4;
+}
+
+body.light .mobile-menu {
+  color: #101621;
 }
 
 body.light .hero,
@@ -1348,18 +1391,128 @@ body.light .hero-text {
   color: #343b46;
 }
 
+body.light .eyebrow {
+  background: rgba(255,255,255,.7);
+  border-color: #e4d9b8;
+  color: #4a3f1e;
+}
+
+body.light .stats {
+  background: rgba(255,255,255,.85);
+  border-color: #d7dce4;
+}
+
+body.light .stats small {
+  color: #5b6473;
+}
+
 body.light .search-panel,
 body.light .quick-card,
 body.light .route-card,
-body.light .trust-bar {
+body.light .trust-bar,
+body.light .ai-card,
+body.light .modal-box {
   background: white;
 
   color: #111;
+  border-color: #d7dce4;
+}
+
+body.light .quick-card small,
+body.light .route-head small,
+body.light .route-head b,
+body.light .trust-bar small {
+  color: #5b6473;
+}
+
+body.light .quick-card.danger {
+  background: #fff1f1;
+  border-color: #f3c2c2;
+}
+
+body.light .ai-card p {
+  color: #4a5261;
 }
 
 body.light .date-field input,
 body.light .date-field select {
   color: #111;
+}
+
+body.light .date-field {
+  border-left-color: #d7dce4;
+}
+
+body.light .route-field {
+  border-color: #d7dce4;
+}
+
+body.light .route-field input {
+  color: #111;
+}
+
+body.light .popular span {
+  color: #5b6473;
+}
+
+body.light .popular button {
+  background: #f3f5f9;
+  border-color: #d7dce4;
+  color: #111;
+}
+
+body.light .city-rail span {
+  background: rgba(255,255,255,.75);
+  color: #111;
+}
+
+body.light .destination {
+  border-color: #d7dce4;
+  background: #eee;
+}
+
+body.light .destination::after {
+  background: linear-gradient(transparent, #ffffff);
+}
+
+body.light .close {
+  color: #111;
+}
+
+body.light footer {
+  background: #f7f9fc;
+  border-top-color: #dde3ec;
+  color: #4a5261;
+}
+
+body.light footer strong {
+  color: #101621;
+}
+
+body.light footer a {
+  color: #4a5261;
+}
+
+body.light .earth {
+  box-shadow:
+    inset -40px -40px 90px rgba(0,0,0,.25),
+    0 0 80px rgba(26,110,255,.15);
+}
+
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .earth,
+  .ai-card {
+    animation: none;
+  }
 }
 
 
@@ -1384,7 +1537,6 @@ body.light .date-field select {
   .brand-name {
     font-size: 21px;
   }
-
   .hero h1 {
     font-size: 42px;
   }
@@ -1421,6 +1573,7 @@ body.light .date-field select {
     height: 66px;
 
     padding: 0 15px;
+    position: relative;
   }
 
   .brand {
@@ -1430,7 +1583,6 @@ body.light .date-field select {
   .brand-mark {
     font-size: 20px;
   }
-
   .brand-name {
     font-size: 17px;
   }
@@ -1442,6 +1594,10 @@ body.light .date-field select {
   .desktop-nav,
   .header-actions {
     display: none;
+  }
+
+  .topbar.nav-open .desktop-nav {
+    display: flex;
   }
 
   .mobile-menu {
@@ -1478,7 +1634,6 @@ body.light .date-field select {
 
     overflow-x: auto;
   }
-
   .stats div {
     min-width: 105px;
 
@@ -1528,7 +1683,6 @@ body.light .date-field select {
     grid-template-columns:
       1fr 1fr;
   }
-
   .search-main {
     grid-column: 1 / -1;
   }
@@ -1539,93 +1693,4 @@ body.light .date-field select {
     padding-left: 6px;
   }
 
-  .popular {
-    grid-column: 1 / -1;
-  }
-
-
-  .quick-grid {
-    grid-template-columns:
-      repeat(2,1fr);
-
-    padding: 15px;
-  }
-
-
-  .content-row {
-    grid-template-columns: 1fr;
-
-    padding:
-      0
-      15px
-      20px;
-  }
-
-
-  .cards {
-    grid-template-columns:
-      repeat(2,1fr);
-  }
-
-
-  .route-card {
-    min-height: 245px;
-  }
-
-
-  .trust-bar {
-    grid-template-columns:
-      repeat(2,1fr);
-
-    gap: 12px;
-
-    margin: 0 15px;
-
-    padding: 12px;
-  }
-
-  .trust-bar div:nth-child(2n) {
-    border: none;
-  }
-
-  .trust-bar div:last-child {
-    grid-column: 1 / -1;
-  }
-
-
-  footer {
-    flex-direction: column;
-
-    padding: 35px 20px;
-  }
-
-}
-
-
-/* =========================
-   SMALL MOBILE
-========================= */
-
-@media (max-width: 430px) {
-
-  .hero h1 {
-    font-size: 29px;
-  }
-
-  .eyebrow {
-    font-size: 9px;
-  }
-
-  .cards {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .destination {
-    height: 145px;
-  }
-
-  .quick-card {
-    min-height: 105px;
-  }
-
-}
+  .popula
