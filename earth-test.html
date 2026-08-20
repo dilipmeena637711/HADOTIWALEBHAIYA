@@ -203,6 +203,40 @@ body {
 }
 
 /* =========================
+   BACK BUTTON
+========================= */
+
+#backBtn {
+
+  position: fixed;
+
+  left: 16px;
+
+  top: 16px;
+
+  z-index: 1000;
+
+  padding: 10px 16px;
+
+  border: 1px solid rgba(255,255,255,0.25);
+
+  border-radius: 25px;
+
+  background: rgba(0,0,0,0.55);
+
+  color: #ffffff;
+
+  font-size: 13px;
+
+  text-decoration: none;
+
+  backdrop-filter: blur(8px);
+
+  cursor: pointer;
+
+}
+
+/* =========================
    ERROR PANEL
 ========================= */
 
@@ -272,6 +306,13 @@ body {
 
 
 <!-- =========================
+     BACK TO HOME
+========================= -->
+
+<a id="backBtn" href="index.html">← Back to Home</a>
+
+
+<!-- =========================
      MOBILE INSTRUCTIONS
 ========================= -->
 
@@ -301,6 +342,13 @@ body {
 
 /* =========================================================
    1. CESIUM TOKEN
+
+   ⚠️ SECURITY NOTE:
+   This token is visible to anyone who views this page's
+   source. Restrict it to your real domain(s) in your
+   Cesium Ion account (ion.cesium.com -> Access Tokens ->
+   URL restrictions) before deploying publicly, otherwise
+   anyone can copy it and use up your quota.
    ========================================================= */
 
 Cesium.Ion.defaultAccessToken =
