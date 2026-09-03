@@ -1,679 +1,706 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HADOTI WALE BHAIYA — Explore Every Journey</title>
+<style>
+  :root{
+    --bg:#0b1220; --bg2:#0f1b2e; --card:#121f36; --card2:#16233c;
+    --text:#eef3ff; --muted:#9fb0c9; --line:#22314f;
+    --accent:#ff8a3d; --accent2:#ffb35c; --blue:#4fa3ff; --green:#33d488;
+    --radius:16px; --shadow:0 10px 30px rgba(0,0,0,.35);
+  }
+  [data-theme="light"]{
+    --bg:#f6f8fc; --bg2:#ffffff; --card:#ffffff; --card2:#f1f4fb;
+    --text:#152036; --muted:#5b6b85; --line:#e3e9f5;
+    --shadow:0 10px 30px rgba(20,30,60,.08);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Segoe UI',system-ui,Arial,sans-serif;
+    background:linear-gradient(180deg,var(--bg),var(--bg2) 60%);
+    color:var(--text); transition:background .3s,color .3s; min-height:100vh;
+  }
+  a{color:inherit; text-decoration:none;}
+  button{font-family:inherit; cursor:pointer;}
+  img,svg{display:block;}
+  .wrap{max-width:1200px; margin:0 auto; padding:0 20px;}
 
-  <title>HADOTI WALE BHAIYA</title>
+  /* HEADER */
+  header.topbar{
+    position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between;
+    padding:14px 24px; background:rgba(11,18,32,.85); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  [data-theme="light"] header.topbar{background:rgba(255,255,255,.85);}
+  .brand{display:flex; align-items:center; gap:10px;}
+  .brand-mark{font-size:26px;}
+  .brand-name{font-weight:800; letter-spacing:.5px; font-size:18px;}
+  .brand-name span{color:var(--accent);}
+  .tagline{font-size:10px; color:var(--muted); letter-spacing:2px;}
+  .desktop-nav{display:flex; gap:22px; font-size:14px; font-weight:600;}
+  .desktop-nav a{color:var(--muted); position:relative;}
+  .desktop-nav a:hover{color:var(--text);}
+  .desktop-nav a b{color:var(--accent); font-size:9px; vertical-align:top; margin-left:2px;}
+  .header-actions{display:flex; align-items:center; gap:10px;}
+  .icon-btn,.lang,.avatar{
+    background:var(--card2); border:1px solid var(--line); color:var(--text);
+    border-radius:10px; padding:8px 12px; font-size:14px;
+  }
+  .avatar{border-radius:50%; padding:8px 10px;}
+  .mobile-menu{display:none; background:none; border:none; color:var(--text); font-size:22px;}
 
-  <link rel="stylesheet" href="style.css">
+  /* HERO */
+  .hero{
+    display:grid; grid-template-columns:1.1fr .9fr; gap:30px; padding:60px 24px 30px; position:relative;
+  }
+  .eyebrow{
+    display:inline-block; background:var(--card2); border:1px solid var(--line); color:var(--accent2);
+    padding:6px 14px; border-radius:30px; font-size:12px; font-weight:700; margin-bottom:18px;
+  }
+  .hero-copy h1{font-size:44px; line-height:1.15; font-weight:900;}
+  .hero-copy h1 span{color:var(--accent);}
+  .script{font-family:Georgia,serif; font-style:italic; color:var(--blue); margin:10px 0; font-size:18px;}
+  .hero-text{color:var(--muted); max-width:480px; margin-bottom:26px; line-height:1.6;}
+  .stats{display:flex; gap:30px; flex-wrap:wrap;}
+  .stats strong{font-size:22px; display:block;}
+  .stats small{color:var(--muted); font-size:12px;}
+
+  .earth{
+    position:relative; border-radius:24px; min-height:280px; display:flex; align-items:center; justify-content:center;
+    background:radial-gradient(circle at 50% 40%, #1c3a63, #0b1220 70%); border:1px solid var(--line); cursor:pointer;
+    box-shadow:var(--shadow); overflow:hidden;
+  }
+  .earth-glow{position:absolute; inset:-30%; background:radial-gradient(circle, rgba(79,163,255,.25), transparent 60%);}
+  .earth-map{font-size:34px; font-weight:900; letter-spacing:6px; color:rgba(255,255,255,.85);}
+  .pin{position:absolute; top:38%; left:52%; font-size:26px; color:var(--accent); animation:bob 2s ease-in-out infinite;}
+  @keyframes bob{0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)}}
+  .rajasthan{
+    position:absolute; bottom:16px; left:16px; background:rgba(0,0,0,.5); padding:10px 14px; border-radius:12px;
+    font-size:12px; color:#fff;
+  }
+  .rajasthan b{display:block; color:var(--accent2); font-size:13px;}
+
+  .ai-card{
+    grid-column:1/-1; display:flex; align-items:center; gap:18px; background:linear-gradient(120deg,var(--card),var(--card2));
+    border:1px solid var(--line); border-radius:var(--radius); padding:22px 26px; box-shadow:var(--shadow); margin-top:6px;
+  }
+  .robot{font-size:38px;}
+  .ai-card h3{font-size:18px; margin-bottom:4px;}
+  .ai-card p{color:var(--muted); font-size:13px; margin-bottom:10px;}
+  .primary{
+    background:linear-gradient(120deg,var(--accent),var(--accent2)); color:#1a0f00; border:none; font-weight:800;
+    padding:11px 20px; border-radius:10px; font-size:14px;
+  }
+  .primary.full{width:100%;}
+  .primary:hover{filter:brightness(1.08);}
+
+  .city-rail{
+    grid-column:1/-1; display:flex; gap:14px; overflow-x:auto; padding:6px 2px;
+  }
+  .city-rail span{
+    background:var(--card2); border:1px solid var(--line); padding:8px 16px; border-radius:30px; font-size:13px; white-space:nowrap;
+  }
+
+  /* SEARCH PANEL */
+  .search-panel{
+    grid-column:1/-1; background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:20px; box-shadow:var(--shadow); display:flex; flex-wrap:wrap; gap:14px; align-items:flex-end;
+  }
+  .search-main{
+    flex:1 1 320px; display:flex; align-items:center; gap:10px; background:var(--card2); border:1px solid var(--line);
+    border-radius:12px; padding:10px 14px;
+  }
+  .search-icon{font-size:18px; color:var(--muted);}
+  .search-main input{
+    background:none; border:none; outline:none; color:var(--text); font-size:15px; width:100%;
+  }
+  .search-main small{color:var(--muted); font-size:11px;}
+  .search-button{
+    background:var(--accent); border:none; color:#1a0f00; border-radius:8px; width:38px; height:38px; font-size:16px;
+  }
+  .date-field{
+    background:var(--card2); border:1px solid var(--line); border-radius:12px; padding:8px 14px; min-width:130px;
+  }
+  .date-field label{display:block; font-size:12px; font-weight:700;}
+  .date-field small{color:var(--muted); font-size:10px;}
+  .date-field input,.date-field select{
+    background:none; border:none; outline:none; color:var(--text); font-size:13px; width:100%; margin-top:2px;
+  }
+  .popular{grid-column:1/-1; width:100%; display:flex; flex-wrap:wrap; gap:8px; align-items:center; font-size:12px; color:var(--muted);}
+  .popular button{
+    background:var(--card2); border:1px solid var(--line); color:var(--text); padding:6px 12px; border-radius:20px; font-size:12px;
+  }
+  .popular button:hover{border-color:var(--accent);}
+
+  /* QUICK GRID */
+  .quick-grid{
+    display:grid; grid-template-columns:repeat(8,1fr); gap:12px; padding:34px 24px;
+  }
+  .quick-card{
+    background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px 8px; text-align:center;
+    display:flex; flex-direction:column; align-items:center; gap:4px; color:var(--text); transition:transform .15s;
+  }
+  .quick-card:hover{transform:translateY(-4px); border-color:var(--accent);}
+  .quick-card span{font-size:22px;}
+  .quick-card b{font-size:12px;}
+  .quick-card small{color:var(--muted); font-size:10px;}
+  .quick-card.danger{border-color:#5c2323;}
+  .quick-card.danger:hover{border-color:#ff5959;}
+
+  /* DESTINATIONS + ROUTE */
+  .content-row{display:grid; grid-template-columns:1.6fr 1fr; gap:24px; padding:10px 24px 40px;}
+  .section-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;}
+  .section-head h2{font-size:22px;}
+  .section-head a{color:var(--accent2); font-size:13px; font-weight:700;}
+  .cards{display:grid; grid-template-columns:repeat(2,1fr); gap:16px;}
+  .dest-card{
+    background:var(--card); border:1px solid var(--line); border-radius:14px; overflow:hidden; cursor:pointer;
+    transition:transform .15s, border-color .15s;
+  }
+  .dest-card:hover{transform:translateY(-4px); border-color:var(--accent);}
+  .dest-img{height:120px; display:flex; align-items:center; justify-content:center; font-size:38px;}
+  .dest-body{padding:12px 14px;}
+  .dest-body b{font-size:14px;}
+  .dest-body .loc{color:var(--muted); font-size:11px; display:block; margin-bottom:6px;}
+  .dest-meta{display:flex; justify-content:space-between; font-size:12px; color:var(--muted);}
+  .dest-meta .rating{color:var(--accent2); font-weight:700;}
+
+  .route-card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow);
+    align-self:start;
+  }
+  .route-head{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px;}
+  .route-head small{color:var(--muted); font-size:11px;}
+  .route-field{
+    display:flex; align-items:center; gap:10px; background:var(--card2); border:1px solid var(--line);
+    border-radius:10px; padding:10px 12px; margin-bottom:10px;
+  }
+  .route-field span{color:var(--muted); font-size:11px; width:36px;}
+  .route-field input{background:none; border:none; outline:none; color:var(--text); width:100%; font-size:14px;}
+  #routeResult{margin-top:12px; font-size:13px; color:var(--muted); display:none;}
+  #routeResult b{color:var(--text);}
+
+  /* TRUST BAR */
+  .trust-bar{
+    display:flex; flex-wrap:wrap; justify-content:space-around; gap:20px; padding:26px 24px;
+    background:var(--card2); border-top:1px solid var(--line); border-bottom:1px solid var(--line); text-align:center;
+  }
+  .trust-bar div{font-size:20px;}
+  .trust-bar b{display:block; font-size:13px; margin-top:4px;}
+  .trust-bar small{color:var(--muted); font-size:11px;}
+
+  /* FOOTER */
+  footer{
+    display:flex; flex-wrap:wrap; gap:30px; justify-content:space-between; padding:36px 24px; color:var(--muted); font-size:13px;
+  }
+  footer strong{color:var(--text); font-size:16px;}
+  footer strong span{color:var(--accent);}
+  footer p{max-width:320px; margin-top:8px; line-height:1.5;}
+  footer > div{display:flex; flex-direction:column; gap:8px;}
+
+  /* MODAL */
+  .modal{
+    position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; align-items:center; justify-content:center;
+    z-index:100; padding:20px;
+  }
+  .modal.open{display:flex;}
+  .modal-box{
+    background:var(--bg2); border:1px solid var(--line); border-radius:16px; max-width:520px; width:100%;
+    max-height:85vh; overflow-y:auto; padding:26px; position:relative; box-shadow:var(--shadow);
+  }
+  .close{position:absolute; top:14px; right:16px; background:none; border:none; color:var(--muted); font-size:22px;}
+  .modal-box h3{margin-bottom:6px;}
+  .modal-box label{display:block; font-size:12px; font-weight:700; margin:14px 0 6px;}
+  .modal-box input,.modal-box select{
+    width:100%; background:var(--card2); border:1px solid var(--line); border-radius:10px; padding:10px 12px;
+    color:var(--text); font-size:14px; outline:none;
+  }
+  .modal-result{margin-top:16px; background:var(--card2); border:1px solid var(--line); border-radius:12px; padding:14px; font-size:13px; line-height:1.7;}
+  .modal-result h4{margin-bottom:6px;}
+  .toast{
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:var(--card); border:1px solid var(--accent);
+    color:var(--text); padding:12px 22px; border-radius:10px; font-size:13px; z-index:200; display:none; box-shadow:var(--shadow);
+  }
+
+  @media(max-width:900px){
+    .desktop-nav{display:none;}
+    .mobile-menu{display:block;}
+    .hero{grid-template-columns:1fr;}
+    .content-row{grid-template-columns:1fr;}
+    .cards{grid-template-columns:1fr 1fr;}
+    .quick-grid{grid-template-columns:repeat(4,1fr);}
+  }
+  @media(max-width:520px){
+    .hero-copy h1{font-size:30px;}
+    .cards{grid-template-columns:1fr;}
+    .quick-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  .desktop-nav.mobile-open{
+    display:flex; flex-direction:column; position:absolute; top:64px; left:0; right:0; background:var(--bg2);
+    border-bottom:1px solid var(--line); padding:16px 24px; gap:14px; z-index:60;
+  }
+</style>
 </head>
-
 <body>
 
-  <!-- HEADER -->
-  <header class="topbar">
-
-    <a href="#" class="brand">
-      <div class="brand-mark">🏔️📍</div>
-
-      <div>
-        <div class="brand-name">
-          HADOTI<span>WALEBHAIYA</span>
-        </div>
-
-        <div class="tagline">
-          EXPLORE EVERY JOURNEY
-        </div>
-      </div>
-    </a>
-
-    <nav class="desktop-nav" id="desktopNav">
-      <a href="#explore">Explore</a>
-      <a href="#states">States</a>
-      <a href="#districts">Districts</a>
-      <a href="#places">Places</a>
-      <a href="#planner">Travel Planner</a>
-      <a href="#bookings">Bookings</a>
-      <a href="#assistant">AI Assistant <b>NEW</b></a>
-      <a href="#stories">Stories</a>
-      <a href="#more">More⌄</a>
-    </nav>
-
-    <div class="header-actions">
-
-      <button class="lang" id="langBtn" aria-label="Change language">
-        🌐 EN⌄
-      </button>
-
-      <button class="icon-btn" id="themeBtn" aria-label="Toggle light/dark theme">
-        ◔
-      </button>
-
-      <button class="icon-btn" id="wishlistBtn" aria-label="Wishlist">
-        ♧
-      </button>
-
-      <button class="avatar" id="loginBtn" aria-label="Login">
-        👨🏻
-      </button>
-
+<header class="topbar">
+  <a href="#" class="brand">
+    <div class="brand-mark">🏔️📍</div>
+    <div>
+      <div class="brand-name">HADOTI<span>WALEBHAIYA</span></div>
+      <div class="tagline">EXPLORE EVERY JOURNEY</div>
     </div>
-
-    <button class="mobile-menu" id="menuBtn" aria-label="Open menu">
-      ☰
-    </button>
-
-  </header>
-
-
-  <!-- HERO -->
-  <main>
-
-    <section class="hero" id="explore">
-
-      <div class="hero-copy">
-
-        <div class="eyebrow">
-          ♛ India's Most Intelligent Travel &amp; Knowledge Platform
-        </div>
-
-        <h1>
-          EXPLORE THE WORLD
-          <br>
-          <span>WITH HADOTIWALEBHAIYA</span>
-        </h1>
-
-        <p class="script">
-          Your Journey, Our Guidance ✈
-        </p>
-
-        <p class="hero-text">
-          Discover places, plan trips with AI, book stays,
-          find guides, explore culture, history and create
-          unforgettable memories.
-        </p>
-
-        <div class="stats">
-
-          <div>
-            <strong>1M+</strong>
-            <small>Travelers</small>
-          </div>
-
-          <div>
-            <strong>100K+</strong>
-            <small>Destinations</small>
-          </div>
-
-          <div>
-            <strong>50K+</strong>
-            <small>Stays &amp; Hotels</small>
-          </div>
-
-          <div>
-            <strong>500+</strong>
-            <small>Local Guides</small>
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- EARTH -->
-      <div class="earth" id="earthGlobe" role="button" tabindex="0" aria-label="Explore map">
-
-        <div class="earth-glow"></div>
-
-        <div class="earth-map">
-          INDIA
-        </div>
-
-        <div class="pin">
-          ⌖
-        </div>
-
-        <div class="rajasthan">
-
-          <b>RAJASTHAN</b>
-
-          <span>
-            The Land of Royals
-          </span>
-
-        </div>
-
-      </div>
-
-
-      <!-- AI CARD -->
-      <div class="ai-card" id="planner">
-
-        <div class="robot">
-          🤖
-        </div>
-
-        <div>
-
-          <h3>
-            AI TRIP PLANNER
-          </h3>
-
-          <p>
-            Plan your perfect trip
-            <br>
-            in just 30 seconds
-          </p>
-
-          <button
-            class="primary"
-            id="planBtn">
-
-            Plan My Trip →
-
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <!-- CITY RAIL -->
-      <div class="city-rail">
-
-        <span>
-          🏰 <b>JAIPUR</b>
-        </span>
-
-        <span>
-          🏯 <b>JODHPUR</b>
-        </span>
-
-        <span>
-          🏰 <b>UDAIPUR</b>
-        </span>
-
-        <span>
-          🏜️ <b>JAISALMER</b>
-        </span>
-
-        <span>
-          🏔️ <b>MOUNT ABU</b>
-        </span>
-
-      </div>
-
-
-      <!-- SEARCH -->
-      <form
-        class="search-panel"
-        id="searchForm">
-
-        <div class="search-main">
-
-          <span class="search-icon">
-            ⌕
-          </span>
-
-          <div>
-
-            <input
-              id="destinationInput"
-              placeholder="Where do you want to go?"
-              autocomplete="off"
-            >
-
-            <small>
-              Search places, cities, states, countries...
-            </small>
-
-          </div>
-
-          <button
-            class="search-button"
-            type="submit"
-            aria-label="Search">
-
-            ⌕
-
-          </button>
-
-        </div>
-
-
-        <div class="date-field">
-
-          <span>▣</span>
-
-          <label>
-            Check In
-            <small>Add date</small>
-          </label>
-
-          <input type="date">
-
-        </div>
-
-
-        <div class="date-field">
-
-          <span>▣</span>
-
-          <label>
-            Check Out
-            <small>Add date</small>
-          </label>
-
-          <input type="date">
-
-        </div>
-
-
-        <div class="date-field">
-
-          <span>♙</span>
-
-          <label>
-            Travelers
-            <small>2 Travelers</small>
-          </label>
-
-          <select>
-
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5+</option>
-
-          </select>
-
-        </div>
-
-
-        <div class="popular">
-
-          <span>
-            Popular Searches:
-          </span>
-
-          <button type="button" data-place="Rajasthan">
-            Rajasthan
-          </button>
-
-          <button type="button" data-place="Jaipur">
-            Jaipur
-          </button>
-
-          <button type="button" data-place="Udaipur">
-            Udaipur
-          </button>
-
-          <button type="button" data-place="Manali">
-            Manali
-          </button>
-
-          <button type="button" data-place="Goa">
-            Goa
-          </button>
-
-          <button type="button" data-place="Varanasi">
-            Varanasi
-          </button>
-
-          <button type="button" data-place="Kerala">
-            Kerala
-          </button>
-
-          <button type="button" data-place="Leh Ladakh">
-            Leh Ladakh
-          </button>
-
-        </div>
-
-      </form>
-
-    </section>
-
-
-    <!-- QUICK SERVICES -->
-    <section class="quick-grid">
-
-      <button class="quick-card" id="qExploreMap">
-
-        <span>🌍</span>
-
-        <b>
-          Explore Map
-        </b>
-
-        <small>
-          Interactive World
-        </small>
-
-      </button>
-
-      <button
-        class="quick-card"
-        id="quickPlanner">
-
-        <span>🤖</span>
-
-        <b>
-          AI Trip Planner
-        </b>
-
-        <small>
-          Plan in 30 Sec
-        </small>
-
-      </button>
-
-
-      <button class="quick-card" id="qBudget">
-
-        <span>🧮</span>
-
-        <b>
-          Budget Calculator
-        </b>
-
-        <small>
-          Estimate Trip Cost
-        </small>
-
-      </button>
-
-
-      <button class="quick-card" id="qHotel">
-
-        <span>🛏️</span>
-
-        <b>
-          Hotel Booking
-        </b>
-
-        <small>
-          Best Stays
-        </small>
-
-      </button>
-
-
-      <button class="quick-card" id="qGuides">
-
-        <span>🧑‍✈️</span>
-
-        <b>
-          Local Guides
-        </b>
-
-        <small>
-          Verified Experts
-        </small>
-
-      </button>
-
-
-      <button class="quick-card" id="qStories">
-
-        <span>📖</span>
-
-        <b>
-          Travel Stories
-        </b>
-
-        <small>
-          Share &amp; Inspire
-        </small>
-
-      </button>
-
-
-      <button class="quick-card" id="qOffers">
-
-        <span>🏷️</span>
-
-        <b>
-          Offers &amp; Deals
-        </b>
-
-        <small>
-          Best Discounts
-        </small>
-
-      </button>
-
-
-      <button class="quick-card danger" id="qEmergency">
-
-        <span>🆘</span>
-
-        <b>
-          Emergency
-        </b>
-
-        <small>
-          24/7 Support
-        </small>
-
-      </button>
-
-    </section>
-
-
-    <!-- DESTINATIONS -->
-    <section
-      class="content-row"
-      id="places">
-
-      <div class="trending">
-
-        <div class="section-head">
-
-          <h2>
-            <i></i>
-            Trending Destinations
-          </h2>
-
-          <a href="#" id="viewAllBtn">
-            View All Destinations →
-          </a>
-
-        </div>
-
-        <div
-          class="cards"
-          id="destinationCards">
-        </div>
-
-      </div>
-
-
-      <!-- ROUTE -->
-      <div
-        class="route-card"
-        id="routeBox">
-
-        <div class="route-head">
-
-          <div>
-
-            <b>
-              Plan From Your City
-            </b>
-
-            <small>
-              Get best routes, distance,
-              time &amp; cost
-            </small>
-
-          </div>
-
-          <strong>
-            📍 JAIPUR
-          </strong>
-
-        </div>
-
-
-        <div class="route-field">
-
-          <span>
-            From
-          </span>
-
-          <input
-            id="routeFrom"
-            value="Jaipur, Rajasthan">
-
-        </div>
-
-
-        <div class="route-field">
-
-          <span>
-            To
-          </span>
-
-          <input
-            id="routeTo"
-            placeholder="Choose Destination">
-
-        </div>
-
-
-        <button
-          class="primary full"
-          id="routeBtn">
-
-          Show Route →
-
-        </button>
-
-      </div>
-
-    </section>
-
-
-    <!-- TRUST -->
-    <section class="trust-bar">
-
-      <div>
-        🛡️
-        <b>100% Trusted</b>
-        <small>Verified Information</small>
-      </div>
-
-      <div>
-        ✥
-        <b>Best Prices</b>
-        <small>Exclusive Deals</small>
-      </div>
-
-      <div>
-        ♧
-        <b>24/7 Support</b>
-        <small>We are here</small>
-      </div>
-
-      <div>
-        🔒
-        <b>Secure Payments</b>
-        <small>Safe &amp; Fast</small>
-      </div>
-
-      <div>
-        ☆
-        <b>4.9/5 Rating</b>
-        <small>Loved by Travelers</small>
-      </div>
-
-    </section>
-
-  </main>
-
-
-  <!-- MODAL -->
-  <div
-    class="modal"
-    id="modal">
-
-    <div class="modal-box">
-
-      <button
-        class="close"
-        id="closeModal"
-        aria-label="Close">
-
-        ×
-
-      </button>
-
-      <div id="modalContent"></div>
-
+  </a>
+
+  <nav class="desktop-nav" id="desktopNav">
+    <a href="#explore">Explore</a>
+    <a href="#places">Destinations</a>
+    <a href="#planner">Travel Planner</a>
+    <a href="#" id="navBudget">Budget</a>
+    <a href="#" id="navGuides">Guides</a>
+    <a href="#" id="navAssistant">AI Assistant <b>NEW</b></a>
+  </nav>
+
+  <div class="header-actions">
+    <button class="lang" id="langBtn">🌐 EN⌄</button>
+    <button class="icon-btn" id="themeBtn">◔</button>
+    <button class="icon-btn" id="wishlistBtn">♡ <span id="wishCount">0</span></button>
+    <button class="avatar" id="loginBtn">👤</button>
+  </div>
+  <button class="mobile-menu" id="menuBtn">☰</button>
+</header>
+
+<main>
+<section class="hero" id="explore">
+  <div class="hero-copy">
+    <div class="eyebrow">♛ India's Most Intelligent Travel &amp; Knowledge Platform</div>
+    <h1>EXPLORE THE WORLD<br><span>WITH HADOTIWALEBHAIYA</span></h1>
+    <p class="script">Your Journey, Our Guidance ✈</p>
+    <p class="hero-text">Discover places, plan trips with AI, book stays, find guides, explore culture, history and create unforgettable memories — starting right here in Hadoti &amp; Rajasthan.</p>
+    <div class="stats">
+      <div><strong>1M+</strong><small>Travelers</small></div>
+      <div><strong>100K+</strong><small>Destinations</small></div>
+      <div><strong>50K+</strong><small>Stays &amp; Hotels</small></div>
+      <div><strong>500+</strong><small>Local Guides</small></div>
     </div>
-
   </div>
 
+  <div class="earth" id="earthGlobe" role="button" tabindex="0">
+    <div class="earth-glow"></div>
+    <div class="earth-map">INDIA</div>
+    <div class="pin">⌖</div>
+    <div class="rajasthan"><b>RAJASTHAN</b><span>The Land of Royals</span></div>
+  </div>
 
-  <!-- FOOTER -->
-  <footer>
-
+  <div class="ai-card" id="planner">
+    <div class="robot">🤖</div>
     <div>
-
-      <strong>
-        HADOTI<span>WALEBHAIYA</span>
-      </strong>
-
-      <p>
-        One Platform for Every Traveler,
-        Every Destination, Every Language,
-        Everywhere.
-      </p>
-
+      <h3>AI TRIP PLANNER</h3>
+      <p>Plan your perfect trip in just 30 seconds</p>
+      <button class="primary" id="planBtn">Plan My Trip →</button>
     </div>
+  </div>
 
-    <div>
+  <div class="city-rail">
+    <span>🏰 <b>JAIPUR</b></span>
+    <span>🏯 <b>JODHPUR</b></span>
+    <span>🏰 <b>UDAIPUR</b></span>
+    <span>🏜️ <b>JAISALMER</b></span>
+    <span>🏔️ <b>MOUNT ABU</b></span>
+    <span>🕌 <b>BUNDI</b></span>
+    <span>🐆 <b>RANTHAMBORE</b></span>
+  </div>
 
-      <a href="#">
-        About
-      </a>
-
-      <a href="#">
-        Destinations
-      </a>
-
-      <a href="#">
-        Businesses
-      </a>
-
-      <a href="#">
-        Safety
-      </a>
-
+  <form class="search-panel" id="searchForm">
+    <div class="search-main">
+      <span class="search-icon">⌕</span>
+      <div>
+        <input id="destinationInput" placeholder="Where do you want to go?" autocomplete="off">
+        <small>Search places, cities, states...</small>
+      </div>
+      <button class="search-button" type="submit">⌕</button>
     </div>
-
-    <div>
-
-      <a href="#">
-        Privacy
-      </a>
-
-      <a href="#">
-        Terms
-      </a>
-
-      <a href="#">
-        Contact
-      </a>
-
+    <div class="date-field">
+      <label>Check In<small>Add date</small></label>
+      <input type="date">
     </div>
+    <div class="date-field">
+      <label>Check Out<small>Add date</small></label>
+      <input type="date">
+    </div>
+    <div class="date-field">
+      <label>Travelers<small>2 Travelers</small></label>
+      <select><option>2</option><option>3</option><option>4</option><option>5+</option></select>
+    </div>
+    <div class="popular">
+      <span>Popular:</span>
+      <button type="button" data-place="Rajasthan">Rajasthan</button>
+      <button type="button" data-place="Jaipur">Jaipur</button>
+      <button type="button" data-place="Udaipur">Udaipur</button>
+      <button type="button" data-place="Manali">Manali</button>
+      <button type="button" data-place="Goa">Goa</button>
+      <button type="button" data-place="Varanasi">Varanasi</button>
+      <button type="button" data-place="Kerala">Kerala</button>
+      <button type="button" data-place="Leh Ladakh">Leh Ladakh</button>
+    </div>
+  </form>
+</section>
 
-  </footer>
+<section class="quick-grid">
+  <button class="quick-card" id="qExploreMap"><span>🌍</span><b>Explore Map</b><small>Interactive India</small></button>
+  <button class="quick-card" id="qPlanner"><span>🤖</span><b>AI Trip Planner</b><small>Plan in 30 Sec</small></button>
+  <button class="quick-card" id="qBudget"><span>🧮</span><b>Budget Calculator</b><small>Estimate Trip Cost</small></button>
+  <button class="quick-card" id="qHotel"><span>🛏️</span><b>Hotel Booking</b><small>Best Stays</small></button>
+  <button class="quick-card" id="qGuides"><span>🧑‍✈️</span><b>Local Guides</b><small>Verified Experts</small></button>
+  <button class="quick-card" id="qStories"><span>📖</span><b>Travel Stories</b><small>Share &amp; Inspire</small></button>
+  <button class="quick-card" id="qOffers"><span>🏷️</span><b>Offers &amp; Deals</b><small>Best Discounts</small></button>
+  <button class="quick-card danger" id="qEmergency"><span>🆘</span><b>Emergency</b><small>24/7 Support</small></button>
+</section>
 
+<section class="content-row" id="places">
+  <div class="trending">
+    <div class="section-head">
+      <h2>Trending Destinations</h2>
+      <a href="#" id="viewAllBtn">View All →</a>
+    </div>
+    <div class="cards" id="destinationCards"></div>
+  </div>
 
-  <script src="script.js"></script>
+  <div class="route-card" id="routeBox">
+    <div class="route-head">
+      <div><b>Plan From Your City</b><small>Get route, distance &amp; time</small></div>
+      <strong>📍 JAIPUR</strong>
+    </div>
+    <div class="route-field"><span>From</span><input id="routeFrom" value="Jaipur, Rajasthan"></div>
+    <div class="route-field"><span>To</span><input id="routeTo" placeholder="Choose Destination"></div>
+    <button class="primary full" id="routeBtn">Show Route →</button>
+    <div id="routeResult"></div>
+  </div>
+</section>
 
+<section class="trust-bar">
+  <div>🛡️<b>100% Trusted</b><small>Verified Information</small></div>
+  <div>✥<b>Best Prices</b><small>Exclusive Deals</small></div>
+  <div>♧<b>24/7 Support</b><small>We are here</small></div>
+  <div>🔒<b>Secure Payments</b><small>Safe &amp; Fast</small></div>
+  <div>☆<b>4.9/5 Rating</b><small>Loved by Travelers</small></div>
+</section>
+</main>
+
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <button class="close" id="closeModal">×</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<footer>
+  <div>
+    <strong>HADOTI<span>WALEBHAIYA</span></strong>
+    <p>One Platform for Every Traveler, Every Destination, Every Language, Everywhere.</p>
+  </div>
+  <div>
+    <a href="#">About</a>
+    <a href="#" id="footDest">Destinations</a>
+    <a href="#">Businesses</a>
+    <a href="#">Safety</a>
+  </div>
+  <div>
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Contact</a>
+  </div>
+</footer>
+
+<script>
+/* ---------- DATA ---------- */
+const destinations = [
+  {name:"Jaipur", state:"Rajasthan", emoji:"🏰", bg:"#8a3b2b", price:"₹4,500", rating:4.8, desc:"The Pink City — Amber Fort, Hawa Mahal, City Palace & vibrant bazaars."},
+  {name:"Udaipur", state:"Rajasthan", emoji:"🏯", bg:"#2b5a8a", price:"₹5,200", rating:4.9, desc:"The City of Lakes — Lake Pichola, City Palace, romantic sunset boat rides."},
+  {name:"Jodhpur", state:"Rajasthan", emoji:"🏰", bg:"#3b3b6b", price:"₹4,000", rating:4.7, desc:"The Blue City — Mehrangarh Fort towering over indigo-washed streets."},
+  {name:"Jaisalmer", state:"Rajasthan", emoji:"🏜️", bg:"#a67c3d", price:"₹4,800", rating:4.6, desc:"The Golden City — desert forts, camel safaris & Sam sand dunes."},
+  {name:"Mount Abu", state:"Rajasthan", emoji:"🏔️", bg:"#2b6b52", price:"₹3,500", rating:4.5, desc:"Rajasthan's only hill station — Dilwara Temples & Nakki Lake."},
+  {name:"Bundi", state:"Hadoti, Rajasthan", emoji:"🕌", bg:"#4a2b6b", price:"₹3,200", rating:4.6, desc:"Stepwells, painted havelis & the majestic Taragarh Fort."},
+  {name:"Ranthambore", state:"Rajasthan", emoji:"🐆", bg:"#6b4a2b", price:"₹6,000", rating:4.7, desc:"Premier tiger reserve — thrilling jungle safaris."},
+  {name:"Goa", state:"Goa", emoji:"🏖️", bg:"#2b6b8a", price:"₹5,500", rating:4.6, desc:"Beaches, nightlife, Portuguese heritage & seafood."},
+  {name:"Manali", state:"Himachal Pradesh", emoji:"🏔️", bg:"#2b4a6b", price:"₹4,200", rating:4.7, desc:"Snow peaks, valleys, adventure sports & cozy cafes."},
+  {name:"Varanasi", state:"Uttar Pradesh", emoji:"🛕", bg:"#8a5a2b", price:"₹3,800", rating:4.5, desc:"India's spiritual heart — Ganga ghats & ancient temples."},
+  {name:"Kerala Backwaters", state:"Kerala", emoji:"🚤", bg:"#2b6b3f", price:"₹6,500", rating:4.8, desc:"Houseboats, palm-lined canals & Ayurvedic wellness."},
+  {name:"Leh Ladakh", state:"Ladakh", emoji:"🏔️", bg:"#3b4a6b", price:"₹8,000", rating:4.9, desc:"High-altitude passes, monasteries & pristine lakes."}
+];
+
+const grid = document.getElementById('destinationCards');
+function renderDestinations(list){
+  grid.innerHTML = "";
+  list.forEach(d=>{
+    const card = document.createElement('div');
+    card.className = 'dest-card';
+    card.innerHTML = `
+      <div class="dest-img" style="background:${d.bg}">${d.emoji}</div>
+      <div class="dest-body">
+        <b>${d.name}</b>
+        <span class="loc">${d.state}</span>
+        <div class="dest-meta"><span>${d.price}/person</span><span class="rating">★ ${d.rating}</span></div>
+      </div>`;
+    card.addEventListener('click', ()=>openDestination(d));
+    grid.appendChild(card);
+  });
+  if(list.length===0){
+    grid.innerHTML = `<p style="color:var(--muted)">No destinations found. Try another search.</p>`;
+  }
+}
+renderDestinations(destinations);
+
+/* ---------- MODAL HELPERS ---------- */
+const modal = document.getElementById('modal');
+const modalContent = document.getElementById('modalContent');
+function openModal(html){
+  modalContent.innerHTML = html;
+  modal.classList.add('open');
+}
+document.getElementById('closeModal').addEventListener('click', ()=> modal.classList.remove('open'));
+modal.addEventListener('click', e=>{ if(e.target===modal) modal.classList.remove('open'); });
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.display = 'block';
+  setTimeout(()=> t.style.display='none', 2200);
+}
+
+/* ---------- DESTINATION DETAIL ---------- */
+let wishlist = [];
+function openDestination(d){
+  openModal(`
+    <div class="dest-img" style="background:${d.bg}; height:150px; border-radius:12px; font-size:50px; margin-bottom:14px;">${d.emoji}</div>
+    <h3>${d.name}</h3>
+    <p style="color:var(--muted); font-size:13px; margin:6px 0 14px;">${d.state}</p>
+    <p style="line-height:1.6; font-size:14px;">${d.desc}</p>
+    <div class="modal-result">
+      <b>Est. starting price:</b> ${d.price} per person &nbsp;|&nbsp; <b>Rating:</b> ★ ${d.rating}
+    </div>
+    <button class="primary full" style="margin-top:16px" id="wishThis">♡ Add to Wishlist</button>
+  `);
+  document.getElementById('wishThis').addEventListener('click', ()=>{
+    if(!wishlist.includes(d.name)){
+      wishlist.push(d.name);
+      document.getElementById('wishCount').textContent = wishlist.length;
+      showToast(d.name + " added to wishlist!");
+    } else {
+      showToast(d.name + " is already in your wishlist.");
+    }
+  });
+}
+
+/* ---------- SEARCH ---------- */
+document.getElementById('searchForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  const q = document.getElementById('destinationInput').value.trim().toLowerCase();
+  if(!q){ renderDestinations(destinations); document.getElementById('places').scrollIntoView({behavior:'smooth'}); return; }
+  const filtered = destinations.filter(d => d.name.toLowerCase().includes(q) || d.state.toLowerCase().includes(q));
+  renderDestinations(filtered);
+  document.getElementById('places').scrollIntoView({behavior:'smooth'});
+});
+document.querySelectorAll('.popular button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.getElementById('destinationInput').value = btn.dataset.place;
+    document.getElementById('searchForm').dispatchEvent(new Event('submit'));
+  });
+});
+document.getElementById('viewAllBtn').addEventListener('click', e=>{
+  e.preventDefault();
+  document.getElementById('destinationInput').value = '';
+  renderDestinations(destinations);
+});
+document.getElementById('footDest').addEventListener('click', e=>{
+  e.preventDefault();
+  document.getElementById('places').scrollIntoView({behavior:'smooth'});
+});
+
+/* ---------- AI TRIP PLANNER ---------- */
+function openPlanner(){
+  openModal(`
+    <h3>🤖 AI Trip Planner</h3>
+    <p style="color:var(--muted); font-size:13px;">Tell us your preferences — we'll build a day-wise plan instantly.</p>
+    <label>Destination</label>
+    <select id="pDest">${destinations.map(d=>`<option>${d.name}</option>`).join('')}</select>
+    <label>Number of Days</label>
+    <input id="pDays" type="number" min="1" max="15" value="3">
+    <label>Budget Level</label>
+    <select id="pBudget"><option>Budget</option><option selected>Comfort</option><option>Luxury</option></select>
+    <button class="primary full" style="margin-top:16px" id="pGenerate">Generate Plan →</button>
+    <div id="pResult"></div>
+  `);
+  document.getElementById('pGenerate').addEventListener('click', ()=>{
+    const destName = document.getElementById('pDest').value;
+    const days = Math.max(1, Math.min(15, parseInt(document.getElementById('pDays').value)||3));
+    const budget = document.getElementById('pBudget').value;
+    const dest = destinations.find(d=>d.name===destName);
+    const activities = [
+      "Arrival & check-in, explore local markets & street food",
+      "Visit main fort/palace & heritage sites, sunset viewpoint",
+      "Nature/adventure activity (safari, lake, trek or beach time)",
+      "Local village or offbeat experience, cultural show",
+      "Shopping for handicrafts, relaxed cafe hopping",
+      "Day trip to a nearby attraction",
+      "Free day / spa & leisure",
+      "Departure with souvenir shopping"
+    ];
+    let plan = "";
+    for(let i=1;i<=days;i++){
+      plan += `<p><b>Day ${i}:</b> ${activities[(i-1)%activities.length]}</p>`;
+    }
+    const perDay = budget==="Budget" ? 2500 : budget==="Luxury" ? 9000 : 5000;
+    const total = perDay*days;
+    document.getElementById('pResult').innerHTML = `
+      <div class="modal-result">
+        <h4>${days}-Day ${budget} Plan for ${dest.name}</h4>
+        ${plan}
+        <p style="margin-top:8px;"><b>Estimated total cost:</b> ₹${total.toLocaleString('en-IN')} per person</p>
+      </div>`;
+  });
+}
+document.getElementById('planBtn').addEventListener('click', openPlanner);
+document.getElementById('qPlanner').addEventListener('click', openPlanner);
+document.getElementById('navAssistant').addEventListener('click', e=>{e.preventDefault(); openPlanner();});
+
+/* ---------- BUDGET CALCULATOR ---------- */
+function openBudget(){
+  openModal(`
+    <h3>🧮 Budget Calculator</h3>
+    <label>Number of Travelers</label>
+    <input id="bTravelers" type="number" min="1" value="2">
+    <label>Number of Days</label>
+    <input id="bDays" type="number" min="1" value="4">
+    <label>Hotel Category</label>
+    <select id="bHotel"><option value="1500">Budget (₹1,500/night)</option><option value="4000" selected>Mid-range (₹4,000/night)</option><option value="9000">Luxury (₹9,000/night)</option></select>
+    <label>Travel Mode</label>
+    <select id="bTravel"><option value="1500">Train/Bus</option><option value="4500" selected>Flight</option><option value="7000">Private Cab</option></select>
+    <button class="primary full" style="margin-top:16px" id="bCalc">Calculate →</button>
+    <div id="bResult"></div>
+  `);
+  document.getElementById('bCalc').addEventListener('click', ()=>{
+    const t = parseInt(document.getElementById('bTravelers').value)||1;
+    const d = parseInt(document.getElementById('bDays').value)||1;
+    const hotel = parseInt(document.getElementById('bHotel').value);
+    const travel = parseInt(document.getElementById('bTravel').value);
+    const food = 800*d*t;
+    const activities = 600*d*t;
+    const hotelTotal = hotel*d*Math.ceil(t/2);
+    const travelTotal = travel*t;
+    const total = food+activities+hotelTotal+travelTotal;
+    document.getElementById('bResult').innerHTML = `
+      <div class="modal-result">
+        <p>🏨 Hotels: ₹${hotelTotal.toLocaleString('en-IN')}</p>
+        <p>🍽️ Food: ₹${food.toLocaleString('en-IN')}</p>
+        <p>🎟️ Activities: ₹${activities.toLocaleString('en-IN')}</p>
+        <p>🚗 Travel: ₹${travelTotal.toLocaleString('en-IN')}</p>
+        <h4 style="margin-top:8px;">Total Estimate: ₹${total.toLocaleString('en-IN')}</h4>
+        <p style="color:var(--muted)">≈ ₹${Math.round(total/t).toLocaleString('en-IN')} per person</p>
+      </div>`;
+  });
+}
+document.getElementById('qBudget').addEventListener('click', openBudget);
+document.getElementById('navBudget').addEventListener('click', e=>{e.preventDefault(); openBudget();});
+
+/* ---------- OTHER QUICK CARDS ---------- */
+document.getElementById('qExploreMap').addEventListener('click', ()=> document.getElementById('earthGlobe').scrollIntoView({behavior:'smooth'}));
+document.getElementById('earthGlobe').addEventListener('click', ()=> document.getElementById('places').scrollIntoView({behavior:'smooth'}));
+
+document.getElementById('qHotel').addEventListener('click', ()=> openModal(`
+  <h3>🛏️ Hotel Booking</h3>
+  <p style="color:var(--muted); font-size:14px; line-height:1.6;">Search hotels across Rajasthan & India — from heritage havelis to budget stays. Pick a destination above and hit search to see date-based availability.</p>
+  <button class="primary full" style="margin-top:16px" onclick="document.getElementById('modal').classList.remove('open'); document.getElementById('explore').scrollIntoView({behavior:'smooth'});">Search Stays →</button>
+`));
+
+document.getElementById('qGuides').addEventListener('click', ()=> openModal(`
+  <h3>🧑‍✈️ Local Guides</h3>
+  <p style="color:var(--muted); font-size:14px; line-height:1.6;">500+ verified local guides across Rajasthan & India, fluent in Hindi, English & regional languages. Guides can be booked per day for heritage walks, safaris & city tours.</p>
+  <div class="modal-result">Avg. price: ₹1,200 – ₹3,000 per day depending on city & expertise.</div>
+`));
+
+document.getElementById('qStories').addEventListener('click', ()=> openModal(`
+  <h3>📖 Travel Stories</h3>
+  <p style="color:var(--muted); font-size:14px; line-height:1.6;">Read & share real traveler experiences from across India — hidden gems, road trip diaries, festival guides and solo travel tips.</p>
+`));
+
+document.getElementById('qOffers').addEventListener('click', ()=> openModal(`
+  <h3>🏷️ Offers & Deals</h3>
+  <p style="color:var(--muted); font-size:14px; line-height:1.6;">🎉 Flat 20% off on Rajasthan heritage stays this month.<br>🎉 Buy 1 Get 1 on guided desert safaris in Jaisalmer.<br>🎉 Free airport pickup on bookings above ₹10,000.</p>
+`));
+
+document.getElementById('qEmergency').addEventListener('click', ()=> openModal(`
+  <h3>🆘 Emergency Support (24/7)</h3>
+  <p style="line-height:1.8; font-size:14px;">
+    📞 Tourist Helpline: <b>1363</b><br>
+    🚓 Police: <b>100</b> &nbsp; 🚑 Ambulance: <b>108</b><br>
+    🏥 Nearest hospital info available on request.<br><br>
+    Our 24/7 travel support team is always one tap away.
+  </p>
+`));
+
+/* ---------- ROUTE PLANNER ---------- */
+document.getElementById('routeBtn').addEventListener('click', ()=>{
+  const from = document.getElementById('routeFrom').value.trim();
+  const to = document.getElementById('routeTo').value.trim();
+  const result = document.getElementById('routeResult');
+  if(!from || !to){
+    result.style.display='block';
+    result.innerHTML = `Please enter both "From" and "To" locations.`;
+    return;
+  }
+  const distance = 80 + Math.floor(Math.random()*450);
+  const hours = (distance/55).toFixed(1);
+  const cost = Math.round(distance*12);
+  result.style.display='block';
+  result.innerHTML = `
+    <b>${from} → ${to}</b><br>
+    Approx. Distance: <b>${distance} km</b><br>
+    Est. Travel Time: <b>${hours} hrs</b> (by road)<br>
+    Est. Cab Cost: <b>₹${cost.toLocaleString('en-IN')}</b>`;
+});
+
+/* ---------- THEME TOGGLE ---------- */
+const themeBtn = document.getElementById('themeBtn');
+themeBtn.addEventListener('click', ()=>{
+  const html = document.documentElement;
+  const isLight = html.getAttribute('data-theme')==='light';
+  html.setAttribute('data-theme', isLight ? '' : 'light');
+  themeBtn.textContent = isLight ? '◔' : '☀';
+});
+
+/* ---------- MOBILE MENU ---------- */
+document.getElementById('menuBtn').addEventListener('click', ()=>{
+  document.getElementById('desktopNav').classList.toggle('mobile-open');
+});
+
+/* ---------- LANGUAGE (demo toggle) ---------- */
+let isHindi = false;
+document.getElementById('langBtn').addEventListener('click', ()=>{
+  isHindi = !isHindi;
+  document.getElementById('langBtn').innerHTML = isHindi ? '🌐 HI⌄' : '🌐 EN⌄';
+  showToast(isHindi ? "भाषा हिंदी में बदली गई" : "Language switched to English");
+});
+
+/* ---------- WISHLIST BUTTON ---------- */
+document.getElementById('wishlistBtn').addEventListener('click', ()=>{
+  if(wishlist.length===0){ showToast("Your wishlist is empty."); return; }
+  openModal(`<h3>♡ Your Wishlist</h3><div class="modal-result">${wishlist.map(w=>`<p>${w}</p>`).join('')}</div>`);
+});
+
+/* ---------- LOGIN (demo) ---------- */
+document.getElementById('loginBtn').addEventListener('click', ()=> openModal(`
+  <h3>👤 Login / Sign Up</h3>
+  <label>Email or Phone</label>
+  <input placeholder="you@example.com">
+  <label>Password</label>
+  <input type="password" placeholder="••••••••">
+  <button class="primary full" style="margin-top:16px" onclick="document.getElementById('modal').classList.remove('open'); showToast('Logged in as Guest Explorer 👋');">Continue</button>
+`));
+</script>
 </body>
 </html>
