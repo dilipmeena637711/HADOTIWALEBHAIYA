@@ -1,7 +1,7 @@
 {
-  "name": "hadoti-wale-bhaiya-backend",
+  "name": "VEYENZA -backend",
   "version": "1.0.0",
-  "description": "HADOTI WALE BHAIYA Travel OS Backend",
+  "description": "VEYENZA  Travel OS Backend",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
