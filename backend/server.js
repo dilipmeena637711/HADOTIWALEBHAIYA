@@ -26,7 +26,7 @@ const pool = new Pool({
 app.get("/", (req, res) => {
   res.json({
     success: true,
-    message: "HADOTI WALE BHAIYA API is running 🚀"
+    message: "VEYENZA API is running 🚀"
   });
 });
 
@@ -218,7 +218,7 @@ app.use((req, res) => {
 app.listen(PORT, () => {
 
   console.log(
-    `HADOTI WALE BHAIYA API running on port ${PORT}`
+    VEYENZA API running on port ${PORT}`
   );
 
 });
